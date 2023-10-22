@@ -14,8 +14,8 @@ class AdminController extends Controller
         return view('superadmin.dashboard', compact('user'));
     }
 
-    public function stok()
+    public function stock()
     {
-        return view('admin.stok.index');
+        return view('admin.stock.index');
     }
 }
