@@ -48,7 +48,7 @@ class BerasController extends Controller
         $nextId = $this->generateNextId();
 
         $beras = Beras::create([
-            'id'   =>  $nextId,
+            'id_beras'   =>  $nextId,
             'nama_beras' => $request->nama_beras,
             'jenis_beras' => $request->jenis_beras,
             'harga' => $request->harga,
@@ -69,7 +69,7 @@ class BerasController extends Controller
     private function generateNextId()
      {
          $prefix = 'B-';
-         $lastId = Beras::max('id');
+         $lastId = Beras::max('id_beras');
 
          if (!$lastId) {
              // Jika belum ada data laporan, gunakan nomor 1
@@ -101,9 +101,9 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_beras)
     {
-        $beras = Beras::find($id);
+        $beras = Beras::find($id_beras);
         return view('admin.stock.edit', compact('beras'));
     }
 
@@ -114,7 +114,7 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Beras $id)
+    public function update(Request $request, Beras $id_beras)
     {
         $request->validate([
             'nama_beras' => 'required',
@@ -125,7 +125,7 @@ class BerasController extends Controller
 
         // @dd($request);
 
-            $id->update([
+            $id_beras->update([
             'nama_beras' => $request->nama_beras,
             'jenis_beras' => $request->jenis_beras,
             'harga' => $request->harga,
@@ -133,7 +133,7 @@ class BerasController extends Controller
             ]);
 
 
-        return redirect()->route('stock')->with('success', 'Data Product Berhasil Disimpan!');
+        return redirect()->route('admin.stockberas')->with('success', 'Data Product Berhasil Disimpan!');
     }
 
     /**
@@ -142,9 +142,9 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Beras $id)
+    public function destroy(Beras $id_beras)
     {
-        $id->delete();
+        $id_beras->delete();
         Alert::error('Data product Berhasil Dihapus!');
         return back();
     }

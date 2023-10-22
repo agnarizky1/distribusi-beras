@@ -10,7 +10,8 @@
                 <div class="card">
                     <div class="card-header">
                     </div>
-                    <form action="{{ Route('admin.toko.update', $toko->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('admin.toko.update', $toko->id_toko) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">

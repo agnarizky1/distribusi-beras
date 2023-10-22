@@ -11,7 +11,7 @@
                     <div class="card-header">
                         <a href="{{ route('admin.toko.add') }}" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                            User</a>
+                            Toko</a>
                     </div>
                     <div class="card-body">
                         <div class="card-body">
@@ -40,18 +40,18 @@
                                     @foreach ($toko as $t)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $t->id }}</td>
+                                            <td>{{ $t->id_toko }}</td>
                                             <td>{{ $t->nama_toko }}</td>
                                             <td>{{ $t->pemilik }}</td>
                                             <td>{{ $t->alamat }}</td>
                                             <td>{{ $t->nomor_tlp }}</td>
                                             @if (Auth::user()->role == 'superadmin')
                                                 <td>
-                                                    <a href="{{ route('admin.toko.edit', $t->id) }}"
+                                                    <a href="{{ route('admin.toko.edit', $t->id_toko) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.toko.destroy', $t->id) }}"
+                                                    <a href="{{ route('admin.toko.destroy', $t->id_toko) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                 </td>

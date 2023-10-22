@@ -41,17 +41,17 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');
     Route::get('/admin/stockberas/add', [BerasController::class, 'create'])->name('admin.stockberas.add');
-    Route::get('/admin/stockberas/edit/{id}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
-    Route::put('/admin/stockberas/update/{id}', [BerasController::class, 'update'])->name('admin.stockberas.update');
-    Route::get('/admin/stockberas/destroy/{id}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
+    Route::get('/admin/stockberas/edit/{id_beras}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
+    Route::put('/admin/stockberas/update/{id_beras}', [BerasController::class, 'update'])->name('admin.stockberas.update');
+    Route::get('/admin/stockberas/destroy/{id_beras}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
 
     //toko
     Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');
     Route::post('/admin/toko/create', [TokoController::class, 'store'])->name('admin.toko.create');
     Route::get('/admin/toko/add', [TokoController::class, 'create'])->name('admin.toko.add');
-    Route::get('/admin/toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.edit');
-    Route::put('/admin/toko/update/{id}', [TokoController::class, 'update'])->name('admin.toko.update');
-    Route::get('/admin/toko/destroy/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
+    Route::get('/admin/toko/edit/{id_toko}', [TokoController::class, 'edit'])->name('admin.toko.edit');
+    Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
+    Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
 
     //user
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');

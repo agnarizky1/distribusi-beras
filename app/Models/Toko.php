@@ -10,5 +10,5 @@ class Toko extends Model
     use HasFactory;
     protected $guarded = [];
     protected $keyType = 'string';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_toko';
 }

@@ -14,7 +14,7 @@ class CreateBerasTable extends Migration
     public function up()
     {
         Schema::create('beras', function (Blueprint $table) {
-            $table->char('id',30)->primary();
+            $table->char('id_beras',30)->primary();
             $table->string('nama_beras');
             $table->string('jenis_beras');
             $table->integer('harga');

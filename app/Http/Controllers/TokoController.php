@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Toko;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TokoController extends Controller
 {
@@ -47,7 +48,7 @@ class TokoController extends Controller
         $nextId = $this->generateNextId();
 
         $toko = Toko::create([
-            'id'   =>  $nextId,
+            'id_toko'   =>  $nextId,
             'nama_toko' => $request->nama_toko,
             'pemilik' => $request->pemilik,
             'alamat' => $request->alamat,
@@ -68,11 +69,11 @@ class TokoController extends Controller
     private function generateNextId()
      {
          $prefix = 'T-';
-         $lastId = Toko::max('id');
+         $lastId = Toko::max('id_toko');
 
          if (!$lastId) {
              // Jika belum ada data laporan, gunakan nomor 1
-             return $prefix . '0001';
+             return $prefix . '00001';
          }
 
          // Ambil angka dari ID terakhir, tambahkan 1, dan lakukan padding
@@ -100,9 +101,9 @@ class TokoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_toko)
     {
-        $toko = Toko::find($id);
+        $toko = Toko::find($id_toko);
         return view('admin.toko.edit', compact('toko'));
     }
 
@@ -113,7 +114,7 @@ class TokoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Toko $id)
+    public function update(Request $request, Toko $id_toko)
     {
         $request->validate([
             'nama_toko' => 'required',
@@ -124,7 +125,7 @@ class TokoController extends Controller
 
         // @dd($request);
 
-            $id->update([
+            $id_toko->update([
             'nama_toko' => $request->nama_toko,
             'pemilik' => $request->pemilik,
             'alamat' => $request->alamat,
@@ -141,9 +142,9 @@ class TokoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Toko $id)
+    public function destroy(Toko $id_toko)
     {
-        $id->delete();
+        $id_toko->delete();
         Alert::error('Data product Berhasil Dihapus!');
         return back();
     }

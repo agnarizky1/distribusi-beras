@@ -11,7 +11,7 @@
                     <div class="card-header">
                         <a href="{{ route('admin.stockberas.add') }}" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                            User</a>
+                            Beras</a>
                     </div>
                     <div class="card-body">
                         <div class="card-body">
@@ -40,18 +40,18 @@
                                     @foreach ($beras as $b)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td class="text-center">{{ $b->id }}</td>
+                                            <td class="text-center">{{ $b->id_beras }}</td>
                                             <td>{{ $b->nama_beras }}</td>
                                             <td>{{ $b->jenis_beras }}</td>
                                             <td class="text-center">Rp. {{ number_format($b->harga, 0, '.', '.') }}</td>
                                             <td>{{ $b->stock }}</td>
                                             @if (Auth::user()->role == 'superadmin')
                                                 <td>
-                                                    <a href="{{ route('admin.stockberas.edit', $b->id) }}"
+                                                    <a href="{{ route('admin.stockberas.edit', $b->id_beras) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.stockberas.destroy', $b->id) }}"
+                                                    <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                 </td>
