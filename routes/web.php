@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TokoController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerasController;
 
@@ -42,4 +44,20 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/stockberas/edit/{id}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
     Route::put('/admin/stockberas/update/{id}', [BerasController::class, 'update'])->name('admin.stockberas.update');
     Route::get('/admin/stockberas/destroy/{id}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
+
+    //toko
+    Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');
+    Route::post('/admin/toko/create', [TokoController::class, 'store'])->name('admin.toko.create');
+    Route::get('/admin/toko/add', [TokoController::class, 'create'])->name('admin.toko.add');
+    Route::get('/admin/toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.edit');
+    Route::put('/admin/toko/update/{id}', [TokoController::class, 'update'])->name('admin.toko.update');
+    Route::get('/admin/toko/destroy/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
+
+    //user
+    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');
+    Route::post('/admin/user/create', [UserController::class, 'store'])->name('admin.user.create');
+    Route::get('/admin/user/add', [UserController::class, 'create'])->name('admin.user.add');
+    Route::get('/admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('/admin/user/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
 });

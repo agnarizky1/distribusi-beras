@@ -51,7 +51,7 @@
 
                 </li>
 
-                <li class="sidebar-title">Data</li>
+                <li class="sidebar-title">Produk</li>
                 <li
                     class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
                     <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
@@ -60,27 +60,20 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <li class="sidebar-title">Halaman</li>
+                <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
+                    <a href="{{ route('admin.toko') }}" class='sidebar-link'>
+                        <i class="bi bi-journal-check"></i>
+                        <span>Data Toko</span>
+                    </a>
+                </li>
+                <li class="sidebar-item ">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-journal-check"></i>
-                        <span>Distribusi</span>
+                        <span>Data Sopir</span>
                     </a>
-
-                    <ul class="submenu ">
-
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Data Toko</a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Data Sopir</a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Pengiriman</a>
-                        </li>
-                    </ul>
-
-
                 </li>
+                <li class="sidebar-title">Distribusi</li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-hexagon-fill"></i>
@@ -122,6 +115,13 @@
                     </ul>
 
 
+                </li>
+                <li class="sidebar-title">Setting</li>
+                <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
+                    <a href="{{ route('admin.user') }}" class='sidebar-link'>
+                        <i class="bi bi-journal-check"></i>
+                        <span>User</span>
+                    </a>
                 </li>
             </ul>
         </div>

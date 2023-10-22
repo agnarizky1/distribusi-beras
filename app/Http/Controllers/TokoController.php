@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Beras;
+use App\Models\Toko;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class BerasController extends Controller
+class TokoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class BerasController extends Controller
      */
     public function index()
     {
-        $beras = Beras::all();
-        return view('admin.stock.index', compact('beras'));
+        $toko = Toko::all();
+        return view('admin.toko.index', compact('toko'));
     }
 
     /**
@@ -26,7 +25,7 @@ class BerasController extends Controller
      */
     public function create()
     {
-        return view('admin.stock.add');
+        return view('admin.toko.add');
     }
 
     /**
@@ -38,27 +37,27 @@ class BerasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_beras' => 'required',
-            'jenis_beras' => 'required',
-            'harga' => 'required',
-            'stock' => 'required',
+            'nama_toko' => 'required',
+            'pemilik' => 'required',
+            'alamat' => 'required',
+            'nomor_tlp' => 'required',
         ]);
 
         // Mencari ID yang belum digunakan
         $nextId = $this->generateNextId();
 
-        $beras = Beras::create([
+        $toko = Toko::create([
             'id'   =>  $nextId,
-            'nama_beras' => $request->nama_beras,
-            'jenis_beras' => $request->jenis_beras,
-            'harga' => $request->harga,
-            'stock' => $request->stock,
+            'nama_toko' => $request->nama_toko,
+            'pemilik' => $request->pemilik,
+            'alamat' => $request->alamat,
+            'nomor_tlp' => $request->nomor_tlp,
 
         ]);
 
-        if ($beras) {
+        if ($toko) {
             //redirect dengan pesan sukses
-            return redirect()->route('admin.stockberas')->with('success', 'Data Product Berhasil Disimpan!');
+            return redirect()->route('admin.toko')->with('success', 'Data Product Berhasil Disimpan!');
         } else {
             //redirect dengan pesan error
             Alert::error('Data Product Gagal Disimpan!');
@@ -68,12 +67,12 @@ class BerasController extends Controller
 
     private function generateNextId()
      {
-         $prefix = 'B-';
-         $lastId = Beras::max('id');
+         $prefix = 'T-';
+         $lastId = Toko::max('id');
 
          if (!$lastId) {
              // Jika belum ada data laporan, gunakan nomor 1
-             return $prefix . '00001';
+             return $prefix . '0001';
          }
 
          // Ambil angka dari ID terakhir, tambahkan 1, dan lakukan padding
@@ -103,8 +102,8 @@ class BerasController extends Controller
      */
     public function edit($id)
     {
-        $beras = Beras::find($id);
-        return view('admin.stock.edit', compact('beras'));
+        $toko = Toko::find($id);
+        return view('admin.toko.edit', compact('toko'));
     }
 
     /**
@@ -114,26 +113,26 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Beras $id)
+    public function update(Request $request, Toko $id)
     {
         $request->validate([
-            'nama_beras' => 'required',
-            'jenis_beras' => 'required',
-            'harga' => 'required',
-            'stock' => 'required',
+            'nama_toko' => 'required',
+            'pemilik' => 'required',
+            'alamat' => 'required',
+            'nomor_tlp' => 'required',
         ]);
 
         // @dd($request);
 
             $id->update([
-            'nama_beras' => $request->nama_beras,
-            'jenis_beras' => $request->jenis_beras,
-            'harga' => $request->harga,
-            'stock' => $request->stock,
+            'nama_toko' => $request->nama_toko,
+            'pemilik' => $request->pemilik,
+            'alamat' => $request->alamat,
+            'nomor_tlp' => $request->nomor_tlp,
             ]);
 
 
-        return redirect()->route('stock')->with('success', 'Data Product Berhasil Disimpan!');
+        return redirect()->route('admin.toko')->with('success', 'Data Product Berhasil Disimpan!');
     }
 
     /**
@@ -142,7 +141,7 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Beras $id)
+    public function destroy(Toko $id)
     {
         $id->delete();
         Alert::error('Data product Berhasil Dihapus!');
