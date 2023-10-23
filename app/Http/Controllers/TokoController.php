@@ -58,10 +58,10 @@ class TokoController extends Controller
 
         if ($toko) {
             //redirect dengan pesan sukses
-            return redirect()->route('admin.toko')->with('success', 'Data Product Berhasil Disimpan!');
+            return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
         } else {
             //redirect dengan pesan error
-            Alert::error('Data Product Gagal Disimpan!');
+            Alert::error('Data Toko Gagal Disimpan!');
             return back();
         }
     }
@@ -133,7 +133,7 @@ class TokoController extends Controller
             ]);
 
 
-        return redirect()->route('admin.toko')->with('success', 'Data Product Berhasil Disimpan!');
+        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
     }
 
     /**
@@ -145,7 +145,7 @@ class TokoController extends Controller
     public function destroy(Toko $id_toko)
     {
         $id_toko->delete();
-        Alert::error('Data product Berhasil Dihapus!');
+        Alert::error('Data Toko Berhasil Dihapus!');
         return back();
     }
 }

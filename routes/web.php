@@ -6,6 +6,8 @@ use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerasController;
+use App\Http\Controllers\GradeController;
+use App\Http\Controllers\JenisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,22 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/toko/edit/{id_toko}', [TokoController::class, 'edit'])->name('admin.toko.edit');
     Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
+
+    //grade
+    Route::get('/admin/grade', [GradeController::class, 'index'])->name('admin.grade');
+    Route::post('/admin/grade/create', [GradeController::class, 'store'])->name('admin.grade.create');
+    Route::get('/admin/grade/add', [GradeController::class, 'create'])->name('admin.grade.add');
+    Route::get('/admin/grade/edit/{id_grade}', [GradeController::class, 'edit'])->name('admin.grade.edit');
+    Route::put('/admin/grade/update/{id_grade}', [GradeController::class, 'update'])->name('admin.grade.update');
+    Route::get('/admin/grade/destroy/{id_grade}', [GradeController::class, 'destroy'])->name('admin.grade.destroy');
+
+    //Jenis
+    Route::get('/admin/jenis', [JenisController::class, 'index'])->name('admin.jenis');
+    Route::post('/admin/jenis/create', [JenisController::class, 'store'])->name('admin.jenis.create');
+    Route::get('/admin/jenis/add', [JenisController::class, 'create'])->name('admin.jenis.add');
+    Route::get('/admin/jenis/edit/{id_jenis}', [JenisController::class, 'edit'])->name('admin.jenis.edit');
+    Route::put('/admin/jenis/update/{id_jenis}', [JenisController::class, 'update'])->name('admin.jenis.update');
+    Route::get('/admin/jenis/destroy/{id_jenis}', [JenisController::class, 'destroy'])->name('admin.jenis.destroy');
 
     //user
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');

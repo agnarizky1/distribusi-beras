@@ -65,10 +65,10 @@ class BerasController extends Controller
 
         if ($beras) {
             //redirect dengan pesan sukses
-            return redirect()->route('admin.stockberas')->with('success', 'Data Product Berhasil Disimpan!');
+            return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
         } else {
             //redirect dengan pesan error
-            Alert::error('Data Product Gagal Disimpan!');
+            Alert::error('Data Beras Gagal Disimpan!');
             return back();
         }
     }
@@ -138,7 +138,7 @@ class BerasController extends Controller
             ]);
 
 
-        return redirect()->route('admin.stockberas')->with('success', 'Data Product Berhasil Disimpan!');
+        return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
 
     /**
@@ -150,7 +150,7 @@ class BerasController extends Controller
     public function destroy(Beras $id_beras)
     {
         $id_beras->delete();
-        Alert::error('Data product Berhasil Dihapus!');
+        Alert::error('Data Beras Berhasil Dihapus!');
         return back();
     }
 }

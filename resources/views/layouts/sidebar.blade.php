@@ -59,7 +59,18 @@
                         <span>Stok Beras</span>
                     </a>
                 </li>
-
+                <li class="sidebar-item {{ set_active(['admin.grade', 'admin.grade.add', 'admin.grade.edit']) }} ">
+                    <a href="{{ route('admin.grade') }}" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <span>Data Grade</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['admin.jenis', 'admin.jenis.add', 'admin.jenis.edit']) }} ">
+                    <a href="{{ route('admin.jenis') }}" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <span>Data Jenis</span>
+                    </a>
+                </li>
                 <li class="sidebar-title">Halaman</li>
                 <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
                     <a href="{{ route('admin.toko') }}" class='sidebar-link'>
