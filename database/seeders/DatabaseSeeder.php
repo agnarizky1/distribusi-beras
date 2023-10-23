@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\AdminSeeder;
+use Database\Seeders\GradeSeeder;
+use Database\Seeders\JenisSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
+            GradeSeeder::class,
+            JenisSeeder::class,
 
         ]);
         // User::factory(10)->create();

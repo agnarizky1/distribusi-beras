@@ -124,6 +124,14 @@
                     </a>
                 </li>
             </ul>
+            <ul>
+                <li class="sidebar-item {{ set_active('logout') }}">
+                    <a href="{{ route('logout') }}" class='sidebar-link'>
+                        <i class="bi bi-journal-check"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
