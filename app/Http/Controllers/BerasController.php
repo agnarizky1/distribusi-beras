@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beras;
+use App\Models\Grade;
+use App\Models\Jenis;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -26,10 +28,12 @@ class BerasController extends Controller
      */
     public function create()
     {
-        return view('admin.stock.add');
+        $jenis = Jenis::all();
+        $grade = Grade::all();
+        return view('admin.stock.add', compact('grade', 'jenis'));
     }
 
-    /**
+    /**,
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,7 +43,9 @@ class BerasController extends Controller
     {
         $request->validate([
             'nama_beras' => 'required',
+            'berat' => 'required',
             'jenis_beras' => 'required',
+            'grade_beras' => 'required',
             'harga' => 'required',
             'stock' => 'required',
         ]);
@@ -50,10 +56,11 @@ class BerasController extends Controller
         $beras = Beras::create([
             'id_beras'   =>  $nextId,
             'nama_beras' => $request->nama_beras,
+            'berat' => $request->berat,
             'jenis_beras' => $request->jenis_beras,
+            'grade_beras' => $request->grade_beras,
             'harga' => $request->harga,
             'stock' => $request->stock,
-
         ]);
 
         if ($beras) {
