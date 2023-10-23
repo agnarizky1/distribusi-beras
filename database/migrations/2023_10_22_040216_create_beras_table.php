@@ -15,6 +15,8 @@ class CreateBerasTable extends Migration
     {
         Schema::create('beras', function (Blueprint $table) {
             $table->char('id_beras',30)->primary();
+            $table->unsignedBigInteger('id_grade');
+            $table->unsignedBigInteger('id_jenis');
             $table->string('nama_beras');
             $table->integer('berat');
             $table->string('jenis_beras');

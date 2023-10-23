@@ -31,6 +31,7 @@
                                         <th class="text-center">Kode Beras</th>
                                         <th>Nama Beras</th>
                                         <th>Jenis</th>
+                                        <th>Grade</th>
                                         <th class="text-center">Harga</th>
                                         <th>Stock</th>
                                         <th>Aksi</th>
@@ -41,7 +42,8 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $b->id_beras }}</td>
-                                            <td>{{ $b->nama_beras }}</td>
+                                            <td>{{ $b->nama_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            <td>{{ $b->grade_beras }}</td>
                                             <td>{{ $b->jenis_beras }}</td>
                                             <td class="text-center">Rp. {{ number_format($b->harga, 0, '.', '.') }}</td>
                                             <td>{{ $b->stock }}</td>

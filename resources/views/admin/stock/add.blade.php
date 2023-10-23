@@ -38,14 +38,15 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="jenis_beras" class="form-label">Jenis Beras :</label>
-                                    <select class="form-select @error('jenis') is-invalid @enderror" id="jenis_beras" name="jenis_beras" aria-label="Default select example" required>
-                                    @foreach($jenis as $item)
-                                        <option value="{{ $item->jenis }}">{{ $item->jenis }}</option>
-                                    @endforeach
+                                    <select class="form-select @error('jenis') is-invalid @enderror" id="jenis_beras"
+                                        name="jenis_beras" aria-label="Default select example" required>
+                                        @foreach ($jenis as $item)
+                                            <option value="{{ $item->jenis }}">{{ $item->jenis }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="text-danger">
                                         @error('jenis')
@@ -55,9 +56,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="grade_beras" class="form-label">Grade :</label>
-                                    <select class="form-select @error('grade') is-invalid @enderror" id="grade_beras" name="grade_beras" aria-label="Default select example" required>
-                                        @foreach($grade as $item)
-                                            <option value="{{ $item->id }}">{{ $item->grade }}</option>
+                                    <select class="form-select @error('grade') is-invalid @enderror" id="grade_beras"
+                                        name="grade_beras" aria-label="Default select example" required>
+                                        @foreach ($grade as $item)
+                                            <option value="{{ $item->grade }}">{{ $item->grade }}</option>
                                         @endforeach
                                     </select>
                                     <div class="text-danger">

@@ -14,7 +14,7 @@ class CreateGradesTable extends Migration
     public function up()
     {
         Schema::create('grades', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_grade');
             $table->char('beras_id')->nullable();
             $table->string('grade');
             $table->foreign('beras_id')->references('id_beras')->on('beras')->onDelete('cascade');

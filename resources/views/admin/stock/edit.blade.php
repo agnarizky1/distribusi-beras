@@ -15,30 +15,32 @@
                         @csrf
                         @method('PUT')
                         <div class="card-body">
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="nama_beras">Beras :</label>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="nama_beras" class="form-label">Beras :</label>
                                     <input type="text" name="nama_beras" value="{{ $beras->nama_beras }}"
-                                        class="form-control @error('nama_beras') is-invalid @enderror"
-                                        placeholder="Beras..">
-                                    <div class="text-danger">
-                                        @error('nama_beras')
-                                            Nama beras tidak boleh kosong.
-                                        @enderror
-                                    </div>
+                                        class="form-control" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="berat" class="form-label">Berat
+                                        :</label>
+                                    <input type="number" name="berat" value="{{ $beras->berat }}" class="form-control "
+                                        disabled>
+
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="jenis_beras">Jenis beras :</label>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="jenis_beras" class="form-label">Jenis Beras :</label>
                                     <input type="text" name="jenis_beras" value="{{ $beras->jenis_beras }}"
-                                        class="form-control @error('jenis_beras') is-invalid @enderror"
-                                        placeholder="Jenis beras..">
-                                    <div class="text-danger">
-                                        @error('jenis_beras')
-                                            Jenis beras tidak boleh kosong.
-                                        @enderror
-                                    </div>
+                                        class="form-control " placeholder="Jenis beras .." disabled>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="grade_beras" class="form-label">Grade Beras :</label>
+                                    <input type="text" name="grade_beras" value="{{ $beras->grade_beras }}"
+                                        class="form-control" disabled>
+
                                 </div>
                             </div>
                             <div class="row mb-4">

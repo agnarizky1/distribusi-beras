@@ -110,8 +110,10 @@ class BerasController extends Controller
      */
     public function edit($id_beras)
     {
+        $jenis = Jenis::all();
+        $grade = Grade::all();
         $beras = Beras::find($id_beras);
-        return view('admin.stock.edit', compact('beras'));
+        return view('admin.stock.edit', compact('beras','grade','jenis'));
     }
 
     /**
@@ -124,8 +126,6 @@ class BerasController extends Controller
     public function update(Request $request, Beras $id_beras)
     {
         $request->validate([
-            'nama_beras' => 'required',
-            'jenis_beras' => 'required',
             'harga' => 'required',
             'stock' => 'required',
         ]);
@@ -133,8 +133,6 @@ class BerasController extends Controller
         // @dd($request);
 
             $id_beras->update([
-            'nama_beras' => $request->nama_beras,
-            'jenis_beras' => $request->jenis_beras,
             'harga' => $request->harga,
             'stock' => $request->stock,
             ]);
