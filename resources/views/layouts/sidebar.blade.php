@@ -78,10 +78,11 @@
                         <span>Data Toko</span>
                     </a>
                 </li>
+                
                 <li class="sidebar-item ">
-                    <a href="#" class='sidebar-link'>
+                    <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="bi bi-journal-check"></i>
-                        <span>Data Sopir</span>
+                        <span>Distribusi</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Distribusi</li>

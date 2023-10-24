@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerasController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
+use App\Http\Controllers\DistributionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -78,4 +80,11 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/user/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
     Route::put('/admin/user/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
     Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+
+    //distribution
+    Route::get('/admin/distribution', [distributionController::class, 'index'])->name('distribution');
+    Route::post('/admin/distribution/create', [DistributionController::class, 'store'])->name('distribution.store');
+    Route::get('/admin/distribution/add', [DistributionController::class, 'create'])->name('distribution.add');
+    Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
+    Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
 });
