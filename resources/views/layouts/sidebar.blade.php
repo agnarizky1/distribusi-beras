@@ -55,26 +55,26 @@
                 <li
                     class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
                     <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <i class="fa-solid fa-box-open"></i>
                         <span>Stok Beras</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.grade', 'admin.grade.add', 'admin.grade.edit']) }} ">
                     <a href="{{ route('admin.grade') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <i class="fa-solid fa-box-archive"></i>
                         <span>Data Grade</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.jenis', 'admin.jenis.add', 'admin.jenis.edit']) }} ">
                     <a href="{{ route('admin.jenis') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <i class="fa-solid fa-box-archive"></i>
                         <span>Data Jenis</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Halaman</li>
                 <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
                     <a href="{{ route('admin.toko') }}" class='sidebar-link'>
-                        <i class="bi bi-journal-check"></i>
+                        <i class="fa-sharp fa-solid fa-store"></i>
                         <span>Data Toko</span>
                     </a>
                 </li>
@@ -130,7 +130,7 @@
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>
-                        <i class="bi bi-journal-check"></i>
+                        <i class="fa-regular fa-user"></i>
                         <span>User</span>
                     </a>
                 </li>
@@ -138,8 +138,8 @@
             <ul>
                 <li class="sidebar-item {{ set_active('logout') }}">
                     <a href="{{ route('logout') }}" class='sidebar-link'>
-                        <i class="bi bi-journal-check"></i>
                         <span>Logout</span>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                 </li>
             </ul>

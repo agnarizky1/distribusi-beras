@@ -24,11 +24,11 @@
                                     {{ session('hapus') }}
                                 </div>
                             @endif
-                            <table id="tabel-user" class="table table-bordered table-striped">
+                            <table id="tabel-user" class="table table-bordered table-striped table-responsive">
                                 <thead>
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Grade</th>
+                                        <th class="text-center">Grade</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -36,9 +36,9 @@
                                     @foreach ($grade as $g)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $g->grade }}</td>
+                                            <td class="text-center">{{ $g->grade }}</td>
                                             @if (Auth::user()->role == 'superadmin')
-                                                <td>
+                                                <td class="text-right">
                                                     <a href="{{ route('admin.grade.edit', $g->id_grade) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
