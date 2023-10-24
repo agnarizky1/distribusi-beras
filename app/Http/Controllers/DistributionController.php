@@ -24,7 +24,6 @@ class DistributionController extends Controller
 
     }
 
-
     public function create()
     {
         $tokos = Toko::all();

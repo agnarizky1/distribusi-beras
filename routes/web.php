@@ -9,6 +9,7 @@ use App\Http\Controllers\BerasController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\DistributionController;
+use App\Http\Controllers\pembayaranController;
 
 
 /*
@@ -83,8 +84,12 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
 
     //distribution
     Route::get('/admin/distribution', [distributionController::class, 'index'])->name('distribution');
-    Route::post('/admin/distribution/create', [DistributionController::class, 'store'])->name('distribution.store');
-    Route::get('/admin/distribution/add', [DistributionController::class, 'create'])->name('distribution.add');
+    Route::post('/admin/distribution/add', [DistributionController::class, 'store'])->name('distribution.store');
+    Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
+
+    //Pembayaran
+    Route::post('/admin/pembayaran/add', [pembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::get('/admin/pembayaran/create', [pembayaranController::class, 'create'])->name('pembayaran.create');
 });

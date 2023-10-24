@@ -7,6 +7,7 @@ use Database\Seeders\AdminSeeder;
 use Database\Seeders\GradeSeeder;
 use Database\Seeders\JenisSeeder;
 use Database\Seeders\TokoSeeder;
+use Database\Seeders\Beras;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             GradeSeeder::class,
             JenisSeeder::class,
             TokoSeeder::class,
+            Beras::class,
         ]);
         // User::factory(10)->create();
     }

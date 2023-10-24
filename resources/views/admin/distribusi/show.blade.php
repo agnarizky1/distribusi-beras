@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4>Kode Distribusi: {{ $distribusi->kode_distribusi }}</h4>
+                            <h4>Surat Jalan: {{ $distribusi->kode_distribusi }}</h4>
                         </div>
                         <div class="col-md-6 text-end">
                             <a href="{{ route('distribution') }}" class="btn btn-primary">
@@ -27,14 +27,14 @@
                             <p>Plat No.: {{ $distribusi->plat_no }}</p>
                         </div>
                         <div class="col-md-6">
-                            <p>Tanggal Distribusi: {{ $distribusi->tanggal_distribusi }}</p>
+                            <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
                             <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
                             <p>Total Harga: {{ $distribusi->total_harga }}</p>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered text-center">
                                 <thead>
                                     <tr>
                                         <th>Nama Beras</th>
@@ -56,6 +56,68 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-end">
+                            <a href="#"
+                                class="btn btn-warning btn-sm">Print</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Nota Pembayaran: {{ $distribusi->kode_distribusi }}</h4>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{{ route('distribution') }}" class="btn btn-primary">
+                                Kembali
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Nama Toko: {{ $toko->nama_toko }}</p>
+                            <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
+                            <p>Total Harga: {{ $distribusi->total_harga }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
+                            <p>Tanggal Tengat Waktu: {{ $distribusi->tanggal_distribusi }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal Bayar</th>
+                                        <th>Metode Pembayaran</th>
+                                        <th>Jumlah yang dibayar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($detailDistribusi as $detail)
+                                    <tr>
+                                        <td>kono</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="text-end">
+                            <a href="{{ route('pembayaran.create', $detail->id_distribusi) }}"
+                                class="btn btn-success btn-sm">Bayar</i>
+                            </a>
+                            <a href="#"
+                                class="btn btn-warning btn-sm">Print</i>
+                            </a>
                         </div>
                     </div>
                 </div>
