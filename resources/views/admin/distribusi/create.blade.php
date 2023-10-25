@@ -274,7 +274,7 @@
         // Kirim data ke server menggunakan AJAX
         $.ajax({
             type: 'POST',
-            url: '{{ url("/admin/distribution/create") }}', // Ganti dengan URL yang sesuai di aplikasi Anda
+            url: '{{ url("/admin/distribution/store") }}', // Ganti dengan URL yang sesuai di aplikasi Anda
             data: {
                 namaToko: namaToko,
                 namaSopir: namaSopir,
