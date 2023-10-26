@@ -22,12 +22,10 @@ class DistributionController extends Controller
             ->select('distribusis.*', 'tokos.nama_toko')
             ->get();
 
-        $pembayaranTotals = [];
-        foreach ($distri as $d) {
-            $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
-            $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
-        }
-        return view('admin.distribusi.index', compact('distri','pembayaranTotals'));
+        $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
+            ->select('distribusis.*', 'tokos.nama_toko')
+            ->get();
+        return view('admin.distribusi.index', compact('distri'));
 
     }
 
@@ -80,7 +78,7 @@ class DistributionController extends Controller
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
 
-            $dataBeras = Beras::where('id_beras', $item['idBeras'])->first();
+            $dataBeras = Beras::where('nama_beras', $item['nama_asli'])->first();
             if ($dataBeras) {
                 if ($dataBeras->stock >= $item['jumlah']) {
                     $dataBeras->stock -= $item['jumlah'];

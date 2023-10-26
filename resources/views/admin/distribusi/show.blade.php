@@ -150,16 +150,15 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            @if ($sisaPembayaran > 0)
-                                <p>Sisa yang harus dibayar: {{ $sisaPembayaran }}</p>
-                            @else
-                                <p id="status">Status: Lunas</p>
-                            @endif
+                        @if ($sisaPembayaran > 0)
+                            <p>Sisa yang harus dibayar: {{ $sisaPembayaran }}</p>
+                        @else
+                            <p>Status: Lunas</p>
+                        @endif
                         </div>
                         <div class="col-6 text-end">
-                            <a href="#" class="btn btn-success btn-sm" id="bayarButton" data-toggle="modal"
-                                data-target="#pembayaranModal">Bayar</a>
-                            <a href="#" class="btn btn-warning btn-sm">Print</a>
+                                <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#pembayaranModal">Bayar</a>
+                                <a href="#" class="btn btn-warning btn-sm">Print</a>
                         </div>
                     </div>
                 </div>
