@@ -91,6 +91,5 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
 
     //Pembayaran
-    Route::post('/admin/pembayaran/add', [pembayaranController::class, 'store'])->name('pembayaran.store');
-    Route::get('/admin/pembayaran/create', [pembayaranController::class, 'create'])->name('pembayaran.create');
+    Route::post('/admin/pembayaran/store', [pembayaranController::class, 'store'])->name('pembayaran.store');
 });

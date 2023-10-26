@@ -21,7 +21,13 @@ class DistributionController extends Controller
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
             ->get();
-        return view('admin.distribusi.index', compact('distri'));
+
+        $pembayaranTotals = [];
+        foreach ($distri as $d) {
+            $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
+            $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
+        }
+        return view('admin.distribusi.index', compact('distri','pembayaranTotals'));
 
     }
 
@@ -74,7 +80,7 @@ class DistributionController extends Controller
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
 
-            $dataBeras = Beras::where('nama_beras', $item['nama_asli'])->first();
+            $dataBeras = Beras::where('id_beras', $item['idBeras'])->first();
             if ($dataBeras) {
                 if ($dataBeras->stock >= $item['jumlah']) {
                     $dataBeras->stock -= $item['jumlah'];
@@ -87,6 +93,14 @@ class DistributionController extends Controller
             }
             $detailDistribusi->save();
         }
+        $pembayaran = new Pembayaran();
+        $pembayaran->id_distribusi = $distribusiModel->id_distribusi;
+
+        $tanggalDistribusi = Carbon::parse($distribusiModel->tanggal_distribusi);
+        $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
+
+        $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
+        $pembayaran->save();
     }
 
     public function show($id)
@@ -99,10 +113,14 @@ class DistributionController extends Controller
         // Jika Distribusi ditemukan, Anda dapat mengambil data terkait di sini
         $toko = $distribusi->toko; // Anda perlu memiliki relasi antara Distribusi dan Toko dalam model Anda
         $detailDistribusi = $distribusi->detailDistribusi;
-        return view('admin.distribusi.show', compact('distribusi', 'toko', 'detailDistribusi'));
+        $pembayaran = $distribusi->pembayaran->first();
+
+        $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
+
+        return view('admin.distribusi.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
-    public function destroy(Beras $id)
+    public function destroy($id)
     {
         $distribusi = Distribusi::find($id);
         $dataDetail = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->first();

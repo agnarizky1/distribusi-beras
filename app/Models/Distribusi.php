@@ -32,4 +32,8 @@ class Distribusi extends Model
     {
         return $this->belongsTo(Toko::class, 'id_toko', 'id_toko');
     }
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_distribusi', 'id_distribusi');
+    }
 }

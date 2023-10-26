@@ -10,7 +10,7 @@ class DetailDistribusi extends Model
     use HasFactory;
 
     protected $table = 'detail_distribusi'; // Nama tabel dalam basis data
-    protected $primaryKey = 'id'; // Kolom primary key
+    protected $primaryKey = 'id_detail_distribusi'; // Kolom primary key
     protected $fillable = [
         'id_distribusi',
         'nama_beras',

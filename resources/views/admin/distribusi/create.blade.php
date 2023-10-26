@@ -158,7 +158,7 @@
 
             const subtotal = berasHarga * berasJumlah;
             const row = `
-        <tr>
+        <tr data-idberas=${berasId}>
             <td>${berasNama}</td>
             <td class="jenis">${berasJenis}</td>
             <td class="grade">${berasGrade}</td>
@@ -227,78 +227,53 @@
                 kuantitasInput.value = kuantitas; // Mengubah nilai input
                 subtotalElement.textContent = subtotal;
 
-                updateTotalHarga()
-            }
-        }
+                document.querySelectorAll('#transaction-records tr').forEach(function(row) {
+                    var berasId = row.getAttribute('data-idberas');
+                    var namaBeras = row.querySelector('td:nth-child(1)').textContent;
+                    var jenisBeras = row.querySelector('td:nth-child(2)').textContent;
+                    var gradeBeras = row.querySelector('td:nth-child(3)').textContent;
+                    var hargaBeras = parseFloat(row.querySelector('td:nth-child(4)').textContent);
+                    var subtotal = parseInt(row.querySelector('td:nth-child(6)').textContent, 10);
+                    var jumlah = subtotal / hargaBeras;
+                    var beratBeras = parseFloat(namaBeras.match(/\d+/));
+                    var subTotalBeras = jumlah * beratBeras;
+                    jumlahDistribusi += subTotalBeras;
 
-        function updateTotalHarga() {
-            let totalHarga = 0;
+                    Distribusi.push({
+                        idBeras: berasId,
+                        nama: namaBeras,
+                        jenis: jenisBeras,
+                        grade: gradeBeras,
+                        harga: hargaBeras,
+                        jumlah: jumlah,
+                    });
+                });
+                console.table(Distribusi)
 
-            document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                const harga = parseFloat(row.querySelector('.harga').textContent);
-                const kuantitas = parseInt(row.querySelector('.kuantitas').value);
-                totalHarga += harga * kuantitas;
-            });
-
-            document.getElementById('total-price').textContent = totalHarga;
-        }
-
-        document.getElementById('simpanDistribusiBtn').addEventListener('click', function() {
-            var Distribusi = [];
-            var namaToko = document.getElementById('nama_toko').value;
-            var tglDistribusi = document.getElementById('tanggal_distribusi').value;
-            var namaSopir = document.getElementById('nama_sopir').value;
-            var PlatNo = document.getElementById('plat_no').value;
-            var totalHarga = document.getElementById('total-price').textContent;
-            var jumlahDistribusi = 0;
-
-            document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-                var namaBerasAsli = namaBeras.replace(/\d+ Kg/, '').trim();
-                var jenisBeras = row.querySelector('td:nth-child(2)').textContent;
-                var gradeBeras = row.querySelector('td:nth-child(3)').textContent;
-                var hargaBeras = parseFloat(row.querySelector('td:nth-child(4)').textContent);
-                var subtotal = parseInt(row.querySelector('td:nth-child(6)').textContent, 10);
-                var jumlah = subtotal / hargaBeras;
-                var beratBeras = parseFloat(namaBeras.match(/\d+/));
-                var subTotalBeras = jumlah * beratBeras;
-                jumlahDistribusi += subTotalBeras;
-
-                Distribusi.push({
-                    nama: namaBeras,
-                    nama_asli: namaBerasAsli,
-                    jenis: jenisBeras,
-                    grade: gradeBeras,
-                    harga: hargaBeras,
-                    jumlah: jumlah,
+                // Kirim data ke server menggunakan AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('/admin/distribution/store') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
+                    data: {
+                        namaToko: namaToko,
+                        namaSopir: namaSopir,
+                        PlatNo: PlatNo,
+                        tglDistri: tglDistribusi,
+                        totalHarga: totalHarga,
+                        jumlahDistribusi: jumlahDistribusi,
+                        Distribusi: Distribusi,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // Distribusi berhasil disimpan
+                        alert('Distribusi berhasil disimpan.');
+                        window.location.href = '{{ route('distribution') }}';
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        alert('Distribusi gagal. Silakan coba lagi.');
+                    }
                 });
             });
-            console.table(Distribusi)
-
-            // Kirim data ke server menggunakan AJAX
-            $.ajax({
-                type: 'POST',
-                url: '{{ url('/admin/distribution/add') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
-                data: {
-                    namaToko: namaToko,
-                    namaSopir: namaSopir,
-                    PlatNo: PlatNo,
-                    tglDistri: tglDistribusi,
-                    totalHarga: totalHarga,
-                    jumlahDistribusi: jumlahDistribusi,
-                    Distribusi: Distribusi,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    // Distribusi berhasil disimpan
-                    alert('Distribusi berhasil disimpan.');
-                    window.location.href = '{{ route('distribution') }}';
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                    alert('Distribusi gagal. Silakan coba lagi.');
-                }
-            });
-        });
     </script>
 @endsection
