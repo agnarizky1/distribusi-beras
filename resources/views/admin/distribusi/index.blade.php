@@ -48,7 +48,15 @@
                                             <td>{{ $d->plat_no }}</td>
                                             <td>{{ $d->tanggal_distribusi }}</td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} KG</td>
-                                            <td>{{ $d->total_harga }}</td>
+                                            <td>
+                                                {{ $d->total_harga }}
+                                                <br>
+                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                                                    <span class="text-success">Lunas</span>
+                                                @else
+                                                    <span class="text-danger">Sisa Bayar: {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
+                                                @endif
+                                            </td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"

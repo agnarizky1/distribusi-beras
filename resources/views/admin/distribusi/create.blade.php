@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="tanggal_distribusi">Tanggal Distribusi</label>
-                            <input type="date" class="form-control" id="tanggal_distribusi" name="tanggal_distribusi" required>
+                            <input type="date" class="form-control" id="tanggal_distribusi" value="{{ date('Y-m-d') }}" name="tanggal_distribusi" required>
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -41,7 +41,7 @@
                             <select name="beras" id="beras" class="form-control select2">
                                 <option value="0">Pilih Beras</option>
                                 @foreach ($beras as $item)
-                                <option value="{{ $item->id }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->nama_beras }} {{ $item->berat }} Kg</option>
+                                <option value="{{ $item->id_beras }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->nama_beras }} {{ $item->berat }} Kg</option>
                                 @endforeach
                             </select>
                         </div>
@@ -154,7 +154,7 @@
 
         const subtotal = berasHarga * berasJumlah;
         const row = `
-        <tr>
+        <tr data-idberas=${berasId}>
             <td>${berasNama}</td>
             <td class="jenis">${berasJenis}</td>
             <td class="grade">${berasGrade}</td>
@@ -249,8 +249,8 @@
         var jumlahDistribusi = 0;
 
         document.querySelectorAll('#transaction-records tr').forEach(function (row) {
+            var berasId = row.getAttribute('data-idberas');
             var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-            var namaBerasAsli = namaBeras.replace(/\d+ Kg/, '').trim();
             var jenisBeras = row.querySelector('td:nth-child(2)').textContent;
             var gradeBeras = row.querySelector('td:nth-child(3)').textContent;
             var hargaBeras = parseFloat(row.querySelector('td:nth-child(4)').textContent); 
@@ -261,8 +261,8 @@
             jumlahDistribusi += subTotalBeras;
 
             Distribusi.push({
+                idBeras: berasId,
                 nama: namaBeras,
-                nama_asli: namaBerasAsli,
                 jenis: jenisBeras,
                 grade: gradeBeras,
                 harga: hargaBeras,
