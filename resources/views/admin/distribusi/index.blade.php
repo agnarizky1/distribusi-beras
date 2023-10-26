@@ -54,15 +54,14 @@
                                                 @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
                                                     <span class="text-success">Lunas</span>
                                                 @else
-                                                    <span class="text-danger">Sisa Bayar:
-                                                        {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
+                                                    <span class="text-danger">Sisa Bayar: {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
                                                 @endif
                                             </td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
                                                         class="btn btn-warning btn-sm">
-                                                        <i class="fa fa-regular fa-eye"></i>
+                                                            <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa fa-trash-can"></i>
