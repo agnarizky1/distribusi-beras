@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
 
     //distribution
     Route::get('/admin/distribution', [DistributionController::class, 'index'])->name('distribution');
-    Route::post('/admin/distribution/add', [DistributionController::class, 'store'])->name('distribution.store');
+    Route::post('/admin/distribution/store', [DistributionController::class, 'store'])->name('distribution.store');
     Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');

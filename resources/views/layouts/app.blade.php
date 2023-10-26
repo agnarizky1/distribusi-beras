@@ -37,6 +37,8 @@
 
         </div>
     </div>
+    <script src="{{ asset('/src/assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
+    <link href="{{ asset('/src/assets/extensions/sweetalert2/sweetalert2.css') }}" rel="stylesheet">
     <script src="{{ asset('/src/assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('/src/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('/src/assets/compiled/js/app.js') }}"></script>

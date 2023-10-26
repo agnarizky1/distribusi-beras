@@ -128,12 +128,12 @@
                         @if ($sisaPembayaran > 0)
                             <p>Sisa yang harus dibayar: {{ $sisaPembayaran }}</p>
                         @else
-                            <p>Status: Lunas</p>
+                            <p id="status">Status: Lunas</p>
                         @endif
                         </div>
                         <div class="col-6 text-end">
-                                <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#pembayaranModal">Bayar</a>
-                                <a href="#" class="btn btn-warning btn-sm">Print</a>
+                            <a id="bayarButton" href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#pembayaranModal">Bayar</a>
+                            <a href="#" class="btn btn-warning btn-sm">Print</a>
                         </div>
                     </div>
                 </div>
@@ -187,6 +187,10 @@
         $("#btnBayar").click(function () {
             $("#pembayaranModal").modal("show");
         });
+
+        if ($('p#status').length) {
+        $('#bayarButton').prop('disabled', true);
+    }
     });
 
     const btnCheckout = document.getElementById('simpanPembayaran');
@@ -235,13 +239,21 @@
                 _token: '{{ csrf_token() }}'
             },
             success: function (response) {
-                // Distribusi berhasil disimpan
-                alert('Pembayaran berhasil disimpan.');
-                window.location.reload();
+                // Pembayaran berhasil disimpan
+                Swal.fire('Success', 'Pembayaran Berhasil', 'success')
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);
-                alert('Distribusi gagal. Silakan coba lagi.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi kesalahan',
+                    text: 'Pembayaran Gagal',
+                });
             }
         });
     });

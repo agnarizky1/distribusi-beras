@@ -127,9 +127,14 @@ class DistributionController extends Controller
     {
         $distribusi = Distribusi::find($id);
         $dataDetails = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->get();
-    
+        $pembayaranDetails = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
+
         foreach ($dataDetails as $detail) {
             $detail->delete();
+        }
+
+        foreach ($pembayaranDetails as $bayar) {
+            $bayar->delete();
         }
     
         $distribusi->delete();

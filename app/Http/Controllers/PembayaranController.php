@@ -25,7 +25,6 @@ class PembayaranController extends Controller
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;        
         $pembayaran->save();
-
-        return redirect()->route('distribution.show', $pembayaran->id_distribusi)->with('success', 'Data pembayaran berhasil disimpan.');
+        return redirect()->route('distribution.show', $pembayaran->id_distribusi);
     }
 }

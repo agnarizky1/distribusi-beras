@@ -287,12 +287,16 @@
             },
             success: function (response) {
                 // Distribusi berhasil disimpan
-                alert('Distribusi berhasil disimpan.');
-                window.location.href = '{{ route("distribution") }}';
+                Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '{{ route("distribution") }}';
+                    }
+                });
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);
-                alert('Distribusi gagal. Silakan coba lagi.');
+                Swal.fire('Error', 'Distribusi Gagal', 'error');
             }
         });
     });
