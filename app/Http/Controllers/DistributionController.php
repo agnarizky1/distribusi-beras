@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distribusi;
-use App\Models\DetailDistribusi;
 use App\Models\Toko;
 use App\Models\Beras;
+use PDF;
+use App\Models\Distribusi;
 use Illuminate\Http\Request;
+use App\Models\DetailDistribusi;
 
 class DistributionController extends Controller
 {
@@ -32,7 +33,7 @@ class DistributionController extends Controller
         return view('admin.distribusi.create', compact('tokos', 'beras'));
     }
 
-   
+
     public function store(Request $request)
     {
         // Mendapatkan data dari permintaan POST
@@ -62,13 +63,13 @@ class DistributionController extends Controller
         $distribusiModel->total_harga = $totalHarga;
 
         $distribusiModel->save();
-    
+
         // Kemudian, simpan setiap Distribusi ke dalam tabel DetailDistribusi
         foreach ($distribusi as $item) {
             $detailDistribusi = new DetailDistribusi();
             $detailDistribusi->id_distribusi = $distribusiModel->id_distribusi;
             $detailDistribusi->nama_beras = $item['nama'];
-            $detailDistribusi->jenis_beras = $item['jenis'];    
+            $detailDistribusi->jenis_beras = $item['jenis'];
             $detailDistribusi->harga = $item['harga'];
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
@@ -84,10 +85,10 @@ class DistributionController extends Controller
             } else {
                 return response()->json(['error' => 'Beras tidak ditemukan'], 404);
             }
-            $detailDistribusi->save();   
+            $detailDistribusi->save();
         }
     }
-    
+
     public function show($id)
     {
         $distribusi = Distribusi::find($id); // Gantilah 'Distribusi' sesuai dengan model Anda
@@ -106,12 +107,24 @@ class DistributionController extends Controller
         $distribusi = Distribusi::find($id);
         $dataDetail = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->first();
         if($dataDetail == null){
-            $distribusi->delete(); 
+            $distribusi->delete();
         }else{
             $dataDetail->delete();
         }
-        $distribusi->delete(); 
+        $distribusi->delete();
         return redirect()->route('distribution')->with('success', 'Transaksi telah dihapus.');
-    
+
     }
+
+    public function cetak($id) {
+        $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
+        $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
+        $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+
+        $pdf = PDF::loadview('admin.distribusi.distribusi_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        return $pdf->download('distribusi' . $kode_distribusi . '.pdf');
+    }
+
 }

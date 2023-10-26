@@ -49,11 +49,11 @@
                                             <td>{{ $d->tanggal_distribusi }}</td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} KG</td>
                                             <td>{{ $d->total_harga }}</td>
-                                            @if (Auth::user()->role == 'admin')
+                                            @if (Auth::user()->role == 'superadmin')
                                                 <td>
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
                                                         class="btn btn-warning btn-sm">
-                                                            <i class="fa fa-regular fa-eye"></i>
+                                                        <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa fa-trash-can"></i>

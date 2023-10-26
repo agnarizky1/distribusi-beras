@@ -25,8 +25,8 @@ use App\Http\Controllers\pembayaranController;
 
 
 
-// Route::get('/admin', function () {
-//     return view('superadmin.dashboard');
+// Route::get('/cetak', function () {
+//     return view('admin.distribusi.distribusi_pdf');
 // });
 // Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
@@ -83,11 +83,12 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/user/destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
 
     //distribution
-    Route::get('/admin/distribution', [distributionController::class, 'index'])->name('distribution');
+    Route::get('/admin/distribution', [DistributionController::class, 'index'])->name('distribution');
     Route::post('/admin/distribution/add', [DistributionController::class, 'store'])->name('distribution.store');
     Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
+    Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
 
     //Pembayaran
     Route::post('/admin/pembayaran/add', [pembayaranController::class, 'store'])->name('pembayaran.store');
