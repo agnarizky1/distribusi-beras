@@ -37,7 +37,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $g->grade }}</td>
-                                            @if (Auth::user()->role == 'superadmin')
+                                            @if (Auth::user()->role == 'admin')
                                                 <td class="text-right">
                                                     <a href="{{ route('admin.grade.edit', $g->id_grade) }}"
                                                         class="btn btn-warning btn-sm"><i

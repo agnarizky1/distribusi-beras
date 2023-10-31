@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Beras;
 use App\Models\Grade;
 use App\Models\Jenis;
+use App\Models\Merk;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +31,8 @@ class BerasController extends Controller
     {
         $jenis = Jenis::all();
         $grade = Grade::all();
-        return view('admin.stock.add', compact('grade', 'jenis'));
+        $merk = Merk::all();
+        return view('admin.stock.add', compact('grade', 'jenis','merk'));
     }
 
     /**,
@@ -42,10 +44,13 @@ class BerasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_beras' => 'required',
+            'merk_beras' => 'required',
             'berat' => 'required',
             'jenis_beras' => 'required',
             'grade_beras' => 'required',
+            'nama_sopir' => 'required',
+            'plat_no' => 'required',
+            'tanggal_masuk_beras' =>'required',
             'harga' => 'required',
             'stock' => 'required',
         ]);
@@ -55,10 +60,13 @@ class BerasController extends Controller
 
         $beras = Beras::create([
             'id_beras'   =>  $nextId,
-            'nama_beras' => $request->nama_beras,
+            'merk_beras' => $request->merk_beras,
             'berat' => $request->berat,
             'jenis_beras' => $request->jenis_beras,
             'grade_beras' => $request->grade_beras,
+            'nama_sopir' => $request->nama_sopir,
+            'plat_no'=>$request->plat_no,
+            'tanggal_masuk_beras' => $request->tanggal_masuk_beras,
             'harga' => $request->harga,
             'stock' => $request->stock,
         ]);
@@ -112,8 +120,9 @@ class BerasController extends Controller
     {
         $jenis = Jenis::all();
         $grade = Grade::all();
+        $merk = Merk::all();
         $beras = Beras::find($id_beras);
-        return view('admin.stock.edit', compact('beras','grade','jenis'));
+        return view('admin.stock.edit', compact('beras','grade','jenis', 'merk'));
     }
 
     /**

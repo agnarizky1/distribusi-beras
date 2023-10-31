@@ -13,16 +13,16 @@ class TokoSeeder extends Seeder
         $data = [
             [
                 'id_toko' => 'TOKO001',
-                'nama_toko' => 'Toko A',
-                'pemilik' => 'Pemilik A',
-                'alamat' => 'Alamat A',
+                'nama_toko' => 'joyo Subur',
+                'pemilik' => 'Joko',
+                'alamat' => 'Sumbersari',
                 'nomor_tlp' => '1234567890',
             ],
             [
                 'id_toko' => 'TOKO002',
-                'nama_toko' => 'Toko B',
-                'pemilik' => 'Pemilik B',
-                'alamat' => 'Alamat B',
+                'nama_toko' => 'Toko Barokah',
+                'pemilik' => 'Pendi',
+                'alamat' => 'Jl. Kalimantan',
                 'nomor_tlp' => '0987654321',
             ],
             // Tambahkan data toko lainnya sesuai kebutuhan

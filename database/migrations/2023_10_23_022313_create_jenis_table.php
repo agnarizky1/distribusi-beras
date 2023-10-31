@@ -15,9 +15,7 @@ class CreateJenisTable extends Migration
     {
         Schema::create('jenis', function (Blueprint $table) {
             $table->id('id_jenis');
-            $table->char('beras_id')->nullable();
             $table->string('jenis');
-            $table->foreign('beras_id')->references('id_beras')->on('beras')->onDelete('cascade');
             $table->timestamps();
         });
     }

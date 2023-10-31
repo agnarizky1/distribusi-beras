@@ -54,9 +54,15 @@
                 <li class="sidebar-title">Produk</li>
                 <li
                     class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
-                    <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
+                    <a href="{{ route('admin.stock.index') }}" class='sidebar-link'>
                         <i class="fa-solid fa-box-open"></i>
                         <span>Stok Beras</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['admin.merk', 'admin.merk.add', 'admin.merk.edit']) }} ">
+                    <a href="{{ route('admin.merk') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span>Data Merk Beras</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.grade', 'admin.grade.add', 'admin.grade.edit']) }} ">

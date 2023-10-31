@@ -21,10 +21,10 @@ class CreateDistribusisTable extends Migration
             $table->string('plat_no');
             $table->date('tanggal_distribusi');
             $table->integer('jumlah_distribusi');
-            $table->decimal('total_harga', 10);
+            $table->integer('total_harga');
             $table->timestamps();
             
-            $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');;
+            $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');
         });
     }
 

@@ -8,8 +8,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerasController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
+use App\Http\Controllers\MerkController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\pembayaranController;
+
 
 
 /*
@@ -89,6 +91,14 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
+
+    //merk
+    Route::get('/admin/merk', [MerkController::class, 'index'])->name('admin.merk');
+    Route::post('/admin/merk/create', [MerkController::class, 'store'])->name('admin.merk.create');
+    Route::get('/admin/merk/add', [MerkController::class, 'create'])->name('admin.merk.add');
+    Route::get('/admin/merk/edit/{id}', [MerkController::class, 'edit'])->name('admin.merk.edit');
+    Route::put('/admin/merk/update/{id}', [MerkController::class, 'update'])->name('admin.merk.update');
+    Route::get('/admin/merk/destroy/{id}', [MerkController::class, 'destroy'])->name('admin.merk.destroy');
 
     //Pembayaran
     Route::post('/admin/pembayaran/store', [pembayaranController::class, 'store'])->name('pembayaran.store');

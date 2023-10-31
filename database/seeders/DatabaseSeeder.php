@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             GradeSeeder::class,
             JenisSeeder::class,
             TokoSeeder::class,
-            Beras::class,
+            MerkSeeder::class,
+
         ]);
         // User::factory(10)->create();
     }

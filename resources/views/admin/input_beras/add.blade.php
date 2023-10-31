@@ -11,18 +11,35 @@
                     <div class="card-header">
 
                     </div>
-                    <form action="{{ Route('admin.stockberas.create') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('admin.input_beras.create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="nama_sopir">Nama Sopir</label>
+                                    <input type="text" class="form-control" id="nama_sopir" name="nama_sopir" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="plat_no">Plat No.</label>
+                                    <input type="text" class="form-control" id="plat_no" name="plat_no" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="tanggal_masuk_beras">Tanggal Masuk Beras</label>
+                                    <input type="date" class="form-control" id="tanggal_masuk_beras" value="{{ date('Y-m-d') }}" name="tanggal_masuk_beras" required>
+                                </div>
+                            </div>
                             <div class="row mb-4">
                                 <div class="col-md-6">
-                                    <label for="nama_beras" class="form-label">Beras :</label>
-                                    <input type="text" name="nama_beras"
-                                        class="form-control @error('beras') is-invalid @enderror"
-                                        placeholder="Nama Beras..">
+                                    <label for="merk_beras" class="form-label">Merk Beras :</label>
+                                    <select class="form-select @error('beras') is-invalid @enderror" id="merk_beras"
+                                        name="merk_beras" aria-label="Default select example" required>
+                                        @foreach ($merk as $item)
+                                            <option value="{{ $item->merk }}">{{ $item->merk }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="text-danger">
                                         @error('beras')
-                                            Nama beras tidak boleh kosong.
+                                            Merk tidak boleh kosong.
                                         @enderror
                                     </div>
                                 </div>
@@ -50,7 +67,7 @@
                                     </select>
                                     <div class="text-danger">
                                         @error('jenis')
-                                            Harga tidak boleh kosong.
+                                            Jenis tidak boleh kosong.
                                         @enderror
                                     </div>
                                 </div>
@@ -95,7 +112,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <a href="{{ route('admin.stockberas') }}" type="button" class="btn btn-warning"><i
+                                <a href="{{ route('admin.input_beras') }}" type="button" class="btn btn-warning"><i
                                         class='nav-icon fas fa-arrow-left'></i> &nbsp;
                                     Kembali</a>
                                 <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i>

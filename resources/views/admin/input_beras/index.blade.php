@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="page-heading">
-        <h3>Data Jenis</h3>
+        <h3>Stok Beras</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -9,9 +9,9 @@
             <div class="col-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('admin.jenis.add') }}" type="button" class="btn btn-primary">
+                        <a href="{{ route('admin.input_beras.add') }}" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                            Jenis</a>
+                            Beras</a>
                     </div>
                     <div class="card-body">
                         <div class="card-body">
@@ -28,23 +28,36 @@
                                 <thead>
                                     <tr>
                                         <th width="5%">No</th>
+                                        <th class="text-center">Kode Beras</th>
+                                        <th>Nama Beras</th>
                                         <th>Jenis</th>
+                                        <th>Grade</th>
+                                        <th class="text-center">Harga</th>
+                                        <th>Stock</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($jenis as $j)
+                                    @foreach ($beras as $b)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $j->jenis }}</td>
+                                            <td class="text-center">{{ $b->id_beras }}</td>
+                                            <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            <td>{{ $b->jenis_beras }}</td>
+                                            <td>{{ $b->grade_beras }}</td>
+                                            <td class="text-center">Rp. {{ number_format($b->harga, 0, '.', '.') }}</td>
+                                            <td>{{ $b->stock }}</td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
-                                                    <a href="{{ route('admin.jenis.edit', $j->id_jenis) }}"
+                                                    <a href="{{ route('admin.input_beras.edit', $b->id_beras) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.jenis.destroy', $j->id_jenis) }}"
+                                                    <a href="{{ route('admin.input_beras.destroy', $b->id_beras) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.input_beras.show', $b->id_beras) }}"
+                                                        class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i>
                                                     </a>
                                                 </td>
                                             @endif
