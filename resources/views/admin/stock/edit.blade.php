@@ -18,7 +18,7 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="nama_beras" class="form-label">Beras :</label>
-                                    <input type="text" name="nama_beras" value="{{ $beras->nama_beras }}"
+                                    <input type="text" name="nama_beras" value="{{ $beras->merk_beras }}"
                                         class="form-control" disabled>
                                 </div>
                                 <div class="col-md-6">

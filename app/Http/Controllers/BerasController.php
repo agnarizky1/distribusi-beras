@@ -19,7 +19,10 @@ class BerasController extends Controller
     public function index()
     {
         $beras = Beras::all();
-        return view('admin.stock.index', compact('beras'));
+        $jenis = Jenis::all();
+        $grade = Grade::all();
+        $merk = Merk::all();
+        return view('admin.stock.index', compact('beras','grade', 'jenis','merk'));
     }
 
     /**
@@ -99,15 +102,15 @@ class BerasController extends Controller
          return $nextId;
      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
-        //
+        $jenis = Jenis::all();
+        $grade = Grade::all();
+        $merk = Merk::all();
+        $beras = Beras::find($id)->first();
+        // dd($beras);
+        return view('admin.stock.show', compact('beras','grade','jenis', 'merk'));
     }
 
     /**

@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     //beras
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');
-    Route::get('/admin/stockberas/add', [BerasController::class, 'create'])->name('admin.stockberas.add');
+    Route::get('/admin/stockberas/show{id}', [BerasController::class, 'show'])->name('admin.stockberas.show');
     Route::get('/admin/stockberas/edit/{id_beras}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
     Route::put('/admin/stockberas/update/{id_beras}', [BerasController::class, 'update'])->name('admin.stockberas.update');
     Route::get('/admin/stockberas/destroy/{id_beras}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
