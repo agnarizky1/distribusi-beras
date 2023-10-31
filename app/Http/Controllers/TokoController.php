@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Toko;
+use App\Models\GradeToko;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -16,7 +17,8 @@ class TokoController extends Controller
     public function index()
     {
         $toko = Toko::all();
-        return view('admin.toko.index', compact('toko'));
+        $grade = GradeToko::all();
+        return view('admin.toko.index', compact('toko', 'grade'));
     }
 
     /**
@@ -39,6 +41,7 @@ class TokoController extends Controller
     {
         $request->validate([
             'nama_toko' => 'required',
+            'grade_toko' => 'required',
             'pemilik' => 'required',
             'alamat' => 'required',
             'nomor_tlp' => 'required',
@@ -50,6 +53,7 @@ class TokoController extends Controller
         $toko = Toko::create([
             'id_toko'   =>  $nextId,
             'nama_toko' => $request->nama_toko,
+            'grade_toko' => $request->grade_toko,
             'pemilik' => $request->pemilik,
             'alamat' => $request->alamat,
             'nomor_tlp' => $request->nomor_tlp,
@@ -104,7 +108,8 @@ class TokoController extends Controller
     public function edit($id_toko)
     {
         $toko = Toko::find($id_toko);
-        return view('admin.toko.edit', compact('toko'));
+        $grade = GradeToko::all();
+        return view('admin.toko.edit', compact('toko', 'grade'));
     }
 
     /**
@@ -118,6 +123,7 @@ class TokoController extends Controller
     {
         $request->validate([
             'nama_toko' => 'required',
+            'grade_toko' => 'required',
             'pemilik' => 'required',
             'alamat' => 'required',
             'nomor_tlp' => 'required',
@@ -127,6 +133,7 @@ class TokoController extends Controller
 
             $id_toko->update([
             'nama_toko' => $request->nama_toko,
+            'grade_toko' => $request->grade_toko,
             'pemilik' => $request->pemilik,
             'alamat' => $request->alamat,
             'nomor_tlp' => $request->nomor_tlp,

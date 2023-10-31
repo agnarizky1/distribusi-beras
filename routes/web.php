@@ -30,6 +30,10 @@ use App\Http\Controllers\pembayaranController;
 // Route::get('/cetak', function () {
 //     return view('admin.distribusi.distribusi_pdf');
 // });
+
+Route::get('/pengembalian', function () {
+        return view('admin.distribusi.retur');
+    });
 // Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
@@ -60,7 +64,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
 
-    //grade
+    //grade_beras
     Route::get('/admin/grade', [GradeController::class, 'index'])->name('admin.grade');
     Route::post('/admin/grade/create', [GradeController::class, 'store'])->name('admin.grade.create');
     Route::get('/admin/grade/add', [GradeController::class, 'create'])->name('admin.grade.add');
@@ -91,6 +95,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
+    Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
 
     //merk
     Route::get('/admin/merk', [MerkController::class, 'index'])->name('admin.merk');

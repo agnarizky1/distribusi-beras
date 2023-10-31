@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Beras;
 use Illuminate\Database\Seeder;
+use Database\Seeders\TokoSeeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\GradeSeeder;
 use Database\Seeders\JenisSeeder;
-use Database\Seeders\TokoSeeder;
-use Database\Seeders\Beras;
+use Database\Seeders\GradeTokoSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             GradeSeeder::class,
+            GradeTokoSeeder::class,
             JenisSeeder::class,
             TokoSeeder::class,
             MerkSeeder::class,
