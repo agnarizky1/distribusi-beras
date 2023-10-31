@@ -22,18 +22,13 @@
         @foreach ($toko as $toko)
             <div class="col-sm-6">
 
-                <h5 class="inv-title-1">Tanggal nota : <p>
+                <h5 class="inv-title-1">Tanggal Surat Jalan : <p>
                         {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
                     </p>
                 </h5>
             </div>
-            <div class="col-sm-6">
-                <h5 class="inv-title-1">Tanggal nota : <p>
-                        {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
-                    </p>
-                </h5>
-            </div>
-            <h5>Kirim ke {{ $toko->nama_toko }} ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </h5>
+            <p>Sopir <b>{{ $total_harga->nama_sopir }}</b>, plat nomor kendaraan <b>{{ $total_harga->plat_no }} </b></p>
+            <p>Kirim ke <b>{{ $toko->nama_toko }}</b> ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </p>
         @endforeach
     </div>
 

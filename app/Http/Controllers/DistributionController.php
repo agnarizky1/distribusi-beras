@@ -146,11 +146,12 @@ class DistributionController extends Controller
     public function cetak($id) {
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
         $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        // $sopir = Distribusi::where('id_distribusi', $id)->select('nama_sopir','plat_no')->get();
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
         $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
-        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga', 'nama_sopir','plat_no')->first();
 
-        $pdf = PDF::loadview('admin.distribusi.distribusi_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        $pdf = PDF::loadview('admin.distribusi.distribusi_pdf', compact('distribusi', 'toko','total_harga','kode_distribusi'));
         return $pdf->download('distribusi' . $kode_distribusi . '.pdf');
     }
 }

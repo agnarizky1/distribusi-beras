@@ -40,8 +40,8 @@
                                         {{ session('hapus') }}
                                     </div>
                                 @endif
-                                <table id="tabel-distribusi" class="table table-bordered table-striped" style="width:100%">
-                                    <thead>
+                                <table id="tabel-distribusi" class="table table-striped table-bordered " style="width:100%">
+                                    <thead class="table-light">
                                         <tr>
                                             <th width="5%">No</th>
                                             <th>Kode Distribusi</th>
