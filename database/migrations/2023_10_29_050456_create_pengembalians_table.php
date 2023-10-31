@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokosTable extends Migration
+class CreatePengembaliansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTokosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tokos', function (Blueprint $table) {
-            $table->char('id_toko',30)->primary();
+        Schema::create('pengembalians', function (Blueprint $table) {
+            $table->id('id_pengembalian');
             $table->string('nama_toko');
-            $table->string('grade_toko');
-            $table->string('pemilik');
-            $table->string('alamat');
-            $table->string('nomor_tlp');
+            $table->integer('total_harga');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTokosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tokos');
+        Schema::dropIfExists('pengembalians');
     }
 }

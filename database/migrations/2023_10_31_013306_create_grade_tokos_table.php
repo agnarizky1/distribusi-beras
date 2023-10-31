@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokosTable extends Migration
+class CreateGradeTokosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTokosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tokos', function (Blueprint $table) {
-            $table->char('id_toko',30)->primary();
-            $table->string('nama_toko');
+        Schema::create('grade_tokos', function (Blueprint $table) {
+            $table->id('id_grade_toko');
+            $table->char('toko_id')->nullable();
             $table->string('grade_toko');
-            $table->string('pemilik');
-            $table->string('alamat');
-            $table->string('nomor_tlp');
+            $table->foreign('toko_id')->references('id_toko')->on('tokos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTokosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tokos');
+        Schema::dropIfExists('grade_tokos');
     }
 }

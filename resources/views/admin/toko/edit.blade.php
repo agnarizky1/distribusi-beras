@@ -15,15 +15,32 @@
                         @csrf
                         @method('PUT')
                         <div class="card-body">
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="nama_toko">Nama toko :</label>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="nama_toko" class="form-label">Nama toko :</label>
                                     <input type="text" name="nama_toko" value="{{ $toko->nama_toko }}"
                                         class="form-control @error('nama_toko') is-invalid @enderror"
                                         placeholder="Nama toko..">
                                     <div class="text-danger">
                                         @error('nama_toko')
                                             Nama toko tidak boleh kosong.
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="grade_toko" class="form-label">Grade toko :</label>
+                                    <select class="form-select @error('grade_toko') is-invalid @enderror" id="grade_toko"
+                                        name="grade_toko" aria-label="Default select example" required>
+                                        <option value="">{{ $toko->grade_toko }}</option>
+                                        @foreach ($grade as $item)
+                                            <option value="{{ $item->grade_toko }}">
+                                                {{ $item->grade_toko }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="text-danger">
+                                        @error('grade_toko')
+                                            Grade toko tidak boleh kosong.
                                         @enderror
                                     </div>
                                 </div>

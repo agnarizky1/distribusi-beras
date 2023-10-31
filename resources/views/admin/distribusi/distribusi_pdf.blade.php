@@ -17,13 +17,25 @@
         @endforeach
     </Center>
     <br>
-    @foreach ($toko as $toko)
-        <h5 class="inv-title-1">Tanggal nota : <p>
-                {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
-            </p>
-        </h5>
-        <h5>Kirim ke {{ $toko->nama_toko }} ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </h5>
-    @endforeach
+    <div class="row">
+
+        @foreach ($toko as $toko)
+            <div class="col-sm-6">
+
+                <h5 class="inv-title-1">Tanggal nota : <p>
+                        {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
+                    </p>
+                </h5>
+            </div>
+            <div class="col-sm-6">
+                <h5 class="inv-title-1">Tanggal nota : <p>
+                        {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
+                    </p>
+                </h5>
+            </div>
+            <h5>Kirim ke {{ $toko->nama_toko }} ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </h5>
+        @endforeach
+    </div>
 
     <table class="table table-bordered">
         <thead>

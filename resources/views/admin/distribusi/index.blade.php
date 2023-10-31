@@ -33,7 +33,7 @@
                                         <th>Nama Sopir</th>
                                         <th>Plat No.</th>
                                         <th>tgl Distribusi</th>
-                                        <th>jumlah Distribusi</th>
+                                        <th>Total Berat(Kg)</th>
                                         <th>Total Harga</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -47,24 +47,28 @@
                                             <td>{{ $d->nama_sopir }}</td>
                                             <td>{{ $d->plat_no }}</td>
                                             <td>{{ $d->tanggal_distribusi }}</td>
-                                            <td class="text-center">{{ $d->jumlah_distribusi }} KG</td>
+                                            <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>
                                                 {{ $d->total_harga }}
                                                 <br>
                                                 @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
                                                     <span class="text-success">Lunas</span>
                                                 @else
-                                                    <span class="text-danger">Sisa Bayar: {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
+                                                    <span class="text-danger">Sisa Bayar:
+                                                        {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
                                                 @endif
                                             </td>
-                                            @if (Auth::user()->role == 'admin')
+                                            @if (Auth::user()->role == 'superadmin')
                                                 <td>
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
                                                         class="btn btn-warning btn-sm">
-                                                            <i class="fa fa-regular fa-eye"></i>
+                                                        <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa fa-trash-can"></i>
+                                                    </a>
+                                                    <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
+                                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                                                     </a>
                                                 </td>
                                             @endif

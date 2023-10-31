@@ -12,15 +12,17 @@ class TokoSeeder extends Seeder
         // Data toko yang akan diisi ke tabel 'tokos'
         $data = [
             [
-                'id_toko' => 'TOKO001',
+                'id_toko' => 'T-00001',
                 'nama_toko' => 'Toko A',
+                'grade_toko' => 'BIASA',
                 'pemilik' => 'Pemilik A',
                 'alamat' => 'Alamat A',
                 'nomor_tlp' => '1234567890',
             ],
             [
-                'id_toko' => 'TOKO002',
+                'id_toko' => 'T-00002',
                 'nama_toko' => 'Toko B',
+                'grade_toko' => 'BIASA',
                 'pemilik' => 'Pemilik B',
                 'alamat' => 'Alamat B',
                 'nomor_tlp' => '0987654321',
