@@ -19,8 +19,9 @@ class DistributionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
             ->get();
@@ -42,7 +43,7 @@ class DistributionController extends Controller
         return view('admin.distribusi.create', compact('tokos', 'beras'));
     }
 
-   
+
     public function store(Request $request)
     {
         // Mendapatkan data dari permintaan POST
@@ -72,13 +73,13 @@ class DistributionController extends Controller
         $distribusiModel->total_harga = $totalHarga;
 
         $distribusiModel->save();
-    
+
         // Kemudian, simpan setiap Distribusi ke dalam tabel DetailDistribusi
         foreach ($distribusi as $item) {
             $detailDistribusi = new DetailDistribusi();
             $detailDistribusi->id_distribusi = $distribusiModel->id_distribusi;
             $detailDistribusi->nama_beras = $item['nama'];
-            $detailDistribusi->jenis_beras = $item['jenis'];    
+            $detailDistribusi->jenis_beras = $item['jenis'];
             $detailDistribusi->harga = $item['harga'];
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
@@ -94,7 +95,7 @@ class DistributionController extends Controller
             } else {
                 return response()->json(['error' => 'Beras tidak ditemukan'], 404);
             }
-            $detailDistribusi->save();   
+            $detailDistribusi->save();
         }
         $pembayaran = new Pembayaran();
         $pembayaran->id_distribusi = $distribusiModel->id_distribusi;
@@ -102,10 +103,10 @@ class DistributionController extends Controller
         $tanggalDistribusi = Carbon::parse($distribusiModel->tanggal_distribusi);
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
-        $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;        
+        $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
         $pembayaran->save();
     }
-    
+
     public function show($id)
     {
         $distribusi = Distribusi::find($id); // Gantilah 'Distribusi' sesuai dengan model Anda
@@ -136,20 +137,22 @@ class DistributionController extends Controller
         foreach ($pembayaranDetails as $bayar) {
             $bayar->delete();
         }
-    
+
         $distribusi->delete();
-    
+
         return redirect()->route('distribution')->with('success', 'Transaksi telah dihapus.');
     }
-    
+
     public function cetak($id) {
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
         $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        // $sopir = Distribusi::where('id_distribusi', $id)->select('nama_sopir','plat_no')->get();
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
         $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
-        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga', 'nama_sopir','plat_no')->first();
 
-        $pdf = PDF::loadview('admin.distribusi.distribusi_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        $pdf = PDF::loadview('admin.distribusi.distribusi_pdf', compact('distribusi', 'toko','total_harga','kode_distribusi'));
         return $pdf->download('distribusi' . $kode_distribusi . '.pdf');
     }
 }
+
