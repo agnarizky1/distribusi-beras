@@ -29,7 +29,7 @@
                                     <tr>
                                         <th width="5%">No</th>
                                         <th>Jenis</th>
-                                        <th>Aksi</th>
+                                        <th width="100px">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>

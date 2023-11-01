@@ -47,7 +47,7 @@
                                             <td>{{ $t->pemilik }}</td>
                                             <td>{{ $t->alamat }}</td>
                                             <td>{{ $t->nomor_tlp }}</td>
-                                            @if (Auth::user()->role == 'superadmin')
+                                            @if (Auth::user()->role == 'admin')
                                                 <td>
                                                     <a href="{{ route('admin.toko.edit', $t->id_toko) }}"
                                                         class="btn btn-warning btn-sm"><i

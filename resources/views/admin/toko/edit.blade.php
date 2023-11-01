@@ -30,8 +30,8 @@
                                 <div class="col-md-6">
                                     <label for="grade_toko" class="form-label">Grade toko :</label>
                                     <select class="form-select @error('grade_toko') is-invalid @enderror" id="grade_toko"
-                                        name="grade_toko" aria-label="Default select example" required>
-                                        <option value="">{{ $toko->grade_toko }}</option>
+                                        name="grade_toko" value="{{ $toko->grade_toko }}">
+                                        <option value="{{ $toko->grade_toko }}">{{ $toko->grade_toko }}</option>
                                         @foreach ($grade as $item)
                                             <option value="{{ $item->grade_toko }}">
                                                 {{ $item->grade_toko }}
