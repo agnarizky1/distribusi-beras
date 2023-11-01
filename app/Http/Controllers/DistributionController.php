@@ -6,6 +6,7 @@ use App\Models\Distribusi;
 use App\Models\DetailDistribusi;
 use App\Models\Toko;
 use App\Models\Beras;
+use App\Models\totalStock;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -38,7 +39,7 @@ class DistributionController extends Controller
     public function create()
     {
         $tokos = Toko::all();
-        $beras = Beras::all();
+        $beras = totalStock::all();
 
         return view('admin.distribusi.create', compact('tokos', 'beras'));
     }
@@ -84,13 +85,13 @@ class DistributionController extends Controller
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
 
-            $dataBeras = Beras::where('id_beras', $item['idBeras'])->first();
+            $dataBeras = totalStock::where('id', $item['idBeras'])->first();
             if ($dataBeras) {
-                if ($dataBeras->stock >= $item['jumlah']) {
-                    $dataBeras->stock -= $item['jumlah'];
+                if ($dataBeras->jumlah_stock >= $item['jumlah']) {
+                    $dataBeras->jumlah_stock -= $item['jumlah'];
                     $dataBeras->save();
                 } else {
-                    return response()->json(['error' => '' . $dataBeras->nama . ' Stok Habis'], 400);
+                    return response()->json(['error' => '' . $dataBeras->merk_beras . ' Stok Habis'], 400);
                 }
             } else {
                 return response()->json(['error' => 'Beras tidak ditemukan'], 404);

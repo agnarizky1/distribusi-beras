@@ -6,6 +6,7 @@ use App\Models\Beras;
 use App\Models\Grade;
 use App\Models\Jenis;
 use App\Models\Merk;
+use App\Models\totalStock;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -22,20 +23,8 @@ class BerasController extends Controller
         $jenis = Jenis::all();
         $grade = Grade::all();
         $merk = Merk::all();
-        return view('admin.stock.index', compact('beras','grade', 'jenis','merk'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $jenis = Jenis::all();
-        $grade = Grade::all();
-        $merk = Merk::all();
-        return view('admin.stock.add', compact('grade', 'jenis','merk'));
+        $total = totalStock::all();
+        return view('admin.stock.index', compact('beras','grade', 'jenis','merk','total'));
     }
 
     /**,
@@ -73,6 +62,28 @@ class BerasController extends Controller
             'harga' => $request->harga,
             'stock' => $request->stock,
         ]);
+
+        $tStock = totalStock::where('merk_beras', $request->merk_beras)
+            ->where('ukuran_beras', $request->berat)
+            ->where('jenis_beras', $request->jenis_beras)
+            ->where('grade_beras', $request->grade_beras)
+            ->first();
+
+        if ($tStock) {
+            $tStock->jumlah_stock += $request->stock;
+            $tStock->harga = $request->harga;
+            $tStock->save();
+        }else {
+            // Jika total_stock belum ada, buat yang baru
+            totalStock::create([
+                'merk_beras' => $request->merk_beras,
+                'ukuran_beras' => $request->berat,
+                'jenis_beras' => $request->jenis_beras,
+                'grade_beras' => $request->grade_beras,
+                'jumlah_stock' => $request->stock,
+                'harga' => $request->harga,
+            ]);
+        }
 
         if ($beras) {
             //redirect dengan pesan sukses
@@ -142,13 +153,38 @@ class BerasController extends Controller
             'stock' => 'required',
         ]);
 
-        // @dd($request);
-
             $id_beras->update([
             'harga' => $request->harga,
             'stock' => $request->stock,
             ]);
 
+
+        return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
+    }
+
+    public function editjumlah($id)
+    {
+        $total = totalStock::find($id);
+        return view('admin.stock.edit_jumlah_stock', compact('total'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatejumlah(Request $request, $id)
+    {
+        $request->validate([
+            'harga' => 'required',
+        ]);
+
+        $total = totalStock::find($id);
+        $total->update([
+        'harga' => $request->harga,
+    ]);
 
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }

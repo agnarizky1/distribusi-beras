@@ -52,9 +52,12 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');
     Route::get('/admin/stockberas/show{id}', [BerasController::class, 'show'])->name('admin.stockberas.show');
-    Route::get('/admin/stockberas/edit/{id_beras}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
+    Route::get('/admin/stockberas/edit/{id}', [BerasController::class, 'edit'])->name('admin.stockberas.edit');
     Route::put('/admin/stockberas/update/{id_beras}', [BerasController::class, 'update'])->name('admin.stockberas.update');
     Route::get('/admin/stockberas/destroy/{id_beras}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
+
+    Route::get('/admin/jumlahstock/edit/{id}', [BerasController::class, 'editjumlah'])->name('admin.jumlahstock.edit');
+    Route::put('/admin/jumlahstock/update/{id}', [BerasController::class, 'updatejumlah'])->name('admin.jumlahstock.update');
 
     //toko
     Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');

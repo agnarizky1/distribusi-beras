@@ -15,7 +15,7 @@
                             <select name="beras" id="beras" class="form-control select2">
                                 <option value="0">Pilih Beras</option>
                                 @foreach ($beras as $item)
-                                <option value="{{ $item->id_beras }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->merk_beras }} {{ $item->berat }} Kg</option>
+                                <option value="{{ $item->id }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg</option>
                                 @endforeach
                             </select>
                         </div>

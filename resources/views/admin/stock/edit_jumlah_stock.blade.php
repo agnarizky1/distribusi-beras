@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">
                     </div>
-                    <form action="{{ Route('admin.stockberas.update', $beras->id_beras) }}" method="POST"
+                    <form action="{{ Route('admin.jumlahstock.update', $total->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -18,13 +18,13 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="nama_beras" class="form-label">Beras :</label>
-                                    <input type="text" name="nama_beras" value="{{ $beras->merk_beras }}"
+                                    <input type="text" name="nama_beras" value="{{ $total->merk_beras }}"
                                         class="form-control" disabled>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="berat" class="form-label">Berat
                                         :</label>
-                                    <input type="number" name="berat" value="{{ $beras->berat }}" class="form-control "
+                                    <input type="number" name="berat" value="{{ $total->ukuran_beras }}" class="form-control "
                                         disabled>
 
                                 </div>
@@ -32,13 +32,13 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="jenis_beras" class="form-label">Jenis Beras :</label>
-                                    <input type="text" name="jenis_beras" value="{{ $beras->jenis_beras }}"
+                                    <input type="text" name="jenis_beras" value="{{ $total->jenis_beras }}"
                                         class="form-control " placeholder="Jenis beras .." disabled>
 
                                 </div>
                                 <div class="col-md-6">
                                     <label for="grade_beras" class="form-label">Grade Beras :</label>
-                                    <input type="text" name="grade_beras" value="{{ $beras->grade_beras }}"
+                                    <input type="text" name="grade_beras" value="{{ $total->grade_beras }}"
                                         class="form-control" disabled>
 
                                 </div>
@@ -46,9 +46,9 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="harga" class="form-label">Harga :</label>
-                                    <input type="number" name="harga" value="{{ $beras->harga }}"
+                                    <input type="number" name="harga" value="{{ $total->harga }}"
                                         class="form-control @error('harga') is-invalid @enderror"
-                                        placeholder="Harga beras.." disabled>
+                                        placeholder="Harga beras..">
                                     <div class="text-danger">
                                         @error('harga')
                                             Harga tidak boleh kosong.
@@ -58,9 +58,9 @@
                                 <div class="col-md-6">
                                     <label for="stock" class="form-label">Jumlah stock
                                         :</label>
-                                    <input type="number" name="stock" value="{{ $beras->stock }}"
+                                    <input type="number" name="stock" value="{{ $total->stock }}"
                                         class="form-control @error('stock') is-invalid @enderror"
-                                        placeholder="Jumlah stock..">
+                                        placeholder="Jumlah stock.."disabled>
                                     <div class="text-danger">
                                         @error('stock')
                                             Jumlah stock tidak boleh kosong.
