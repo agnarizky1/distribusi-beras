@@ -123,7 +123,6 @@ class TokoController extends Controller
     {
         $request->validate([
             'nama_toko' => 'required',
-            'grade_toko' => 'required',
             'pemilik' => 'required',
             'alamat' => 'required',
             'nomor_tlp' => 'required',
