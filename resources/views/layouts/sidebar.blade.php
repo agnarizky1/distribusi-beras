@@ -84,6 +84,7 @@
                 </li>
                 
                 <li class="sidebar-item ">
+                <li class="sidebar-item {{ set_active(['distribution','distribution.add', 'distribution.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="bi bi-journal-check"></i>
                         <span>Distribusi</span>

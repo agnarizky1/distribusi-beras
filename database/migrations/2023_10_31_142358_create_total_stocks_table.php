@@ -15,6 +15,12 @@ class CreateTotalStocksTable extends Migration
     {
         Schema::create('total_stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('merk_beras');
+            $table->string('ukuran_beras');
+            $table->string('jenis_beras');
+            $table->string('grade_beras');
+            $table->integer('harga');
+            $table->integer('jumlah_stock');
             $table->timestamps();
         });
     }

@@ -84,17 +84,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($beras as $b)
+                                @foreach ($total as $t)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $b->merk_beras }}</td>
-                                    <td>{{ $b->berat }} Kg</td>
-                                    <td>{{ $b->grade_beras }}</td>
-                                    <td>{{ $b->jenis_beras }}</td>
-                                    <td class="text-center">Rp. {{ number_format($b->harga, 0, '.', '.') }}</td>
-                                    <td>{{ $b->stock }}</td>
+                                    <td>{{ $t->merk_beras }}</td>
+                                    <td>{{ $t->ukuran_beras }} Kg</td>
+                                    <td>{{ $t->grade_beras }}</td>
+                                    <td>{{ $t->jenis_beras }}</td>
+                                    <td class="text-center">Rp. {{ number_format($t->harga, 0, '.', '.') }}</td>
+                                    <td class="text-center">{{ $t->jumlah_stock }}</td>
                                     <td>
-                                        <a href="{{ route('admin.stockberas.edit', $b->id_beras) }}"
+                                        <a href="{{ route('admin.jumlahstock.edit', $t->id) }}"
                                             class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i>
                                         </a>                                   
                                     </td>
