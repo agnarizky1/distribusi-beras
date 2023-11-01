@@ -26,15 +26,9 @@ use App\Http\Controllers\pembayaranController;
 */
 
 
-
-// Route::get('/cetak', function () {
-//     return view('admin.distribusi.distribusi_pdf');
-// });
-
 Route::get('/pengembalian', function () {
         return view('admin.distribusi.retur');
     });
-// Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
 Route::get('/', [AuthController::class, "login"])->name('login');
@@ -48,6 +42,7 @@ Route::get('/logout', [AuthController::class, "logout"])->name('logout');
 Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     //input admin
     Route::get('/admin', [AdminController::class, 'index'])->name('superadmin.dashboard');
+    
     //beras
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');

@@ -76,13 +76,13 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td>
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-warning btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <a href="#" class="btn btn-danger btn-sm mb-1" data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
                                                         <i class="fa fa-trash-can"></i></a>
-                                                    <a href="#" class="btn btn-primary btn-sm"><i
+                                                    <a href="#" class="btn btn-primary btn-sm mb-1"><i
                                                             class="fa fa-edit"></i>
                                                     </a>
                                                 </td>

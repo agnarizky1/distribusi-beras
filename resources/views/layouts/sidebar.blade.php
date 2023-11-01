@@ -88,11 +88,11 @@
                 <li
                     class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
-                        <i class="bi bi-journal-check"></i>
+                        <i class="fa fa-truck-moving"></i>
                         <span>Distribusi</span>
                     </a>
                 </li>
-                <li class="sidebar-title">Distribusi</li>
+                <!-- <li class="sidebar-title">Distribusi</li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-hexagon-fill"></i>
@@ -134,7 +134,7 @@
                     </ul>
 
 
-                </li>
+                </li> -->
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>
