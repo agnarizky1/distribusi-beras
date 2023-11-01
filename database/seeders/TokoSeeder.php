@@ -22,7 +22,7 @@ class TokoSeeder extends Seeder
             [
                 'id_toko' => 'T-00002',
                 'nama_toko' => 'Toko Barokah',
-                'grade_toko' => 'BIASA',
+                'grade_toko' => 'SEDANG',
                 'pemilik' => 'Pendi',
                 'alamat' => 'Jl. Kalimantan',
                 'nomor_tlp' => '0987654321',
