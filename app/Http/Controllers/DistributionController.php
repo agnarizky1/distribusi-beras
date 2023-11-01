@@ -57,7 +57,7 @@ class DistributionController extends Controller
         $distribusi = $request->input('Distribusi');
 
         $timestamp = time(); // Waktu saat ini dalam detik
-        $randomValue = mt_rand(100, 999); // Nilai acak antara 1000 dan 9999
+        $randomValue = mt_rand(1000, 9999); // Nilai acak antara 1000 dan 9999
 
         // Gabungkan elemen-elemen tersebut untuk membuat kode transaksi
         $kode_distribusi = 'DS' . date('mdH', $timestamp) . $randomValue;

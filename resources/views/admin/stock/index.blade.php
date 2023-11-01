@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th class="text-center">Kode Beras</th>
                                     <th>Merk Beras</th>
+                                    <th>Tanggal Masuk</th>
                                     <th>Sopir</th>
                                     <th>Plat No.</th>
                                     <th class="text-center">Stock Masuk</th>
@@ -40,8 +40,8 @@
                                 @foreach ($beras as $b)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td class="text-center">{{ $b->id_beras }}</td>
                                     <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                    <td>{{ $b->tanggal_masuk_beras}}</td>
                                     <td>{{ $b->nama_sopir }}</td>
                                     <td>{{ $b->plat_no }}</td>
                                     <td class="text-center">{{ $b->stock }}</td>
