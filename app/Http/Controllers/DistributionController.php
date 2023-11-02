@@ -22,7 +22,8 @@ class DistributionController extends Controller
      */
     public function index(Request $request)
     {
-
+        $tokos = Toko::all();
+        $beras = totalStock::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
             ->get();
@@ -32,7 +33,7 @@ class DistributionController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.distribusi.index', compact('distri','pembayaranTotals'));
+        return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
 
     }
 

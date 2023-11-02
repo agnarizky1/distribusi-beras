@@ -30,7 +30,7 @@
                                         <th width="5%">No</th>
                                         <th>Id Toko</th>
                                         <th>Nama Toko</th>
-                                        <th>Grade</th>
+                                        <th>Rating</th>
                                         <th>Pemilik</th>
                                         <th>Alamat</th>
                                         <th>No. Telpon</th>
@@ -95,7 +95,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="grade_toko" class="form-label">Grade toko :</label>
+                                                    <label for="grade_toko" class="form-label">Rating toko :</label>
                                                     <select class="form-select @error('grade_toko') is-invalid @enderror"
                                                         id="grade_toko" name="grade_toko"
                                                         aria-label="Default select example" required>
@@ -107,7 +107,7 @@
                                                     </select>
                                                     <div class="text-danger">
                                                         @error('grade_toko')
-                                                            Grade toko tidak boleh kosong.
+                                                            Rating toko tidak boleh kosong.
                                                         @enderror
                                                     </div>
                                                 </div>
