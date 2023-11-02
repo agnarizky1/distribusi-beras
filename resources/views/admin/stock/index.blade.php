@@ -52,9 +52,9 @@
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
-                                                        class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
-                                                    </a>
+                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteConfirmationModal{{ $b->id_beras }}">
+                                                        <i class="fa fa-trash-can"></i></a>
                                                     <a href="{{ route('admin.stockberas.show', $b->id_beras) }}"
                                                         class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i>
                                                     </a>
@@ -67,6 +67,30 @@
                         </div>
                     </div>
                 </div>
+                @foreach ($beras as $b)
+                        <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1"
+                            role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah Anda yakin ingin menghapus data ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
+                                            class="btn btn-danger">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
 
                 <div class="card">
                     <div class="card-header">
@@ -78,30 +102,42 @@
                                         <th width="5%">No</th>
                                         <th>Merk Beras</th>
                                         <th>Ukuran Berat</th>
-                                        <th>Grade</th>
-                                        <th>Jenis</th>
                                         <th>Harga</th>
                                         <th>Total Stock</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $stockMap = [];
+                                    @endphp
+
                                     @foreach ($total as $t)
+                                        @php
+                                        $key = $t->merk_beras . $t->ukuran_beras;
+                                        if (array_key_exists($key, $stockMap)) {
+                                            $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
+                                        } else {
+                                            $stockMap[$key] = $t;
+                                        }
+                                        @endphp
+                                    @endforeach
+
+                                    @foreach ($stockMap as $stock)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $t->merk_beras }}</td>
-                                            <td>{{ $t->ukuran_beras }} Kg</td>
-                                            <td>{{ $t->grade_beras }}</td>
-                                            <td>{{ $t->jenis_beras }}</td>
-                                            <td>Rp. {{ number_format($t->harga, 0, '.', '.') }}</td>
-                                            <td class="text-center">{{ $t->jumlah_stock }}</td>
+                                            <td>{{ $stock->merk_beras }}</td>
+                                            <td>{{ $stock->ukuran_beras }} Kg</td>
+                                            <td>Rp. {{ number_format($stock->harga, 0, '.', '.') }}</td>
+                                            <td class="text-center">{{ $stock->jumlah_stock }}</td>
                                             <td>
-                                                <a href="{{ route('admin.jumlahstock.edit', $t->id) }}"
-                                                    class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i>
+                                                <a href="{{ route('admin.jumlahstock.edit', ['id' => $stock->id, 'nilai' => $stock->jumlah_stock]) }}" class="btn btn-warning btn-sm">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach
+
                                     <!-- <tr>
                                                 <td colspan="4">Jumlah Total:</td>
                                                 <td class="text-center" colspan="2">10000</td>
