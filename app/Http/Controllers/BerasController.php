@@ -149,15 +149,35 @@ class BerasController extends Controller
     public function update(Request $request, Beras $id_beras)
     {
         $request->validate([
-            'harga' => 'required',
             'stock' => 'required',
         ]);
 
-            $id_beras->update([
-            'harga' => $request->harga,
-            'stock' => $request->stock,
-            ]);
+        $stockawal = $id_beras->stock;
+        $selisihStock = $request->stock;
 
+        $merk_beras = $request->input('nama_beras');
+        $berat = $request->input('berat');
+
+        $tStock = totalStock::where('merk_beras', $merk_beras)
+        ->where('ukuran_beras', $berat)
+        ->first();
+
+        if ($tStock) {
+            if($selisihStock > $stockawal){
+                $selisihStock -= $stockawal;
+                $tStock->jumlah_stock += $selisihStock;
+                $tStock->save();
+            }
+            elseif ($selisihStock < $stockawal) {
+                $stockawal -= $selisihStock;
+                $tStock->jumlah_stock -= $stockawal;
+                $tStock->save();
+            }
+        }
+
+        $id_beras->update([
+            'stock' => $request->stock,
+        ]);
 
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
