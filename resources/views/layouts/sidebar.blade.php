@@ -51,7 +51,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-title">Produk</li>
+                <li class="sidebar-title">Master</li>
                 <li
                     class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
                     <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
@@ -77,7 +77,7 @@
                         <span>Data Jenis</span>
                     </a>
                 </li>
-                <li class="sidebar-title">Halaman</li>
+                <li class="sidebar-title">Transaksi</li>
                 <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
                     <a href="{{ route('admin.toko') }}" class='sidebar-link'>
                         <i class="fa-sharp fa-solid fa-store"></i>
@@ -92,7 +92,7 @@
                         <span>Distribusi</span>
                     </a>
                 </li>
-                <!-- <li class="sidebar-title">Distribusi</li>
+                {{-- <li class="sidebar-title">Distribusi</li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-hexagon-fill"></i>
@@ -134,7 +134,7 @@
                     </ul>
 
 
-                </li> -->
+                </li> --}}
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>

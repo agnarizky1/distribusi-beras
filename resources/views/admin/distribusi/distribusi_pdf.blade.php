@@ -10,8 +10,8 @@
 <body>
 
     <Center>
-        <h3>PT. Beras Abadi</h3>
-        <p>Balung, Jember</p>
+        <h3>UD. SUMBER REJEKI SEJATI</h3>
+        <p>Jember</p>
         @foreach ($distribusi as $distribusi)
             <h4>Surat Jalan # <span>{{ $distribusi->kode_distribusi }}</span></h4>
         @endforeach

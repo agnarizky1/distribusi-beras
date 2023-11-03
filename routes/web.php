@@ -26,9 +26,18 @@ use App\Http\Controllers\pembayaranController;
 */
 
 
-Route::get('/pengembalian', function () {
-        return view('admin.distribusi.retur');
-    });
+// Route::get('/pengembalian', function () {
+//         return view('admin.distribusi.retur');
+//     });
+
+// Route::get('/cetak', function () {
+//     return view('admin.distribusi.distribusi_pdf');
+// });
+
+// Route::get('/l', function () {
+//         return view('auth.x');
+//     });
+// Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
 Route::get('/', [AuthController::class, "login"])->name('login');
