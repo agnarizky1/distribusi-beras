@@ -76,6 +76,16 @@ class DistributionController extends Controller
 
         $distribusiModel->save();
 
+        $pembayaran = new Pembayaran();
+        $pembayaran->id_distribusi = $distribusiModel->id_distribusi;
+
+        $tanggalDistribusi = Carbon::parse($distribusiModel->tanggal_distribusi);
+        $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
+
+        $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
+        
+        $pembayaran->save();
+
         // Kemudian, simpan setiap Distribusi ke dalam tabel DetailDistribusi
         foreach ($distribusi as $item) {
             $detailDistribusi = new DetailDistribusi();
@@ -92,21 +102,13 @@ class DistributionController extends Controller
                     $dataBeras->jumlah_stock -= $item['jumlah'];
                     $dataBeras->save();
                 } else {
-                    return response()->json(['error' => '' . $dataBeras->merk_beras . ' Stok Habis'], 400);
+                    return response()->json(['error' => 'Beras merk ' . $dataBeras->merk_beras . ' Habis'], 400);
                 }
             } else {
                 return response()->json(['error' => 'Beras tidak ditemukan'], 404);
             }
             $detailDistribusi->save();
         }
-        $pembayaran = new Pembayaran();
-        $pembayaran->id_distribusi = $distribusiModel->id_distribusi;
-
-        $tanggalDistribusi = Carbon::parse($distribusiModel->tanggal_distribusi);
-        $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
-
-        $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
-        $pembayaran->save();
     }
 
     public function show($id)

@@ -58,7 +58,7 @@
                                 <div class="col-md-6">
                                     <label for="stock" class="form-label">Jumlah stock
                                         :</label>
-                                    <input type="number" name="stock" value="{{ $total->stock }}"
+                                        <input type="text" name="jumlah_stock" value="{{ $nilai }}"
                                         class="form-control @error('stock') is-invalid @enderror"
                                         placeholder="Jumlah stock.."disabled>
                                     <div class="text-danger">

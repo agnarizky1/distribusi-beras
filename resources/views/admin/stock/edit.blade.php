@@ -19,13 +19,13 @@
                                 <div class="col-md-6">
                                     <label for="nama_beras" class="form-label">Beras :</label>
                                     <input type="text" name="nama_beras" value="{{ $beras->merk_beras }}"
-                                        class="form-control" disabled>
+                                        class="form-control" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="berat" class="form-label">Berat
                                         :</label>
                                     <input type="number" name="berat" value="{{ $beras->berat }}" class="form-control "
-                                        disabled>
+                                    readonly>
 
                                 </div>
                             </div>
@@ -33,13 +33,13 @@
                                 <div class="col-md-6">
                                     <label for="jenis_beras" class="form-label">Jenis Beras :</label>
                                     <input type="text" name="jenis_beras" value="{{ $beras->jenis_beras }}"
-                                        class="form-control " placeholder="Jenis beras .." disabled>
+                                        class="form-control " placeholder="Jenis beras .." readonly>
 
                                 </div>
                                 <div class="col-md-6">
                                     <label for="grade_beras" class="form-label">Grade Beras :</label>
                                     <input type="text" name="grade_beras" value="{{ $beras->grade_beras }}"
-                                        class="form-control" disabled>
+                                        class="form-control" readonly>
 
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                     <label for="harga" class="form-label">Harga :</label>
                                     <input type="number" name="harga" value="{{ $beras->harga }}"
                                         class="form-control @error('harga') is-invalid @enderror"
-                                        placeholder="Harga beras.." disabled>
+                                        placeholder="Harga beras.." readonly>
                                     <div class="text-danger">
                                         @error('harga')
                                             Harga tidak boleh kosong.

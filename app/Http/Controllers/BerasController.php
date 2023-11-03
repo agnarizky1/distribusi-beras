@@ -149,23 +149,43 @@ class BerasController extends Controller
     public function update(Request $request, Beras $id_beras)
     {
         $request->validate([
-            'harga' => 'required',
             'stock' => 'required',
         ]);
 
-            $id_beras->update([
-            'harga' => $request->harga,
-            'stock' => $request->stock,
-            ]);
+        $stockawal = $id_beras->stock;
+        $selisihStock = $request->stock;
 
+        $merk_beras = $request->input('nama_beras');
+        $berat = $request->input('berat');
+
+        $tStock = totalStock::where('merk_beras', $merk_beras)
+        ->where('ukuran_beras', $berat)
+        ->first();
+
+        if ($tStock) {
+            if($selisihStock > $stockawal){
+                $selisihStock -= $stockawal;
+                $tStock->jumlah_stock += $selisihStock;
+                $tStock->save();
+            }
+            elseif ($selisihStock < $stockawal) {
+                $stockawal -= $selisihStock;
+                $tStock->jumlah_stock -= $stockawal;
+                $tStock->save();
+            }
+        }
+
+        $id_beras->update([
+            'stock' => $request->stock,
+        ]);
 
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
 
-    public function editjumlah($id)
+    public function editjumlah($id, $nilai)
     {
         $total = totalStock::find($id);
-        return view('admin.stock.edit_jumlah_stock', compact('total'));
+        return view('admin.stock.edit_jumlah_stock', compact('total','nilai'));
     }
 
     /**
@@ -197,7 +217,20 @@ class BerasController extends Controller
      */
     public function destroy(Beras $id_beras)
     {
-        $id_beras->delete();
+        $tStock = totalStock::where('merk_beras', $id_beras->merk_beras)
+        ->where('ukuran_beras', $id_beras->berat)
+        ->where('jenis_beras', $id_beras->jenis_beras)
+        ->where('grade_beras', $id_beras->grade_beras)
+        ->first();
+
+        if ($tStock) {
+            $tStock->jumlah_stock -= $id_beras->stock;
+            if($tStock->jumlah_stock < 0){
+                $tStock->jumlah_stock = 0;
+            }
+            $tStock->save();
+            $id_beras->delete();
+        }
         Alert::error('Data Beras Berhasil Dihapus!');
         return back();
     }

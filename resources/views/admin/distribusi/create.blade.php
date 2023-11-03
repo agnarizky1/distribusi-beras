@@ -9,30 +9,6 @@
         <div class="col-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="beras">Beras</label>
-                            <select name="beras" id="beras" class="form-control select2">
-                                <option value="0">Pilih Beras</option>
-                                @foreach ($beras as $item)
-                                <option value="{{ $item->id }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="harga">Harga Satuan</label>
-                            <input type="text" id="harga" class="form-control" readonly>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="jumlah">Jumlah</label>
-                            <input type="number" id="jumlah" class="form-control">
-                        </div>
-                        <input type="hidden" id="selected-product-id">
-                        <div class="col-md-12 text-end">
-                            <button class="btn btn-success btn-sm text-white rounded" id="simpanBtn"><i class="fa fa-save"></i> Tambah Barang</button>
-                        </div>
-                    </div>
-                    <hr>
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label for="nama_toko">Nama Toko</label>
@@ -58,6 +34,32 @@
                             <input type="text" class="form-control" id="plat_no" name="plat_no" required>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="beras">Beras</label>
+                            <select name="beras" id="beras" class="form-control select2">
+                                <option value="0">Pilih Beras</option>
+                                @foreach ($beras as $item)
+                                <option value="{{ $item->id }}" data-grade="{{ $item->grade_beras }}" data-jenis="{{ $item->jenis_beras }}" data-price="{{ $item->harga }}">{{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg {{ $item->jenis_beras }} {{ $item->grade_beras }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="harga">Harga Satuan</label>
+                            <input type="text" id="harga" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="jumlah">Jumlah</label>
+                            <input type="number" id="jumlah" class="form-control">
+                        </div>
+                        <input type="hidden" id="selected-product-id">
+                        <div class="col-md-12 text-end">
+                            <button class="btn btn-success btn-sm text-white rounded" id="simpanBtn"><i class="fa fa-save"></i> Tambah Barang</button>
+                        </div>
+                    </div>
+                    <hr>
+
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -294,7 +296,11 @@
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);
-                Swal.fire('Error', 'Distribusi Gagal', 'error');
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    Swal.fire('Stok Habis', xhr.responseJSON.error, 'error');
+                } else {
+                    Swal.fire('Error', 'Distribusi Gagal', 'error');
+                }
             }
         });
     });

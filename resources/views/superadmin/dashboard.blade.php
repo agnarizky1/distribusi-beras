@@ -13,12 +13,12 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                         <div class="stats-icon purple mb-2">
-                                            <i class="iconly-boldShow"></i>
+                                            <i class="fa-solid fa-wheat-awn"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Profile Views</h6>
-                                        <h6 class="font-extrabold mb-0">112.000</h6>
+                                        <h6 class="text-muted font-semibold">Merk Beras</h6>
+                                        <h6 class="font-extrabold mb-0">{{$merk->count()}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -30,12 +30,12 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                         <div class="stats-icon blue mb-2">
-                                            <i class="iconly-boldProfile"></i>
+                                        <i class="fa-solid fa-store"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Followers</h6>
-                                        <h6 class="font-extrabold mb-0">183.000</h6>
+                                        <h6 class="text-muted font-semibold">Toko</h6>
+                                        <h6 class="font-extrabold mb-0">{{$toko->count()}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -47,12 +47,12 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                         <div class="stats-icon green mb-2">
-                                            <i class="iconly-boldAdd-User"></i>
+                                            <i class="fa-solid fa-truck"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Following</h6>
-                                        <h6 class="font-extrabold mb-0">80.000</h6>
+                                        <h6 class="text-muted font-semibold">Distribusi</h6>
+                                        <h6 class="font-extrabold mb-0">{{$distribusi->count()}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -64,12 +64,12 @@
                                 <div class="row">
                                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                         <div class="stats-icon red mb-2">
-                                            <i class="iconly-boldBookmark"></i>
+                                            <i class="iconly-boldUser"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">Saved Post</h6>
-                                        <h6 class="font-extrabold mb-0">112</h6>
+                                        <h6 class="text-muted font-semibold">User</h6>
+                                        <h6 class="font-extrabold mb-0">{{$user->count()}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -88,9 +88,10 @@
                                 <h5 class="font-bold">{{ Auth::user()->name }}</h5>
                                 <h6 class="text-muted mb-0">{{ Auth::user()->role }}</h6>
                                 <ul class="nav nav-pills">
-                                    <li class="nav-item"><a href="/logout" class="nav-link"
-                                            style="background-color: black; color: white;">Logout</a>
-                                    </li>
+                                <a href="{{ route('logout') }}" type="button" class='sidebar-link btn btn-primary'>
+                                    <span>Logout</span>
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </a>
                                 </ul>
                             </div>
                         </div>

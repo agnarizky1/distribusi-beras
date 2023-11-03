@@ -26,6 +26,9 @@ use App\Http\Controllers\pembayaranController;
 */
 
 
+// Route::get('/pengembalian', function () {
+//         return view('admin.distribusi.retur');
+//     });
 
 // Route::get('/cetak', function () {
 //     return view('admin.distribusi.distribusi_pdf');
@@ -48,6 +51,7 @@ Route::get('/logout', [AuthController::class, "logout"])->name('logout');
 Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     //input admin
     Route::get('/admin', [AdminController::class, 'index'])->name('superadmin.dashboard');
+    
     //beras
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');
@@ -56,7 +60,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/stockberas/update/{id_beras}', [BerasController::class, 'update'])->name('admin.stockberas.update');
     Route::get('/admin/stockberas/destroy/{id_beras}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
 
-    Route::get('/admin/jumlahstock/edit/{id}', [BerasController::class, 'editjumlah'])->name('admin.jumlahstock.edit');
+    Route::get('/admin/jumlahstock/edit/{id}/{nilai}', [BerasController::class, 'editjumlah'])->name('admin.jumlahstock.edit');
     Route::put('/admin/jumlahstock/update/{id}', [BerasController::class, 'updatejumlah'])->name('admin.jumlahstock.update');
 
     //toko
