@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endsection
 @section('content')
     <div class="page-heading">
@@ -138,8 +140,8 @@
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko"
-                                                            required>
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required
+                                                            data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
                                                                 <option value="{{ $toko->id_toko }}">
@@ -149,9 +151,9 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="tanggal_distribusi">Tanggal Distribusi</label>
-                                                        <input type="date" class="form-control" id="tanggal_distribusi"
-                                                            value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
-                                                            required>
+                                                        <input type="date" class="form-control"
+                                                            id="tanggal_distribusi" value="{{ date('Y-m-d') }}"
+                                                            name="tanggal_distribusi" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -240,6 +242,8 @@
 
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/js/select2.min.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0/dist/js/bootstrap-select.min.js"></script>
                             <script>
                                 const selectberas = document.getElementById('beras');
                                 const inputHarga = document.getElementById('harga');
@@ -442,6 +446,11 @@
                                             Swal.fire('Error', 'Distribusi Gagal', 'error');
                                         }
                                     });
+                                });
+                            </script>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#nama_toko').selectpicker();
                                 });
                             </script>
                         </div>
