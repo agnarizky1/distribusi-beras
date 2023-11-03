@@ -31,9 +31,9 @@ use App\Http\Controllers\pembayaranController;
 //     return view('admin.distribusi.distribusi_pdf');
 // });
 
-Route::get('/pengembalian', function () {
-        return view('admin.distribusi.retur');
-    });
+// Route::get('/l', function () {
+//         return view('auth.x');
+//     });
 // Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
