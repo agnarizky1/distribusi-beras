@@ -10,7 +10,7 @@
 <body>
 
     <Center>
-        <h3>PT. Beras Abadi</h3>
+        <h3>UD. SUMBER REJEKI SEJATI.</h3>
         <p>Balung, Jember</p>
         @foreach ($distribusi as $distribusi)
             <h4>nota # <span>{{ $distribusi->kode_distribusi }}</span></h4>
