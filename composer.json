@@ -16,7 +16,8 @@
         "laravel/framework": "^8.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.0",
-        "realrashid/sweet-alert": "^7.1"
+        "realrashid/sweet-alert": "^7.1",
+        "snapappointments/bootstrap-select": "^1.13"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
