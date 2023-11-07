@@ -144,7 +144,7 @@
                                                     <label for="nama_toko">Nama Toko</label>
                                                     <select class="form-control" id="nama_toko" name="nama_toko"
                                                         placeholder="Nama toko" data-search="true"
-                                                        data-silent-initial-value-set="true">>
+                                                        data-silent-initial-value-set="false">>
                                                         @foreach ($tokos as $toko)
                                                             <option value="{{ $toko->id_toko }}">
                                                                 {{ $toko->nama_toko }}</option>

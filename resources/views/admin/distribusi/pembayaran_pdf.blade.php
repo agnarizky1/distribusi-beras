@@ -10,7 +10,7 @@
 <body>
 
     <Center>
-        <h3>UD. SUMBER REJEKI SEJATI.</h3>
+        <h3>UD. SUMBER REJEKI SEJATI</h3>
         <p>Balung, Jember</p>
         @foreach ($distribusi as $distribusi)
             <h4>nota # <span>{{ $distribusi->kode_distribusi }}</span></h4>
@@ -22,13 +22,18 @@
         @foreach ($toko as $toko)
             <div class="col-sm-6">
 
-                <h5 class="inv-title-1">Tanggal nota : <p>
+                {{-- <h5 class="inv-title-1">Tanggal nota : <p>
                         {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}
                     </p>
-                </h5>
+                </h5> --}}
             </div>
-
-            <p><b>{{ $toko->nama_toko }}</b> ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </p>
+            <ul style="list-style:none;">
+                <li> Tanggal : {{ Carbon\Carbon::parse($distribusi->tanggal_distribusi)->format('M d, Y') }}</li>
+                <li> Pembeli : {{ $toko->nama_toko }}</li>
+                <li> No. Telp : {{ $toko->nomor_tlp }}</li>
+                <li> Alamat : {{ $toko->alamat }}</li>
+            </ul>
+            {{-- <p><b>{{ $toko->nama_toko }}</b> ({{ $toko->nomor_tlp }}),{{ $toko->alamat }} </p> --}}
         @endforeach
     </div>
 
@@ -61,6 +66,7 @@
 
         </tbody>
     </table>
+    <p class="text-end">Tanda terima</p>
 </body>
 
 </html>
