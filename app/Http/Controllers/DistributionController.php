@@ -33,7 +33,7 @@ class DistributionController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
+        return view('admin.distribusi.index2', compact('tokos', 'beras','distri','pembayaranTotals'));
 
     }
 

@@ -20,14 +20,14 @@
                                 Distribusi</a>
                         </div>
                         {{-- <div class="col-md-3">
-                            <form action="/post">
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="search" placeholder="search.."
-                                        value="{{ request('search') }}">
-                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-                </form>
-            </div> --}}
+                                        <form action="/post">
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" name="search" placeholder="search.."
+                                                    value="{{ request('search') }}">
+                                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                            </form>
+                        </div> --}}
                         <div class="card-body">
                             @if (session('status'))
                                 <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -138,11 +138,12 @@
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko"
-                                                            required>
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required>
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                                <option value="{{ $toko->id_toko }}">
+                                                                <option value="{{ $toko->id_toko }}"
+                                                                data-pemilik="{{ $toko->pemilik }}" 
+                                                                data-alamat="{{ $toko->alamat }}">
                                                                     {{ $toko->nama_toko }}</option>
                                                             @endforeach
                                                         </select>
@@ -152,6 +153,18 @@
                                                         <input type="date" class="form-control" id="tanggal_distribusi"
                                                             value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
                                                             required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-6">
+                                                        <label for="pemilik">Pemilik Toko</label>
+                                                        <input type="text" class="form-control" id="pemilik"
+                                                            name="pemilik" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="alamat">Alamat</label>
+                                                        <input type="text" class="form-control" id="alamat"
+                                                            name="alamat" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -174,12 +187,13 @@
                                                             class="form-control select2">
                                                             <option value="0">Pilih Beras</option>
                                                             @foreach ($beras as $item)
-                                                                <option value="{{ $item->id }}"
-                                                                    data-grade="{{ $item->grade_beras }}"
-                                                                    data-jenis="{{ $item->jenis_beras }}"
-                                                                    data-price="{{ $item->harga }}">
-                                                                    {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
-                                                                </option>
+                                                            <option value="{{ $item->id }}" 
+                                                                data-grade="{{ $item->grade_beras }}" 
+                                                                data-jenis="{{ $item->jenis_beras }}" 
+                                                                data-price="{{ $item->harga }}">
+                                                                {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg {{ $item->jenis_beras }} {{ $item->grade_beras }}
+                                                            </option>
+
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -253,6 +267,18 @@
                                     const grade = selectedOption.getAttribute('data-grade');
                                     const jenis = selectedOption.getAttribute('data-jenis');
                                     inputHarga.value = price;
+                                });
+
+                                const selecttoko = document.getElementById('nama_toko');
+                                const inputPemilik = document.getElementById('pemilik');
+                                const inputAlamat = document.getElementById('alamat');
+
+                                selecttoko.addEventListener('change', function() {
+                                    const selectedOption = this.options[this.selectedIndex];
+                                    const pemilik = selectedOption.getAttribute('data-pemilik');
+                                    const alamat = selectedOption.getAttribute('data-alamat');
+                                    inputPemilik.value = pemilik;
+                                    inputAlamat.value = alamat;
                                 });
 
                                 $(document).ready(function() {
@@ -433,7 +459,7 @@
                                             Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
                                                 .then((result) => {
                                                     if (result.isConfirmed) {
-                                                        window.location.href = '{{ route('distribution') }}';
+                                                        window.location.href = '{{ route("distribution") }}';
                                                     }
                                                 });
                                         },
