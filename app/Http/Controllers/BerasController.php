@@ -96,7 +96,7 @@ class BerasController extends Controller
     }
 
     private function generateNextId()
-     {
+    {
          $prefix = 'B-';
          $lastId = Beras::max('id_beras');
 
@@ -111,7 +111,7 @@ class BerasController extends Controller
          $nextId = $prefix . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
 
          return $nextId;
-     }
+    }
 
     
     public function show($id)

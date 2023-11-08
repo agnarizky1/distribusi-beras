@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('link')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 @endsection
 @section('content')
     <div class="page-heading">
@@ -138,13 +137,13 @@
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko" required>
+                                                        <br>
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                                <option value="{{ $toko->id_toko }}"
-                                                                data-pemilik="{{ $toko->pemilik }}" 
-                                                                data-alamat="{{ $toko->alamat }}">
-                                                                    {{ $toko->nama_toko }}</option>
+                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}">
+                                                                {{ $toko->nama_toko }}
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -184,7 +183,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <label for="beras">Beras</label>
                                                         <select name="beras" id="beras"
-                                                            class="form-control select2">
+                                                            class="form-control">
                                                             <option value="0">Pilih Beras</option>
                                                             @foreach ($beras as $item)
                                                             <option value="{{ $item->id }}" 
@@ -250,11 +249,14 @@
                                     </div>
                                 </section>
                             </div>
-
-
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+                            
                             <script>
+                                $(document).ready(function() {
+                                    $('#nama_toko').select2({
+                                        dropdownParent: $('#exampleModal')
+                                    });
+                                });
+
                                 const selectberas = document.getElementById('beras');
                                 const inputHarga = document.getElementById('harga');
 
@@ -269,16 +271,17 @@
                                     inputHarga.value = price;
                                 });
 
-                                const selecttoko = document.getElementById('nama_toko');
-                                const inputPemilik = document.getElementById('pemilik');
-                                const inputAlamat = document.getElementById('alamat');
+                                const selecttoko = $('#nama_toko');
+                                const inputPemilik = $('#pemilik');
+                                const inputAlamat = $('#alamat');
 
-                                selecttoko.addEventListener('change', function() {
-                                    const selectedOption = this.options[this.selectedIndex];
-                                    const pemilik = selectedOption.getAttribute('data-pemilik');
-                                    const alamat = selectedOption.getAttribute('data-alamat');
-                                    inputPemilik.value = pemilik;
-                                    inputAlamat.value = alamat;
+                                selecttoko.on('change', function() {
+                                    const selectedOption = $(this).find('option:selected');
+                                    const pemilik = selectedOption.data('pemilik');
+                                    const alamat = selectedOption.data('alamat');
+
+                                    inputPemilik.val(pemilik);
+                                    inputAlamat.val(alamat);
                                 });
 
                                 $(document).ready(function() {
@@ -473,33 +476,13 @@
                         </div>
                     </div>
                 </section>
-
-
             </div>
         </div>
     </div>
-@endsection
-@section('script')
-    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script>
+    $(document).ready( function () {
+        $("#tabel-distribusi").DataTable();
+    } );
 
-    <script type="text/javascript">
-        $(function() {
-            $("#tabel-distribusi").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
     </script>
 @endsection
