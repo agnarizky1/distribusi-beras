@@ -24,7 +24,7 @@ class TokoSeeder extends Seeder
                 // Ambil angka dari ID terakhir, tambahkan 1, dan lakukan padding
                 $lastNumber = intval(substr($lastId, strlen($prefix))) + 1;
                 $nextId = $prefix . str_pad($lastNumber, 5, '0', STR_PAD_LEFT);
-                            }
+            }
 
             $tambah = [
                 'id_toko' => $nextId,
@@ -36,9 +36,7 @@ class TokoSeeder extends Seeder
             ];
 
             Toko::insert($tambah);
-
-
-            $data[] = $tambah;
+            // $data[] = $tambah;
         }
 
         // foreach ($data as $item) {

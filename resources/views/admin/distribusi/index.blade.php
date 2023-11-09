@@ -4,6 +4,16 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 @endsection
 @section('content')
+<style>
+    .select2-container {
+        border: 1px solid #dce7f1;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+    }
+    .select2-container--default .select2-selection--single {
+    border: 1px solid #fff;
+    }
+</style>
     <div class="page-heading">
         <h3>Data Distribusi</h3>
     </div>
@@ -67,8 +77,8 @@
                                                 @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
                                                     <span class="text-success">Lunas</span>
                                                 @else
-                                                    <span class="text-danger">Sisa Bayar:
-                                                        {{ $d->total_harga - $pembayaranTotals[$d->id_distribusi] }}</span>
+                                                    <span class="text-danger">Sisa Bayar: Rp.
+                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
                                                 @endif
                                             </td>
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
@@ -251,7 +261,7 @@
                             </div>
                             
                             <script>
-                                $(document).ready(function() {
+                                $(document).on('shown.bs.modal',function() {
                                     $('#nama_toko').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
