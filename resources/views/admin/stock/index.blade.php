@@ -102,7 +102,6 @@
                                         <th width="5%">No</th>
                                         <th>Merk Beras</th>
                                         <th>Ukuran Berat</th>
-                                        <th>Harga</th>
                                         <th>Total Stock</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -128,10 +127,9 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $stock->merk_beras }}</td>
                                             <td>{{ $stock->ukuran_beras }} Kg</td>
-                                            <td>Rp. {{ number_format($stock->harga, 0, '.', '.') }}</td>
                                             <td class="text-center">{{ $stock->jumlah_stock }}</td>
                                             <td>
-                                                <a href="{{ route('admin.jumlahstock.edit', ['id' => $stock->id, 'nilai' => $stock->jumlah_stock]) }}" class="btn btn-warning btn-sm">
+                                                <a href="{{ route('admin.jumlahstock.edit', ['nilai' => $stock->jumlah_stock, 'merk' => $stock->merk_beras, 'ukuran' => $stock->ukuran_beras]) }}" class="btn btn-warning btn-sm">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                             </td>

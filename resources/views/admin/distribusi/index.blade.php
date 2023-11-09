@@ -7,7 +7,7 @@
 <style>
     .select2-container {
         border: 1px solid #dce7f1;
-        padding: 0.375rem 0.75rem;
+        padding: 0.275rem 0.75rem;
         border-radius: 0.25rem;
     }
     .select2-container--default .select2-selection--single {

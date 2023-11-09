@@ -60,8 +60,8 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/stockberas/update/{id_beras}', [BerasController::class, 'update'])->name('admin.stockberas.update');
     Route::get('/admin/stockberas/destroy/{id_beras}', [BerasController::class, 'destroy'])->name('admin.stockberas.destroy');
 
-    Route::get('/admin/jumlahstock/edit/{id}/{nilai}', [BerasController::class, 'editjumlah'])->name('admin.jumlahstock.edit');
-    Route::put('/admin/jumlahstock/update/{id}', [BerasController::class, 'updatejumlah'])->name('admin.jumlahstock.update');
+    Route::get('/admin/jumlahstock/edit/{merk}/{ukuran}/{nilai}', [BerasController::class, 'editjumlah'])->name('admin.jumlahstock.edit');
+    Route::put('/admin/jumlahstock/update', [BerasController::class, 'updatejumlah'])->name('admin.jumlahstock.update');
 
     //toko
     Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');
