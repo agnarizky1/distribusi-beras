@@ -4,10 +4,8 @@
         <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/virtual-select.min.css') }}" />
-        =======
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-        >>>>>>> fathur
     @endsection
     @section('content')
         <style>
