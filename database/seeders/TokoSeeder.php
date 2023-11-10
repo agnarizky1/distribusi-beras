@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 use App\models\Toko;
 
 class TokoSeeder extends Seeder
