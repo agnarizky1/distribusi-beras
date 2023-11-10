@@ -96,7 +96,7 @@ class BerasController extends Controller
     }
 
     private function generateNextId()
-     {
+    {
          $prefix = 'B-';
          $lastId = Beras::max('id_beras');
 
@@ -111,7 +111,7 @@ class BerasController extends Controller
          $nextId = $prefix . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
 
          return $nextId;
-     }
+    }
 
     
     public function show($id)
@@ -182,30 +182,31 @@ class BerasController extends Controller
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
 
-    public function editjumlah($id, $nilai)
+    public function editjumlah($merk, $ukuran, $nilai)
     {
-        $total = totalStock::find($id);
-        return view('admin.stock.edit_jumlah_stock', compact('total','nilai'));
+        $total =totalStock::all();
+        return view('admin.stock.edit_jumlah_stock', compact('total','nilai','merk','ukuran'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatejumlah(Request $request, $id)
+    public function updatejumlah(Request $request)
     {
         $request->validate([
             'harga' => 'required',
         ]);
+        $merk = $request->input('nama_beras');
+        $berat = $request->input('berat');
+        $jenis = $request->input('jenis_beras');
+        $grade = $request->input('grade_beras');
 
-        $total = totalStock::find($id);
-        $total->update([
-        'harga' => $request->harga,
-    ]);
+        $query = totalStock::where('merk_beras', $merk)
+            ->where('ukuran_beras', $berat)->where('jenis_beras', $jenis)->where('grade_beras', $grade);
+        $getData = $query->first();
 
+        if($getData){
+            $getData->update([
+                'harga' => $request->harga,
+            ]);
+        }
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
 

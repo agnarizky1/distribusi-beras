@@ -14,6 +14,16 @@
     <link rel="stylesheet" href="{{ asset('/src/assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('/src/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" href="{{ asset('/src/assets/compiled/css/iconly.css') }}">
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -72,8 +82,6 @@
     <!-- Need: Apexcharts -->
     <script src="{{ asset('/src/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('/src/assets/static/js/pages/dashboard.js') }}"></script>
-    <!-- jQuery -->
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

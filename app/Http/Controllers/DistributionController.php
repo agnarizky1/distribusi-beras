@@ -34,7 +34,6 @@ class DistributionController extends Controller
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
         return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
-
     }
 
     public function create()
