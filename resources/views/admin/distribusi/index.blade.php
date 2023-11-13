@@ -16,7 +16,7 @@
         }
     </style>
     <div class="page-heading">
-        <h3>Data Distribusi</h3>
+        <h3>Data Order</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -26,8 +26,8 @@
                     <div class="card-header row g-3">
                         <div class="col-md-4">
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                                Distribusi</a>
+                                <i class="fa-solid fa-folder-plus"></i> Tambah
+                                Order</a>
                         </div>
                         {{-- <div class="col-md-3">
                                         <form action="/post">
@@ -52,11 +52,11 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Kode Distribusi</th>
+                                        <th>Kode Order</th>
                                         <th>Nama Toko</th>
                                         <th>Nama Sopir</th>
                                         <th>Plat No.</th>
-                                        <th>tgl Distribusi</th>
+                                        <th>tgl Order</th>
                                         <th>Total Berat(Kg)</th>
                                         <th>Total Harga</th>
                                         <th>Aksi</th>
@@ -115,7 +115,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus distribusi ini?
+                                        Apakah Anda yakin ingin menghapus order ini?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -134,7 +134,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Distribusi</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Order</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <section class="row">
@@ -162,7 +162,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="tanggal_distribusi">Tanggal Distribusi</label>
+                                                        <label for="tanggal_distribusi">Tanggal Order</label>
                                                         <input type="date" class="form-control" id="tanggal_distribusi"
                                                             value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
                                                             required>
@@ -255,7 +255,7 @@
                                                         data-bs-dismiss="modal">Close</button>
                                                     <button id="simpanDistribusiBtn" class="btn btn-primary rounded"><i
                                                             class="fa fa-save"></i>
-                                                        Simpan Distribusi</button>
+                                                        Simpan Order</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -17,8 +17,6 @@ class CreateBerasTable extends Migration
             $table->char('id_beras',30)->primary();
             $table->string('merk_beras');
             $table->integer('berat');
-            $table->string('jenis_beras');
-            $table->string('grade_beras');
             $table->string('nama_sopir');
             $table->string('plat_no');
             $table->date('tanggal_masuk_beras');

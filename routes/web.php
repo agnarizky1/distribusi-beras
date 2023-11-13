@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MerkController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerasController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
-use App\Http\Controllers\MerkController;
-use App\Http\Controllers\DistributionController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\pembayaranController;
+use App\Http\Controllers\DistributionController;
 
 
 
@@ -51,7 +52,7 @@ Route::get('/logout', [AuthController::class, "logout"])->name('logout');
 Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     //input admin
     Route::get('/admin', [AdminController::class, 'index'])->name('superadmin.dashboard');
-    
+
     //beras
     Route::get('/admin/stockberas', [BerasController::class, 'index'])->name('admin.stockberas');
     Route::post('/admin/stockberas/create', [BerasController::class, 'store'])->name('admin.stockberas.create');
@@ -71,21 +72,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
 
-    //grade_beras
-    Route::get('/admin/grade', [GradeController::class, 'index'])->name('admin.grade');
-    Route::post('/admin/grade/create', [GradeController::class, 'store'])->name('admin.grade.create');
-    Route::get('/admin/grade/add', [GradeController::class, 'create'])->name('admin.grade.add');
-    Route::get('/admin/grade/edit/{id_grade}', [GradeController::class, 'edit'])->name('admin.grade.edit');
-    Route::put('/admin/grade/update/{id_grade}', [GradeController::class, 'update'])->name('admin.grade.update');
-    Route::get('/admin/grade/destroy/{id_grade}', [GradeController::class, 'destroy'])->name('admin.grade.destroy');
 
-    //Jenis
-    Route::get('/admin/jenis', [JenisController::class, 'index'])->name('admin.jenis');
-    Route::post('/admin/jenis/create', [JenisController::class, 'store'])->name('admin.jenis.create');
-    Route::get('/admin/jenis/add', [JenisController::class, 'create'])->name('admin.jenis.add');
-    Route::get('/admin/jenis/edit/{id_jenis}', [JenisController::class, 'edit'])->name('admin.jenis.edit');
-    Route::put('/admin/jenis/update/{id_jenis}', [JenisController::class, 'update'])->name('admin.jenis.update');
-    Route::get('/admin/jenis/destroy/{id_jenis}', [JenisController::class, 'destroy'])->name('admin.jenis.destroy');
 
     //user
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');
@@ -103,6 +90,14 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
     Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+
+    //sales
+    Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
+    Route::post('/admin/sales/create', [SalesController::class, 'store'])->name('admin.sales.create');
+    Route::get('/admin/sales/add', [SalesController::class, 'create'])->name('admin.sales.add');
+    Route::get('/admin/sales/edit/{id}', [SalesController::class, 'edit'])->name('admin.sales.edit');
+    Route::put('/admin/sales/update/{id}', [SalesController::class, 'update'])->name('admin.sales.update');
+    Route::get('/admin/sales/destroy/{id}', [SalesController::class, 'destroy'])->name('admin.sales.destroy');
 
     //merk
     Route::get('/admin/merk', [MerkController::class, 'index'])->name('admin.merk');

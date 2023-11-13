@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="page-heading">
-        <h3>Data Jenis</h3>
+        <h3>Data Sales</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -9,9 +9,9 @@
             <div class="col-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('admin.jenis.add') }}" type="button" class="btn btn-primary">
+                        <a href="{{ route('admin.sales.add') }}" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                            Jenis</a>
+                            Sales</a>
                     </div>
                     <div class="card-body">
                         <div class="card-body">
@@ -28,22 +28,24 @@
                                 <thead>
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Jenis</th>
+                                        <th>Nama Sales</th>
+                                        <th>Nomor Telpon</th>
                                         <th width="100px">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($jenis as $j)
+                                    @foreach ($sales as $s)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $j->jenis }}</td>
+                                            <td>{{ $s->nama_sales }}</td>
+                                            <td>{{ $s->no_telpon }}</td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
-                                                    <a href="{{ route('admin.jenis.edit', $j->id_jenis) }}"
+                                                    <a href="{{ route('admin.sales.edit', $s->id_sales) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.jenis.destroy', $j->id_jenis) }}"
+                                                    <a href="{{ route('admin.sales.destroy', $s->id_sales) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                 </td>

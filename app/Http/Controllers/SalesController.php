@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade;
+use App\Models\Sales;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class GradeController extends Controller
+class SalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grade = Grade::all();
-        return view('admin.grade.index', compact('grade'));
+        $sales = Sales::all();
+        return view('admin.sales.index', compact('sales'));
     }
 
     /**
@@ -26,10 +25,10 @@ class GradeController extends Controller
      */
     public function create()
     {
-        return view('admin.grade.add');
+        return view('admin.sales.add');
     }
 
-    /**,
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,20 +37,22 @@ class GradeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'grade' => 'required',
+            'nama_sales' => 'required',
+            'no_telpon' => 'required',
         ]);
 
 
-        $grade = Grade::create([
-            'grade' => $request->grade,
+        $sales = Sales::create([
+            'nama_sales' => $request->nama_sales,
+            'no_telpon' => $request->no_telpon,
         ]);
 
-        if ($grade) {
+        if ($sales) {
             //redirect dengan pesan sukses
-            return redirect()->route('admin.grade')->with('success', 'Data grade Berhasil Disimpan!');
+            return redirect()->route('admin.sales')->with('success', 'Data Sales Berhasil Disimpan!');
         } else {
             //redirect dengan pesan error
-            Alert::error('Data grade Gagal Disimpan!');
+            Alert::error('Data Sales Gagal Disimpan!');
             return back();
         }
     }
@@ -59,59 +60,61 @@ class GradeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id_grade
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id_grade)
+    public function show($id)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id_grade
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id_grade)
+    public function edit($id)
     {
-        $grade = Grade::find($id_grade);
-        return view('admin.grade.edit', compact('grade'));
+        $sales = Sales::find($id);
+        return view('admin.sales.edit', compact('sales'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id_grade
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grade $id_grade)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'grade' => 'required',
+            'nama_sales' => 'required',
+            'no_telpon' => 'required',
         ]);
 
-        // @dd($request);
-
-        $id_grade->update([
-            'grade' => $request->grade,
+        $sales = Sales::find($id);
+        $sales->update([
+            'nama_sales' => $request->nama_sales,
+            'no_telpon' => $request->no_telpon,
         ]);
 
+        return redirect()->route('admin.sales')->with('success', 'Data sales Berhasil Diubah!');
 
-        return redirect()->route('admin.grade')->with('success', 'Data grade Berhasil Disimpan!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id_grade
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grade $id_grade)
+    public function destroy($id)
     {
-        $id_grade->delete();
-        Alert::error('Data grade Berhasil Dihapus!');
+        $sales = Sales::find($id);
+        $sales->delete();
+        Alert::error('Data sales Berhasil Dihapus!');
         return back();
     }
 }

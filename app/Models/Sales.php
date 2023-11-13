@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Beras;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Grade extends Model
+class Sales extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $primaryKey = 'id_grade';
+    protected $primaryKey = 'id_sales';
 }

@@ -38,37 +38,51 @@ class TokoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_toko' => 'required',
-            'grade_toko' => 'required',
-            'pemilik' => 'required',
-            'alamat' => 'required',
-            'nomor_tlp' => 'required',
-        ]);
+{
+    $request->validate([
+        'sales' => 'required',
+        'foto_toko' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'nama_toko' => 'required',
+        'grade_toko' => 'required',
+        'pemilik' => 'required',
+        'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'alamat' => 'required',
+        'nomor_tlp' => 'required',
+    ]);
 
-        // Mencari ID yang belum digunakan
-        $nextId = $this->generateNextId();
+    // Mencari ID yang belum digunakan
+    $nextId = $this->generateNextId();
 
-        $toko = Toko::create([
-            'id_toko'   =>  $nextId,
-            'nama_toko' => $request->nama_toko,
-            'grade_toko' => $request->grade_toko,
-            'pemilik' => $request->pemilik,
-            'alamat' => $request->alamat,
-            'nomor_tlp' => $request->nomor_tlp,
+    //foto toko
+    $foto_toko = $request->file('foto_toko');
+    $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
 
-        ]);
+    //foto ktp
+    $foto_ktp = $request->file('foto_ktp');
+    $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
 
-        if ($toko) {
-            //redirect dengan pesan sukses
-            return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
-        } else {
-            //redirect dengan pesan error
-            Alert::error('Data Toko Gagal Disimpan!');
-            return back();
-        }
+    $toko = Toko::create([
+        'id_toko' => $nextId,
+        'sales' => $request->sales,
+        'foto_toko' => $foto_toko->hashName(),
+        'nama_toko' => $request->nama_toko,
+        'grade_toko' => $request->grade_toko,
+        'pemilik' => $request->pemilik,
+        'foto_ktp' => $foto_ktp->hashName(),
+        'alamat' => $request->alamat,
+        'nomor_tlp' => $request->nomor_tlp,
+    ]);
+
+    if ($toko) {
+        //redirect dengan pesan sukses
+        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
+    } else {
+        //redirect dengan pesan error
+        Alert::error('Data Toko Gagal Disimpan!');
+        return back();
     }
+}
+
 
     private function generateNextId()
      {
@@ -122,24 +136,48 @@ class TokoController extends Controller
     public function update(Request $request, Toko $id_toko)
     {
         $request->validate([
+            'sales' => 'required',
             'nama_toko' => 'required',
+            'grade_toko' => 'required',
             'pemilik' => 'required',
             'alamat' => 'required',
             'nomor_tlp' => 'required',
         ]);
 
-        // @dd($request);
+        $toko = Toko::find($id_toko);
 
-            $id_toko->update([
-            'nama_toko' => $request->nama_toko,
-            'grade_toko' => $request->grade_toko,
-            'pemilik' => $request->pemilik,
-            'alamat' => $request->alamat,
-            'nomor_tlp' => $request->nomor_tlp,
-            ]);
+        if (!$toko) {
+            // Handle case where toko with the given ID is not found
+            return redirect()->route('admin.toko')->with('error', 'Data Toko tidak ditemukan!');
+        }
 
+        // Update data
+        $toko->sales = $request->sales;
+        $toko->nama_toko = $request->nama_toko;
+        $toko->grade_toko = $request->grade_toko;
+        $toko->pemilik = $request->pemilik;
+        $toko->alamat = $request->alamat;
+        $toko->nomor_tlp = $request->nomor_tlp;
 
-        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
+        // Check if a new foto_toko is uploaded
+        if ($request->hasFile('foto_toko')) {
+            $foto_toko = $request->file('foto_toko');
+            $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
+            $toko->foto_toko = $foto_toko->hashName();
+        }
+
+        // Check if a new foto_ktp is uploaded
+        if ($request->hasFile('foto_ktp')) {
+            $foto_ktp = $request->file('foto_ktp');
+            $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
+            $toko->foto_ktp = $foto_ktp->hashName();
+        }
+
+        // Save updated data
+        $toko->save();
+
+        // Redirect with success message
+        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Diperbarui!');
     }
 
     /**

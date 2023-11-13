@@ -68,29 +68,29 @@
                     </div>
                 </div>
                 @foreach ($beras as $b)
-                        <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1"
-                            role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus data ini?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
-                                            class="btn btn-danger">Hapus</a>
-                                    </div>
+                    <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1" role="dialog"
+                        aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Apakah Anda yakin ingin menghapus data ini?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
+                                        class="btn btn-danger">Hapus</a>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
 
                 <div class="card">
                     <div class="card-header">
@@ -108,17 +108,17 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                    $stockMap = [];
+                                        $stockMap = [];
                                     @endphp
 
                                     @foreach ($total as $t)
                                         @php
-                                        $key = $t->merk_beras . $t->ukuran_beras;
-                                        if (array_key_exists($key, $stockMap)) {
-                                            $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
-                                        } else {
-                                            $stockMap[$key] = $t;
-                                        }
+                                            $key = $t->merk_beras . $t->ukuran_beras;
+                                            if (array_key_exists($key, $stockMap)) {
+                                                $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
+                                            } else {
+                                                $stockMap[$key] = $t;
+                                            }
                                         @endphp
                                     @endforeach
 
@@ -129,7 +129,8 @@
                                             <td>{{ $stock->ukuran_beras }} Kg</td>
                                             <td class="text-center">{{ $stock->jumlah_stock }}</td>
                                             <td>
-                                                <a href="{{ route('admin.jumlahstock.edit', ['nilai' => $stock->jumlah_stock, 'merk' => $stock->merk_beras, 'ukuran' => $stock->ukuran_beras]) }}" class="btn btn-warning btn-sm">
+                                                <a href="{{ route('admin.jumlahstock.edit', ['nilai' => $stock->jumlah_stock, 'merk' => $stock->merk_beras, 'ukuran' => $stock->ukuran_beras]) }}"
+                                                    class="btn btn-warning btn-sm">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                             </td>
@@ -137,9 +138,9 @@
                                     @endforeach
 
                                     <!-- <tr>
-                                                <td colspan="4">Jumlah Total:</td>
-                                                <td class="text-center" colspan="2">10000</td>
-                                            </tr> -->
+                                                    <td colspan="4">Jumlah Total:</td>
+                                                    <td class="text-center" colspan="2">10000</td>
+                                                </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -178,8 +179,9 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <label for="merk_beras" class="form-label">Merk Beras :</label>
-                                            <select class="form-select @error('beras') is-invalid @enderror" id="merk_beras"
-                                                name="merk_beras" aria-label="Default select example" required>
+                                            <select class="form-select @error('beras') is-invalid @enderror"
+                                                id="merk_beras" name="merk_beras" aria-label="Default select example"
+                                                required>
                                                 @foreach ($merk as $item)
                                                     <option value="{{ $item->merk }}">{{ $item->merk }}</option>
                                                 @endforeach
@@ -192,8 +194,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="berat" class="form-label">Berat :</label>
-                                            <select class="form-select @error('berat') is-invalid @enderror" id="berat"
-                                                name="berat" aria-label="Default select example" required>
+                                            <select class="form-select @error('berat') is-invalid @enderror"
+                                                id="berat" name="berat" aria-label="Default select example"
+                                                required>
                                                 <option value="3">3 KG</option>
                                                 <option value="5">5 KG</option>
                                                 <option value="10">10 KG</option>
@@ -202,38 +205,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <label for="jenis_beras" class="form-label">Jenis Beras :</label>
-                                            <select class="form-select @error('jenis') is-invalid @enderror"
-                                                id="jenis_beras" name="jenis_beras" aria-label="Default select example"
-                                                required>
-                                                @foreach ($jenis as $item)
-                                                    <option value="{{ $item->jenis }}">{{ $item->jenis }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="text-danger">
-                                                @error('jenis')
-                                                    Jenis tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="grade_beras" class="form-label">Grade :</label>
-                                            <select class="form-select @error('grade') is-invalid @enderror"
-                                                id="grade_beras" name="grade_beras" aria-label="Default select example"
-                                                required>
-                                                @foreach ($grade as $item)
-                                                    <option value="{{ $item->grade }}">{{ $item->grade }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="text-danger">
-                                                @error('grade')
-                                                    Jumlah stock tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <label for="harga" class="form-label">Harga :</label>
