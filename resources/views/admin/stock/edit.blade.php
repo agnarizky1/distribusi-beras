@@ -31,20 +31,6 @@
                             </div>
                             <div class="row mb-4">
                                 <div class="col-md-6">
-                                    <label for="jenis_beras" class="form-label">Jenis Beras :</label>
-                                    <input type="text" name="jenis_beras" value="{{ $beras->jenis_beras }}"
-                                        class="form-control " placeholder="Jenis beras .." readonly>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="grade_beras" class="form-label">Grade Beras :</label>
-                                    <input type="text" name="grade_beras" value="{{ $beras->grade_beras }}"
-                                        class="form-control" readonly>
-
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-md-6">
                                     <label for="harga" class="form-label">Harga :</label>
                                     <input type="number" name="harga" value="{{ $beras->harga }}"
                                         class="form-control @error('harga') is-invalid @enderror"

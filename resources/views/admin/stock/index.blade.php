@@ -123,18 +123,20 @@
                                     @endforeach
 
                                     @foreach ($stockMap as $stock)
+                                        @if ($stock->jumlah_stock != 0 || $stock->jumlah_stock != null)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $stock->merk_beras }}</td>
                                             <td>{{ $stock->ukuran_beras }} Kg</td>
                                             <td class="text-center">{{ $stock->jumlah_stock }}</td>
                                             <td>
-                                                <a href="{{ route('admin.jumlahstock.edit', ['nilai' => $stock->jumlah_stock, 'merk' => $stock->merk_beras, 'ukuran' => $stock->ukuran_beras]) }}"
+                                                <a href="{{ route('admin.jumlahstock.edit', ['id' => $stock->id]) }}"
                                                     class="btn btn-warning btn-sm">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                             </td>
                                         </tr>
+                                        @endif
                                     @endforeach
 
                                     <!-- <tr>
@@ -208,8 +210,8 @@
 
                                     <div class="row mb-4">
                                         <div class="col-md-6">
-                                            <label for="harga" class="form-label">Harga :</label>
-                                            <input type="number" name="harga"
+                                            <label for="harga" class="form-label">Harga per KG :</label>
+                                            <input type="number" name="harga" id="harga"
                                                 class="form-control @error('harga') is-invalid @enderror"
                                                 placeholder="Harga beras..">
                                             <div class="text-danger">
@@ -219,6 +221,19 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="harga" class="form-label">Harga satuan :</label>
+                                            <input type="number" name="hargapcs" id="hargapcs"
+                                                class="form-control @error('hargapcs') is-invalid @enderror"
+                                                placeholder="Harga beras.." readonly>
+                                            <div class="text-danger">
+                                                @error('harga')
+                                                    Harga tidak boleh kosong.
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
                                             <label for="stock" class="form-label">Jumlah stock :</label>
                                             <input type="number" name="stock"
                                                 class="form-control @error('stock') is-invalid @enderror"
@@ -254,6 +269,22 @@
             $("#tutupbtn").click(function() {
                 $("#tambahBerasModal").modal("hide");
             });
+
+            $("#harga").on('input', function() {
+                updateHargapcs();
+            });
+
+            $("#berat").on('input', function() {
+                updateHargapcs();
+            });
+
+            function updateHargapcs() {
+                var hargapcs = $("#hargapcs");
+                var harga = $("#harga").val();
+                var berat = $("#berat").val();
+
+                hargapcs.val(harga * berat);
+            }
         });
     </script>
 @endsection

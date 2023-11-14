@@ -73,6 +73,8 @@ class BerasController extends Controller
             ]);
         }
 
+        $updateharga = TotalStock::where('merk_beras', $request->merk_beras)->update(['harga' => $request->harga]);
+
         if ($beras) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
@@ -141,7 +143,7 @@ class BerasController extends Controller
 
         $merk_beras = $request->input('nama_beras');
         $berat = $request->input('berat');
-
+        
         $tStock = totalStock::where('merk_beras', $merk_beras)
         ->where('ukuran_beras', $berat)
         ->first();
@@ -166,23 +168,21 @@ class BerasController extends Controller
         return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
     }
 
-    public function editjumlah($merk, $ukuran, $nilai)
+    public function editjumlah($id)
     {
-        $total =totalStock::all();
-        return view('admin.stock.edit_jumlah_stock', compact('total','nilai','merk','ukuran'));
+        $total =totalStock::find($id);
+        return view('admin.stock.edit_jumlah_stock', compact('total'));
     }
 
-    public function updatejumlah(Request $request)
+    public function updatejumlah(Request $request, $id)
     {
         $request->validate([
             'harga' => 'required',
         ]);
-        $merk = $request->input('nama_beras');
-        $berat = $request->input('berat');
 
-        $query = totalStock::where('merk_beras', $merk)
-            ->where('ukuran_beras', $berat);
+        $query = totalStock::find('id', $id);
         $getData = $query->first();
+        dd($getData);
 
         if($getData){
             $getData->update([
