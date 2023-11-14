@@ -36,15 +36,6 @@ class DistributionController extends Controller
         return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
     }
 
-    public function create()
-    {
-        $tokos = Toko::all();
-        $beras = totalStock::all();
-
-        return view('admin.distribusi.create', compact('tokos', 'beras'));
-    }
-
-
     public function store(Request $request)
     {
         // Mendapatkan data dari permintaan POST
