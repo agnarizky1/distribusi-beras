@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');
     Route::post('/admin/toko/create', [TokoController::class, 'store'])->name('admin.toko.create');
     Route::get('/admin/toko/add', [TokoController::class, 'create'])->name('admin.toko.add');
+    Route::get('/admin/toko/show/{id}', [TokoController::class, 'show'])->name('admin.toko.show');
     Route::get('/admin/toko/edit/{id_toko}', [TokoController::class, 'edit'])->name('admin.toko.edit');
     Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');

@@ -8,6 +8,7 @@ use Database\Seeders\TokoSeeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\GradeSeeder;
 use Database\Seeders\JenisSeeder;
+use Database\Seeders\SalesSeeder;
 use Database\Seeders\GradeTokoSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +22,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            GradeTokoSeeder::class,
             // TokoSeeder::class,
             MerkSeeder::class,
             SalesSeeder::class,

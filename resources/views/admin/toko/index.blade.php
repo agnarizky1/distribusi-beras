@@ -30,7 +30,6 @@
                                         <th>Id Toko</th>
                                         <th class="text-center">Foto</th>
                                         <th>Nama Toko</th>
-                                        <th>Rating</th>
                                         <th>Pemilik</th>
                                         <th>Alamat</th>
                                         <th>No. Telpon</th>
@@ -44,14 +43,17 @@
                                             <td><img src="{{ asset('/storage/toko/' . $t->foto_toko) }}" class="rounded"
                                                     style="width: 150px"></td>
                                             <td>{{ $t->nama_toko }}</td>
-                                            <td>{{ $t->grade_toko }}</td>
                                             <td>{{ $t->pemilik }}</td>
                                             <td>{{ $t->alamat }}</td>
                                             <td>{{ $t->nomor_tlp }}</td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
+                                                    <a href="{{ route('admin.toko.show', $t->id_toko) }}"
+                                                        class="btn btn-warning btn-sm mb-1">
+                                                        <i class="fa fa-regular fa-eye"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.toko.edit', $t->id_toko) }}"
-                                                        class="btn btn-warning btn-sm"><i
+                                                        class="btn btn-primary btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
                                                     <a href="{{ route('admin.toko.destroy', $t->id_toko) }}"
@@ -117,26 +119,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="grade_toko" class="form-label">Rating toko :</label>
-                                                    <select class="form-select @error('grade_toko') is-invalid @enderror"
-                                                        id="grade_toko" name="grade_toko"
-                                                        aria-label="Default select example" required>
-                                                        @foreach ($grade as $item)
-                                                            <option value="{{ $item->grade_toko }}">
-                                                                {{ $item->grade_toko }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div class="text-danger">
-                                                        @error('grade_toko')
-                                                            Rating toko tidak boleh kosong.
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="form-group">
-                                                    <label for="pemilik">Nama pemilik :</label>
+                                                    <label class="form-label" for="pemilik">Nama pemilik :</label>
                                                     <input type="text" name="pemilik"
                                                         class="form-control @error('pemilik') is-invalid @enderror"
                                                         placeholder="Nama pemilik..">
@@ -147,7 +130,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="mb-3">
                                                 <div class="form-group">
                                                     <label for="alamat">Alamat toko:</label>

@@ -18,7 +18,6 @@ class CreateTokosTable extends Migration
             $table->string('foto_toko');
             $table->string('nama_toko');
             $table->string('sales');
-            $table->string('grade_toko');
             $table->string('pemilik');
             $table->string('foto_ktp');
             $table->string('alamat');
