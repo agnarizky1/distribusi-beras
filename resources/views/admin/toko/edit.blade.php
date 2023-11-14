@@ -5,16 +5,53 @@
     </div>
     <div class="page-content">
         <section class="row">
-
             <div class="col-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                    </div>
                     <form action="{{ Route('admin.toko.update', $toko->id_toko) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
+                            <div class="mb-3">
+                                <label for="sales" class="form-label">Sales:</label>
+                                <input type="text" name="sales" value="{{ $toko->sales }}"
+                                    class="form-control @error('sales') is-invalid @enderror" placeholder="Nama sales..">
+                                <div class="text-danger">
+                                    @error('sales')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="foto_toko" class="form-label">Foto Toko:</label>
+                                    <input type="file" name="foto_toko"
+                                        class="form-control @error('foto_toko') is-invalid @enderror">
+                                    <div class="text-danger">
+                                        @error('foto_toko')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    @if ($toko->foto_toko)
+                                        <img src="{{ asset('storage/toko/' . $toko->foto_toko) }}" alt="Foto Toko"
+                                            class="img-fluid mt-2">
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="foto_ktp" class="form-label">Foto KTP:</label>
+                                    <input type="file" name="foto_ktp"
+                                        class="form-control @error('foto_ktp') is-invalid @enderror">
+                                    <div class="text-danger">
+                                        @error('foto_ktp')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    @if ($toko->foto_ktp)
+                                        <img src="{{ asset('storage/ktp/' . $toko->foto_ktp) }}" alt="Foto KTP"
+                                            class="img-fluid mt-2">
+                                    @endif
+                                </div>
+                            </div>
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="nama_toko" class="form-label">Nama toko :</label>
@@ -30,10 +67,10 @@
                                 <div class="col-md-6">
                                     <label for="grade_toko" class="form-label">Rating toko :</label>
                                     <select class="form-select @error('grade_toko') is-invalid @enderror" id="grade_toko"
-                                        name="grade_toko" value="{{ $toko->grade_toko }}">
-                                        <option value="{{ $toko->grade_toko }}">{{ $toko->grade_toko }}</option>
+                                        name="grade_toko">
                                         @foreach ($grade as $item)
-                                            <option value="{{ $item->grade_toko }}">
+                                            <option value="{{ $item->grade_toko }}"
+                                                @if ($toko->grade_toko == $item->grade_toko) selected @endif>
                                                 {{ $item->grade_toko }}
                                             </option>
                                         @endforeach
@@ -86,7 +123,7 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-footer">
+                            <div class="card-footer text-end">
                                 <a href="{{ route('admin.toko') }}" type="button" class="btn btn-warning"><i
                                         class='nav-icon fas fa-arrow-left'></i> &nbsp;
                                     Kembali</a>

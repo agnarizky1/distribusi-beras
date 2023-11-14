@@ -21,11 +21,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            GradeSeeder::class,
             GradeTokoSeeder::class,
-            JenisSeeder::class,
-            TokoSeeder::class,
+            // TokoSeeder::class,
             MerkSeeder::class,
+            SalesSeeder::class,
 
         ]);
         // User::factory(10)->create();

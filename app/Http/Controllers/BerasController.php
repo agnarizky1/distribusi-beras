@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beras;
-use App\Models\Grade;
-use App\Models\Jenis;
 use App\Models\Merk;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
@@ -70,8 +68,6 @@ class BerasController extends Controller
             totalStock::create([
                 'merk_beras' => $request->merk_beras,
                 'ukuran_beras' => $request->berat,
-                'jenis_beras' => $request->jenis_beras,
-                'grade_beras' => $request->grade_beras,
                 'jumlah_stock' => $request->stock,
                 'harga' => $request->harga,
             ]);
@@ -105,15 +101,13 @@ class BerasController extends Controller
          return $nextId;
     }
 
-    
+
     public function show($id)
     {
-        $jenis = Jenis::all();
-        $grade = Grade::all();
         $merk = Merk::all();
         $beras = Beras::find($id)->first();
         // dd($beras);
-        return view('admin.stock.show', compact('beras','grade','jenis', 'merk'));
+        return view('admin.stock.show', compact('beras', 'merk'));
     }
 
     /**
@@ -124,11 +118,9 @@ class BerasController extends Controller
      */
     public function edit($id_beras)
     {
-        $jenis = Jenis::all();
-        $grade = Grade::all();
         $merk = Merk::all();
         $beras = Beras::find($id_beras);
-        return view('admin.stock.edit', compact('beras','grade','jenis', 'merk'));
+        return view('admin.stock.edit', compact('beras', 'merk'));
     }
 
     /**
@@ -187,11 +179,9 @@ class BerasController extends Controller
         ]);
         $merk = $request->input('nama_beras');
         $berat = $request->input('berat');
-        $jenis = $request->input('jenis_beras');
-        $grade = $request->input('grade_beras');
 
         $query = totalStock::where('merk_beras', $merk)
-            ->where('ukuran_beras', $berat)->where('jenis_beras', $jenis)->where('grade_beras', $grade);
+            ->where('ukuran_beras', $berat);
         $getData = $query->first();
 
         if($getData){
@@ -212,8 +202,6 @@ class BerasController extends Controller
     {
         $tStock = totalStock::where('merk_beras', $id_beras->merk_beras)
         ->where('ukuran_beras', $id_beras->berat)
-        ->where('jenis_beras', $id_beras->jenis_beras)
-        ->where('grade_beras', $id_beras->grade_beras)
         ->first();
 
         if ($tStock) {

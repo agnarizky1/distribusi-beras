@@ -27,8 +27,8 @@
                             <table id="tabel-user" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th width="5%">No</th>
                                         <th>Id Toko</th>
+                                        <th class="text-center">Foto</th>
                                         <th>Nama Toko</th>
                                         <th>Rating</th>
                                         <th>Pemilik</th>
@@ -40,8 +40,9 @@
                                 <tbody>
                                     @foreach ($toko as $t)
                                         <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $t->id_toko }}</td>
+                                            <td><img src="{{ asset('/storage/toko/' . $t->foto_toko) }}" class="rounded"
+                                                    style="width: 150px"></td>
                                             <td>{{ $t->nama_toko }}</td>
                                             <td>{{ $t->grade_toko }}</td>
                                             <td>{{ $t->pemilik }}</td>
@@ -82,6 +83,27 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="card-body">
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                    <label for="sales">Nama sales :</label>
+                                                    <br>
+                                                    <select class="form-select" id="sales" name="sales" required
+                                                        data-live-search="true">
+                                                        <option value="">Pilih Nama Sales</option>
+                                                        @foreach ($sales as $s)
+                                                            <option value="{{ $s->id_sales }}">
+                                                                {{ $s->nama_sales }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="text-danger">
+                                                        @error('sales')
+                                                            Nama sales tidak boleh kosong.
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-4">
                                                 <div class="col-md-6">
                                                     <label for="nama_toko" class="form-label">Nama toko :</label>
@@ -125,6 +147,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="mb-3">
                                                 <div class="form-group">
                                                     <label for="alamat">Alamat toko:</label>
@@ -151,6 +174,31 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                    <label for="foto_ktp">Foto KTP:</label>
+                                                    <input type="file" name="foto_ktp" accept="image/*"
+                                                        class="form-control @error('foto_ktp') is-invalid @enderror">
+                                                    <div class="text-danger">
+                                                        @error('foto_ktp')
+                                                            Foto KTP tidak boleh kosong.
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                    <label for="foto_toko">Foto Toko:</label>
+                                                    <input type="file" name="foto_toko" accept="image/*"
+                                                        class="form-control @error('foto_toko') is-invalid @enderror">
+                                                    <div class="text-danger">
+                                                        @error('foto_toko')
+                                                            Foto toko tidak boleh kosong.
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- /.card-body -->
                                             <div class="modal-footer">
                                                 <a href="{{ route('admin.toko') }}" type="button"
@@ -173,4 +221,17 @@
             </div>
         </section>
     </div>
+    <script>
+        $(document).on('shown.bs.modal', function() {
+            $('#sales').select2({
+                dropdownParent: $('#exampleModal')
+            });
+        });
+
+        const selecttoko = $('#sales');
+        selecttoko.on('change', function() {
+            const selectedOption = $(this).find('option:selected');
+
+        });
+    </script>
 @endsection
