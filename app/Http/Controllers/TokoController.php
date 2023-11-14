@@ -133,52 +133,55 @@ class TokoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Toko $id_toko)
-    {
-        $request->validate([
-            'sales' => 'required',
-            'nama_toko' => 'required',
-            'grade_toko' => 'required',
-            'pemilik' => 'required',
-            'alamat' => 'required',
-            'nomor_tlp' => 'required',
-        ]);
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'sales' => 'required',
+        'foto_toko' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'nama_toko' => 'required',
+        'grade_toko' => 'required',
+        'pemilik' => 'required',
+        'foto_ktp' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'alamat' => 'required',
+        'nomor_tlp' => 'required',
+    ]);
 
-        $toko = Toko::find($id_toko);
+    $toko = Toko::find($id);
 
-        if (!$toko) {
-            // Handle case where toko with the given ID is not found
-            return redirect()->route('admin.toko')->with('error', 'Data Toko tidak ditemukan!');
-        }
-
-        // Update data
-        $toko->sales = $request->sales;
-        $toko->nama_toko = $request->nama_toko;
-        $toko->grade_toko = $request->grade_toko;
-        $toko->pemilik = $request->pemilik;
-        $toko->alamat = $request->alamat;
-        $toko->nomor_tlp = $request->nomor_tlp;
-
-        // Check if a new foto_toko is uploaded
-        if ($request->hasFile('foto_toko')) {
-            $foto_toko = $request->file('foto_toko');
-            $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
-            $toko->foto_toko = $foto_toko->hashName();
-        }
-
-        // Check if a new foto_ktp is uploaded
-        if ($request->hasFile('foto_ktp')) {
-            $foto_ktp = $request->file('foto_ktp');
-            $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
-            $toko->foto_ktp = $foto_ktp->hashName();
-        }
-
-        // Save updated data
-        $toko->save();
-
-        // Redirect with success message
-        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Diperbarui!');
+    if (!$toko) {
+        // Redirect with an error message if the toko is not found
+        Alert::error('Data Toko Tidak Ditemukan!');
+        return back();
     }
+
+    // Update fields that are not file uploads
+    $toko->update([
+        'sales' => $request->sales,
+        'nama_toko' => $request->nama_toko,
+        'grade_toko' => $request->grade_toko,
+        'pemilik' => $request->pemilik,
+        'alamat' => $request->alamat,
+        'nomor_tlp' => $request->nomor_tlp,
+    ]);
+
+    // Update foto toko if a new file is uploaded
+    if ($request->hasFile('foto_toko')) {
+        $foto_toko = $request->file('foto_toko');
+        $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
+        $toko->update(['foto_toko' => $foto_toko->hashName()]);
+    }
+
+    // Update foto ktp if a new file is uploaded
+    if ($request->hasFile('foto_ktp')) {
+        $foto_ktp = $request->file('foto_ktp');
+        $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
+        $toko->update(['foto_ktp' => $foto_ktp->hashName()]);
+    }
+
+    // Redirect with a success message
+    return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Diperbarui!');
+}
+
 
     /**
      * Remove the specified resource from storage.
