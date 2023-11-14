@@ -20,11 +20,9 @@ class BerasController extends Controller
     public function index()
     {
         $beras = Beras::all();
-        $jenis = Jenis::all();
-        $grade = Grade::all();
         $merk = Merk::all();
         $total = totalStock::all();
-        return view('admin.stock.index', compact('beras','grade', 'jenis','merk','total'));
+        return view('admin.stock.index', compact('beras','merk','total'));
     }
 
     /**,
@@ -38,8 +36,6 @@ class BerasController extends Controller
         $request->validate([
             'merk_beras' => 'required',
             'berat' => 'required',
-            'jenis_beras' => 'required',
-            'grade_beras' => 'required',
             'nama_sopir' => 'required',
             'plat_no' => 'required',
             'tanggal_masuk_beras' =>'required',
@@ -54,8 +50,6 @@ class BerasController extends Controller
             'id_beras'   =>  $nextId,
             'merk_beras' => $request->merk_beras,
             'berat' => $request->berat,
-            'jenis_beras' => $request->jenis_beras,
-            'grade_beras' => $request->grade_beras,
             'nama_sopir' => $request->nama_sopir,
             'plat_no'=>$request->plat_no,
             'tanggal_masuk_beras' => $request->tanggal_masuk_beras,
@@ -65,8 +59,6 @@ class BerasController extends Controller
 
         $tStock = totalStock::where('merk_beras', $request->merk_beras)
             ->where('ukuran_beras', $request->berat)
-            ->where('jenis_beras', $request->jenis_beras)
-            ->where('grade_beras', $request->grade_beras)
             ->first();
 
         if ($tStock) {

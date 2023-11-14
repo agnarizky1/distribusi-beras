@@ -52,11 +52,18 @@
                 </li>
 
                 <li class="sidebar-title">Master</li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
-                    <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-box-open"></i>
-                        <span>Stok Beras</span>
+
+
+                <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
+                    <a href="{{ route('admin.toko') }}" class='sidebar-link'>
+                        <i class="fa-sharp fa-solid fa-store"></i>
+                        <span>Data Toko</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['']) }} ">
+                    <a href="{{ route('admin.sales') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-users"></i>
+                        <span>Data Sales</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.merk', 'admin.merk.add', 'admin.merk.edit']) }} ">
@@ -65,31 +72,20 @@
                         <span>Data Merk Beras</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ set_active(['admin.grade', 'admin.grade.add', 'admin.grade.edit']) }} ">
-                    <a href="{{ route('admin.grade') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-box-archive"></i>
-                        <span>Data Grade</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ set_active(['admin.jenis', 'admin.jenis.add', 'admin.jenis.edit']) }} ">
-                    <a href="{{ route('admin.jenis') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-box-archive"></i>
-                        <span>Data Jenis</span>
-                    </a>
-                </li>
                 <li class="sidebar-title">Transaksi</li>
-                <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit']) }}">
-                    <a href="{{ route('admin.toko') }}" class='sidebar-link'>
-                        <i class="fa-sharp fa-solid fa-store"></i>
-                        <span>Data Toko</span>
+
+                <li
+                    class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
+                    <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-box-open"></i>
+                        <span>Stok Beras</span>
                     </a>
                 </li>
-
                 <li
                     class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="fa fa-truck-moving"></i>
-                        <span>Distribusi</span>
+                        <span>Order</span>
                     </a>
                 </li>
                 {{-- <li class="sidebar-title">Distribusi</li>
