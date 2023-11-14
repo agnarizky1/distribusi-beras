@@ -10,6 +10,7 @@ use App\Http\Controllers\BerasController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\UkuranController;
 use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 
@@ -99,6 +100,14 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/sales/edit/{id}', [SalesController::class, 'edit'])->name('admin.sales.edit');
     Route::put('/admin/sales/update/{id}', [SalesController::class, 'update'])->name('admin.sales.update');
     Route::get('/admin/sales/destroy/{id}', [SalesController::class, 'destroy'])->name('admin.sales.destroy');
+
+    //ukuran
+    Route::get('/admin/ukuran', [UkuranController::class, 'index'])->name('admin.ukuran');
+    Route::post('/admin/ukuran/create', [UkuranController::class, 'store'])->name('admin.ukuran.create');
+    Route::get('/admin/ukuran/add', [UkuranController::class, 'create'])->name('admin.ukuran.add');
+    Route::get('/admin/ukuran/edit/{id}', [UkuranController::class, 'edit'])->name('admin.ukuran.edit');
+    Route::put('/admin/ukuran/update/{id}', [UkuranController::class, 'update'])->name('admin.ukuran.update');
+    Route::get('/admin/ukuran/destroy/{id}', [UkuranController::class, 'destroy'])->name('admin.ukuran.destroy');
 
     //merk
     Route::get('/admin/merk', [MerkController::class, 'index'])->name('admin.merk');

@@ -73,8 +73,14 @@
                         <span>Data Merk Beras</span>
                     </a>
                 </li>
-                <li class="sidebar-title">Transaksi</li>
+                <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
+                    <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span>Data Ukuran Beras</span>
+                    </a>
+                </li>
 
+                <li class="sidebar-title">Transaksi</li>
                 <li
                     class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
                     <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
