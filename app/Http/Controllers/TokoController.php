@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Toko;
+use App\Models\Sales;
 use App\Models\GradeToko;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,7 +19,8 @@ class TokoController extends Controller
     {
         $toko = Toko::all();
         $grade = GradeToko::all();
-        return view('admin.toko.index', compact('toko', 'grade'));
+        $sales = Sales::all();
+        return view('admin.toko.index', compact('toko', 'grade','sales'));
     }
 
     /**

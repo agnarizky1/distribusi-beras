@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             GradeTokoSeeder::class,
             // TokoSeeder::class,
             MerkSeeder::class,
+            SalesSeeder::class,
 
         ]);
         // User::factory(10)->create();

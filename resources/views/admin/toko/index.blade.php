@@ -83,7 +83,26 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="card-body">
-
+                                            <div class="mb-3">
+                                                <div class="form-group">
+                                                    <label for="sales">Nama sales :</label>
+                                                    <br>
+                                                    <select class="form-select" id="sales" name="sales" required
+                                                        data-live-search="true">
+                                                        <option value="">Pilih Nama Sales</option>
+                                                        @foreach ($sales as $s)
+                                                            <option value="{{ $s->id_sales }}">
+                                                                {{ $s->nama_sales }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="text-danger">
+                                                        @error('sales')
+                                                            Nama sales tidak boleh kosong.
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="row mb-4">
                                                 <div class="col-md-6">
@@ -155,19 +174,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <div class="form-group">
-                                                    <label for="sales">Nama sales :</label>
-                                                    <input type="text" name="sales"
-                                                        class="form-control @error('sales') is-invalid @enderror"
-                                                        placeholder="Nama sales..">
-                                                    <div class="text-danger">
-                                                        @error('sales')
-                                                            Nama sales tidak boleh kosong.
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <div class="mb-3">
                                                 <div class="form-group">
                                                     <label for="foto_ktp">Foto KTP:</label>
@@ -214,4 +221,17 @@
             </div>
         </section>
     </div>
+    <script>
+        $(document).on('shown.bs.modal', function() {
+            $('#sales').select2({
+                dropdownParent: $('#exampleModal')
+            });
+        });
+
+        const selecttoko = $('#sales');
+        selecttoko.on('change', function() {
+            const selectedOption = $(this).find('option:selected');
+
+        });
+    </script>
 @endsection
