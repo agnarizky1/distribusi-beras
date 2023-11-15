@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="page-heading">
-        <h3>Input Data Sales</h3>
+        <h3>Input Data Ukuran Beras</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -11,31 +11,18 @@
                     <div class="card-header">
 
                     </div>
-                    <form action="{{ Route('admin.sales.create') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('admin.ukuran.create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="form-group">
-                                    <label for="nama_sales">Nama Sales :</label>
-                                    <input type="text" name="nama_sales"
-                                        class="form-control @error('nama_sales') is-invalid @enderror"
-                                        placeholder="Nama Sales..">
+                                    <label for="berat">Ukuran beras (berat) :</label>
+                                    <input type="text" name="berat"
+                                        class="form-control @error('berat') is-invalid @enderror"
+                                        placeholder="Ukuran beras..">
                                     <div class="text-danger">
-                                        @error('nama_sales')
-                                            Nama sales tidak boleh kosong.
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="no_telpon">Nomor Telpon :</label>
-                                    <input type="text" name="no_telpon"
-                                        class="form-control @error('no_telpon') is-invalid @enderror"
-                                        placeholder="Nomor telpon..">
-                                    <div class="text-danger">
-                                        @error('no_telpon')
-                                            Nomor telepon sales tidak boleh kosong.
+                                        @error('berat')
+                                            Ukuran beras tidak boleh kosong.
                                         @enderror
                                     </div>
                                 </div>
@@ -43,7 +30,7 @@
 
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <a href="{{ route('admin.sales') }}" type="button" class="btn btn-warning"><i
+                                <a href="{{ route('admin.ukuran') }}" type="button" class="btn btn-warning"><i
                                         class='nav-icon fas fa-arrow-left'></i> &nbsp;
                                     Kembali</a>
                                 <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i>

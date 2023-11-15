@@ -28,7 +28,7 @@
                                 <thead>
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Ukuran(berat)</th>
+                                        <th>Ukuran(berat/Kg)</th>
                                         <th width="100px">Aksi</th>
                                     </tr>
                                 </thead>
@@ -36,7 +36,7 @@
                                     @foreach ($berat as $b)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $b->berat }}</td>
+                                            <td>{{ $b->berat }} Kg</td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
                                                     <a href="{{ route('admin.sales.edit', $b->id) }}"

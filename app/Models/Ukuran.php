@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ukuran extends Model
 {
     use HasFactory;
-    protected $table = 'total_stocks';
+    protected $table = 'ukurans';
     protected $fillable = ['berat'];
 }
