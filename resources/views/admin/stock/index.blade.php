@@ -199,11 +199,9 @@
                                             <select class="form-select @error('berat') is-invalid @enderror"
                                                 id="berat" name="berat" aria-label="Default select example"
                                                 required>
-                                                <option value="3">3 KG</option>
-                                                <option value="5">5 KG</option>
-                                                <option value="10">10 KG</option>
-                                                <option value="25">25 KG</option>
-                                                <option value="50">50 KG</option>
+                                                @foreach ($ukuran as $ukuran)
+                                                    <option value="{{ $ukuran->berat }}">{{ $ukuran->berat }} KG</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

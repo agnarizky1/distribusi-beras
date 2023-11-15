@@ -8,6 +8,7 @@ use App\Models\Toko;
 use App\Models\Beras;
 use App\Models\totalStock;
 use App\Models\Pembayaran;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
@@ -23,6 +24,7 @@ class DistributionController extends Controller
     public function index(Request $request)
     {
         $tokos = Toko::all();
+        $sales = Sales::all();
         $beras = totalStock::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
@@ -33,7 +35,7 @@ class DistributionController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
+        return view('admin.distribusi.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
     }
 
     public function store(Request $request)

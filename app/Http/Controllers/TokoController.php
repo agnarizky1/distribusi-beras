@@ -6,6 +6,7 @@ use App\Models\Toko;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\File;
 
 class TokoController extends Controller
 {
@@ -30,13 +31,7 @@ class TokoController extends Controller
     {
         return view('admin.toko.add');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
 {
     $request->validate([
@@ -53,23 +48,31 @@ class TokoController extends Controller
     $nextId = $this->generateNextId();
 
     //foto toko
-    $foto_toko = $request->file('foto_toko');
-    $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
+    if ($request->hasFile('foto_toko') && $request->hasFile('foto_ktp')) {
+        $nama_toko = $request->file('foto_toko');
+        $namaGambartoko = time() . 'toko.' . $nama_toko->getClientOriginalExtension();
+        $nama_toko->move(public_path('uploads/toko'), $namaGambartoko); 
 
-    //foto ktp
-    $foto_ktp = $request->file('foto_ktp');
-    $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
+        $foto_ktp = $request->file('foto_ktp');
+        $namaGambarktp = time() . 'ktp.' . $foto_ktp->getClientOriginalExtension();
+        $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp); 
+    } else {
+        $namaGambartoko = null; // Jika tidak ada gambar yang diunggah
+        $namaGambarktp = null; // Jika tidak ada gambar yang diunggah
+    }
 
     $toko = Toko::create([
         'id_toko' => $nextId,
         'sales' => $request->sales,
-        'foto_toko' => $foto_toko->hashName(),
+        'foto_toko' => $namaGambartoko,
         'nama_toko' => $request->nama_toko,
         'pemilik' => $request->pemilik,
-        'foto_ktp' => $foto_ktp->hashName(),
+        'foto_ktp' => $namaGambarktp,
         'alamat' => $request->alamat,
         'nomor_tlp' => $request->nomor_tlp,
+        'koordinat' => $request->koordinat,
     ]);
+
 
     if ($toko) {
         //redirect dengan pesan sukses
@@ -125,13 +128,6 @@ class TokoController extends Controller
         return view('admin.toko.edit', compact('toko', ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
 {
     $request->validate([
@@ -188,6 +184,14 @@ class TokoController extends Controller
      */
     public function destroy(Toko $id_toko)
     {
+        if ($id_toko->foto_toko) {
+            $gambartoko = public_path('uploads/toko/' . $id_toko->foto_toko);
+            $gambarktp = public_path('uploads/ktp/' . $id_toko->foto_ktp);
+    
+            if (File::exists($gambartoko, $gambarktp)) {
+                File::delete($gambartoko, $gambarktp);
+            }
+        }
         $id_toko->delete();
         Alert::error('Data Toko Berhasil Dihapus!');
         return back();

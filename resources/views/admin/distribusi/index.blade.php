@@ -151,7 +151,7 @@
                                                         <select class="form-select" id="nama_toko" name="nama_toko" required data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}">
+                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}" data-nomor_tlp="{{ $toko->nomor_tlp}}">
                                                                 {{ $toko->nama_toko }}
                                                             </option>
                                                             @endforeach
@@ -180,12 +180,19 @@
                                                     <div class="col-md-6">
                                                         <label for="nomor_hp_toko">No.Telp Toko</label>
                                                         <input type="text" class="form-control" id="nomor_hp_toko"
-                                                            name="nomor_hp_toko" required>
+                                                            name="nomor_hp_toko" disabled>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sales">Nama Sales</label>
-                                                        <input type="text" class="form-control" id="sales"
-                                                            name="sales" required>
+                                                        <br>
+                                                        <select class="form-select" id="sales" name="sales" required data-live-search="true">
+                                                            <option value="">Pilih Sales</option>
+                                                            @foreach ($sales as $sales)
+                                                            <option value="{{ $sales->nama_sales }}">
+                                                                {{ $sales->nama_sales }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -278,6 +285,11 @@
                             <script>
                                 $(document).on('shown.bs.modal',function() {
                                     $('#nama_toko').select2({
+                                        dropdownParent: $('#exampleModal')
+                                    });
+                                });
+                                $(document).on('shown.bs.modal',function() {
+                                    $('#sales').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
                                 });
