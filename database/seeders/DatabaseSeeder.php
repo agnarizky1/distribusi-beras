@@ -8,8 +8,6 @@ use Database\Seeders\TokoSeeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\GradeSeeder;
 use Database\Seeders\JenisSeeder;
-use Database\Seeders\SalesSeeder;
-use Database\Seeders\GradeTokoSeeder;
 
 class DatabaseSeeder extends Seeder
 {

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\models\Toko;
+use Illuminate\Support\Facades\DB;
 
 class TokoSeeder extends Seeder
 {
@@ -25,14 +26,15 @@ class TokoSeeder extends Seeder
             $nextId = $prefix . str_pad($lastNumber, 5, '0', STR_PAD_LEFT);
         }
 
-        \DB::table('tokos')->insert([
+        DB::table('tokos')->insert([
             'id_toko' => $nextId,
+            // 'foto_toko' => ,
             'nama_toko' => $faker->company,
-            'grade_toko' => 'BIASA',
+            // 'sales' => ,
             'pemilik' => $faker->name,
+            // 'foto_ktp' => ,
             'alamat' => $faker->address,
             'nomor_tlp' => $faker->phoneNumber,
-            // Add other columns as needed
         ]);
      }
     }

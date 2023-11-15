@@ -4,19 +4,18 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 @endsection
 @section('content')
-    <style>
-        .select2-container {
-            border: 1px solid #dce7f1;
-            padding: 0.275rem 0.75rem;
-            border-radius: 0.25rem;
-        }
-
-        .select2-container--default .select2-selection--single {
-            border: 1px solid #fff;
-        }
-    </style>
+<style>
+    .select2-container {
+        border: 1px solid #dce7f1;
+        padding: 0.275rem 0.75rem;
+        border-radius: 0.25rem;
+    }
+    .select2-container--default .select2-selection--single {
+    border: 1px solid #fff;
+    }
+</style>
     <div class="page-heading">
-        <h3>Data Order</h3>
+        <h3>Data Distribusi</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -26,8 +25,8 @@
                     <div class="card-header row g-3">
                         <div class="col-md-4">
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                <i class="fa-solid fa-folder-plus"></i> Tambah
-                                Order</a>
+                                <i class="fa-solid fa-folder-plus"></i> Tambah Data
+                                Distribusi</a>
                         </div>
                         {{-- <div class="col-md-3">
                                         <form action="/post">
@@ -52,11 +51,11 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Kode Order</th>
+                                        <th>Kode Distribusi</th>
                                         <th>Nama Toko</th>
                                         <th>Nama Sopir</th>
                                         <th>Plat No.</th>
-                                        <th>tgl Order</th>
+                                        <th>tgl Distribusi</th>
                                         <th>Total Berat(Kg)</th>
                                         <th>Total Harga</th>
                                         <th>Aksi</th>
@@ -115,7 +114,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus order ini?
+                                        Apakah Anda yakin ingin menghapus distribusi ini?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -134,7 +133,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Order</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Distribusi</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <section class="row">
@@ -149,20 +148,17 @@
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
                                                         <br>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko" required
-                                                            data-live-search="true">
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                                <option value="{{ $toko->id_toko }}"
-                                                                    data-pemilik="{{ $toko->pemilik }}"
-                                                                    data-alamat="{{ $toko->alamat }}">
-                                                                    {{ $toko->nama_toko }}
-                                                                </option>
+                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}">
+                                                                {{ $toko->nama_toko }}
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="tanggal_distribusi">Tanggal Order</label>
+                                                        <label for="tanggal_distribusi">Tanggal Distribusi</label>
                                                         <input type="date" class="form-control" id="tanggal_distribusi"
                                                             value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
                                                             required>
@@ -182,6 +178,18 @@
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
+                                                        <label for="nomor_hp_toko">No.Telp Toko</label>
+                                                        <input type="text" class="form-control" id="nomor_hp_toko"
+                                                            name="nomor_hp_toko" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="sales">Nama Sales</label>
+                                                        <input type="text" class="form-control" id="sales"
+                                                            name="sales" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-6">
                                                         <label for="nama_sopir">Nama Sopir</label>
                                                         <input type="text" class="form-control" id="nama_sopir"
                                                             name="nama_sopir" required>
@@ -194,27 +202,32 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-md-4 mb-3">
+                                                    <div class="col-md-3 mb-3">
                                                         <label for="beras">Beras</label>
-                                                        <select name="beras" id="beras" class="form-control">
+                                                        <select name="beras" id="beras"
+                                                            class="form-control">
                                                             <option value="0">Pilih Beras</option>
                                                             @foreach ($beras as $item)
-                                                                <option value="{{ $item->id }}"
-                                                                    data-grade="{{ $item->grade_beras }}"
-                                                                    data-jenis="{{ $item->jenis_beras }}"
-                                                                    data-price="{{ $item->harga }}">
-                                                                    {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
-                                                                    {{ $item->jenis_beras }} {{ $item->grade_beras }}
-                                                                </option>
+                                                            <option value="{{ $item->id }}" 
+                                                                data-price="{{ $item->harga }}"
+                                                                data-satuan="">
+                                                                {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
+                                                            </option>
+
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="harga">Harga Satuan</label>
-                                                        <input type="text" id="harga" class="form-control"
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="hargakg">Harga per KG</label>
+                                                        <input type="text" id="hargakg" class="form-control"
                                                             readonly>
                                                     </div>
-                                                    <div class="col-md-4 mb-3">
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="hargapcs">Harga Satuan</label>
+                                                        <input type="text" id="hargapcs" class="form-control"
+                                                            readonly>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
                                                         <label for="jumlah">Jumlah (qty)</label>
                                                         <input type="number" id="jumlah" class="form-control">
                                                     </div>
@@ -230,8 +243,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Nama Beras</th>
-                                                                <th>Jenis Beras</th>
-                                                                <th>Grade Beras</th>
+                                                                <th>Harga Per KG</th>
                                                                 <th>Harga Satuan</th>
                                                                 <th>Jumlah</th>
                                                                 <th>Subtotal</th>
@@ -243,7 +255,7 @@
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="6" class="text-end"><strong>Total Jumlah
+                                                                <td colspan="4" class="text-end"><strong>Total Jumlah
                                                                         Harga :</strong></td>
                                                                 <td colspan="2"><span id="total-price">0</span></td>
                                                             </tr>
@@ -255,33 +267,33 @@
                                                         data-bs-dismiss="modal">Close</button>
                                                     <button id="simpanDistribusiBtn" class="btn btn-primary rounded"><i
                                                             class="fa fa-save"></i>
-                                                        Simpan Order</button>
+                                                        Simpan Distribusi</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                             </div>
-
+                            
                             <script>
-                                $(document).on('shown.bs.modal', function() {
+                                $(document).on('shown.bs.modal',function() {
                                     $('#nama_toko').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
                                 });
 
-                                const selectberas = document.getElementById('beras');
-                                const inputHarga = document.getElementById('harga');
-
                                 const transactionRecords = document.getElementById('transaction-records');
                                 let totalHarga = 0;
 
-                                selectberas.addEventListener('change', function() {
-                                    const selectedOption = this.options[this.selectedIndex];
-                                    const price = selectedOption.getAttribute('data-price');
-                                    const grade = selectedOption.getAttribute('data-grade');
-                                    const jenis = selectedOption.getAttribute('data-jenis');
-                                    inputHarga.value = price;
+                                $('#beras').change(function() {
+                                    var selectedOption = $(this).find('option:selected');
+                                    var price = selectedOption.data('price');
+                                    var berat = parseFloat(selectedOption.text().match(/\d+/)[0]);
+
+                                    $('#hargakg').val(price);
+                                    $('#hargapcs').val(price * berat);
+
+                                    selectedOption.data('satuan', price * berat);
                                 });
 
                                 const selecttoko = $('#nama_toko');
@@ -327,27 +339,25 @@
                                     const selectedOption = berasSelect.find('option:selected');
                                     const berasId = selectedOption.val();
                                     const berasNama = selectedOption.text();
-                                    const berasHarga = parseFloat(selectedOption.data('price'));
+                                    const berasHargaKg = parseFloat(selectedOption.data('price'));
+                                    const berasHargaPcs = parseFloat(selectedOption.data('satuan'));
                                     const berasJumlah = parseInt($('#jumlah').val());
-                                    const berasGrade = selectedOption.data('grade');
-                                    const berasJenis = selectedOption.data('jenis');
 
-                                    if (!berasNama || isNaN(berasHarga) || isNaN(berasJumlah)) {
+                                    if (!berasNama || isNaN(berasJumlah)) {
                                         alert('Silakan lengkapi semua field sebelum menambahkan beras.');
                                         return;
                                     }
 
-                                    const subtotal = berasHarga * berasJumlah;
+                                    const subtotal = berasHargaPcs * berasJumlah;
                                     const row = `
                                     <tr data-idberas=${berasId}>
                                         <td>${berasNama}</td>
-                                        <td class="jenis">${berasJenis}</td>
-                                        <td class="grade">${berasGrade}</td>
-                                        <td class="harga">${berasHarga}</td>
+                                        <td class="hargakg">${berasHargaKg}</td>
+                                        <td class="hargapcs">${berasHargaPcs}</td>
                                         <td>
                                             <div class="input-group">
                                                 <button class="btn btn-primary btn-sm" onclick="tambahBeras(this)">+</button>
-                                                <input class="kuantitas" value="${berasJumlah}">
+                                                <input class="kuantitas" value="${berasJumlah}" readonly>
                                                 <button class="btn btn-primary btn-sm" onclick="kurangBeras(this)">-</button>
                                             </div>
                                         </td>
@@ -366,7 +376,8 @@
                                     $('#total-price').text(totalHarga);
 
                                     berasSelect.val('0');
-                                    $('#harga').val('');
+                                    $('#hargakg').val('');
+                                    $('#hargapcs').val('');
                                     $('#jumlah').val('');
                                     berasSelect.focus();
                                 }
@@ -381,13 +392,13 @@
                                     const row = button.closest('tr');
                                     const kuantitasInput = row.querySelector('.kuantitas'); // Mengambil input kuantitas
                                     const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
-                                    const harga = parseFloat(row.querySelector('.harga').textContent);
+                                    const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
 
                                     let kuantitas = parseFloat(kuantitasInput.value);
                                     kuantitas++;
                                     kuantitasInput.value = kuantitas; // Mengubah nilai input
 
-                                    const subtotal = kuantitas * harga;
+                                    const subtotal = kuantitas * hargapcs;
                                     subtotalElement.textContent = subtotal; // Memperbarui subtotal
 
                                     updateTotalHarga()
@@ -402,8 +413,8 @@
                                     let kuantitas = parseInt(kuantitasInput.value);
                                     if (kuantitas > 1) {
                                         kuantitas--;
-                                        const harga = parseFloat(row.querySelector('.harga').textContent);
-                                        const subtotal = kuantitas * harga;
+                                        const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
+                                        const subtotal = kuantitas * hargapcs;
 
                                         kuantitasInput.value = kuantitas; // Mengubah nilai input
                                         subtotalElement.textContent = subtotal;
@@ -416,9 +427,9 @@
                                     let totalHarga = 0;
 
                                     document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                                        const harga = parseFloat(row.querySelector('.harga').textContent);
+                                        const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
                                         const kuantitas = parseInt(row.querySelector('.kuantitas').value);
-                                        totalHarga += harga * kuantitas;
+                                        totalHarga += hargapcs * kuantitas;
                                     });
 
                                     document.getElementById('total-price').textContent = totalHarga;
@@ -436,10 +447,8 @@
                                     document.querySelectorAll('#transaction-records tr').forEach(function(row) {
                                         var berasId = row.getAttribute('data-idberas');
                                         var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-                                        var jenisBeras = row.querySelector('td:nth-child(2)').textContent;
-                                        var gradeBeras = row.querySelector('td:nth-child(3)').textContent;
-                                        var hargaBeras = parseFloat(row.querySelector('td:nth-child(4)').textContent);
-                                        var subtotal = parseInt(row.querySelector('td:nth-child(6)').textContent, 10);
+                                        var hargaBeras = parseFloat(row.querySelector('td:nth-child(2)').textContent);
+                                        var subtotal = parseInt(row.querySelector('td:nth-child(4)').textContent, 10);
                                         var jumlah = subtotal / hargaBeras;
                                         var beratBeras = parseFloat(namaBeras.match(/\d+/));
                                         var subTotalBeras = jumlah * beratBeras;
@@ -448,8 +457,6 @@
                                         Distribusi.push({
                                             idBeras: berasId,
                                             nama: namaBeras,
-                                            jenis: jenisBeras,
-                                            grade: gradeBeras,
                                             harga: hargaBeras,
                                             jumlah: jumlah,
                                         });
@@ -475,7 +482,7 @@
                                             Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
                                                 .then((result) => {
                                                     if (result.isConfirmed) {
-                                                        window.location.href = '{{ route('distribution') }}';
+                                                        window.location.href = '{{ route("distribution") }}';
                                                     }
                                                 });
                                         },
@@ -493,8 +500,9 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $("#tabel-distribusi").DataTable();
-        });
+    $(document).ready( function () {
+        $("#tabel-distribusi").DataTable();
+    } );
+
     </script>
 @endsection
