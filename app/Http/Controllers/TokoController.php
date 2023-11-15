@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Toko;
 use App\Models\Sales;
-use App\Models\GradeToko;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,9 +17,8 @@ class TokoController extends Controller
     public function index()
     {
         $toko = Toko::all();
-        $grade = GradeToko::all();
         $sales = Sales::all();
-        return view('admin.toko.index', compact('toko', 'grade','sales'));
+        return view('admin.toko.index', compact('toko', 'sales'));
     }
 
     /**
@@ -45,7 +43,6 @@ class TokoController extends Controller
         'sales' => 'required',
         'foto_toko' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'nama_toko' => 'required',
-        'grade_toko' => 'required',
         'pemilik' => 'required',
         'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'alamat' => 'required',
@@ -68,7 +65,6 @@ class TokoController extends Controller
         'sales' => $request->sales,
         'foto_toko' => $foto_toko->hashName(),
         'nama_toko' => $request->nama_toko,
-        'grade_toko' => $request->grade_toko,
         'pemilik' => $request->pemilik,
         'foto_ktp' => $foto_ktp->hashName(),
         'alamat' => $request->alamat,
@@ -112,7 +108,9 @@ class TokoController extends Controller
      */
     public function show($id)
     {
-        //
+        $toko = Toko::findOrFail($id);
+
+        return view('admin.toko.show', compact('toko'));
     }
 
     /**
@@ -124,8 +122,7 @@ class TokoController extends Controller
     public function edit($id_toko)
     {
         $toko = Toko::find($id_toko);
-        $grade = GradeToko::all();
-        return view('admin.toko.edit', compact('toko', 'grade'));
+        return view('admin.toko.edit', compact('toko', ));
     }
 
     /**
@@ -141,7 +138,6 @@ class TokoController extends Controller
         'sales' => 'required',
         'foto_toko' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'nama_toko' => 'required',
-        'grade_toko' => 'required',
         'pemilik' => 'required',
         'foto_ktp' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'alamat' => 'required',
@@ -160,7 +156,6 @@ class TokoController extends Controller
     $toko->update([
         'sales' => $request->sales,
         'nama_toko' => $request->nama_toko,
-        'grade_toko' => $request->grade_toko,
         'pemilik' => $request->pemilik,
         'alamat' => $request->alamat,
         'nomor_tlp' => $request->nomor_tlp,
