@@ -184,14 +184,32 @@
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
-                                                        <label for="nomor_tlp">No.Telp Toko</label>
-                                                        <input type="text" class="form-control" id="nomor_tlp"
-                                                            name="nomor_tlp" disabled>
+                                                        <<<<<<< HEAD <label for="nomor_tlp">No.Telp Toko</label>
+                                                            <input type="text" class="form-control" id="nomor_tlp"
+                                                                name="nomor_tlp" disabled>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sales">Nama Sales</label>
                                                         <input type="text" class="form-control" id="sales"
                                                             name="sales" disabled>
+                                                        =======
+                                                        <label for="nomor_hp_toko">No.Telp Toko</label>
+                                                        <input type="text" class="form-control" id="nomor_hp_toko"
+                                                            name="nomor_hp_toko" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="sales">Nama Sales</label>
+                                                        <br>
+                                                        <select class="form-select" id="sales" name="sales"
+                                                            required data-live-search="true">
+                                                            <option value="">Pilih Sales</option>
+                                                            @foreach ($sales as $sales)
+                                                                <option value="{{ $sales->nama_sales }}">
+                                                                    {{ $sales->nama_sales }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        >>>>>>> 5c0ae9eb1f80359f6b4586b6a841095b9200dd8d
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -281,6 +299,11 @@
                             <script>
                                 $(document).on('shown.bs.modal', function() {
                                     $('#nama_toko').select2({
+                                        dropdownParent: $('#exampleModal')
+                                    });
+                                });
+                                $(document).on('shown.bs.modal', function() {
+                                    $('#sales').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
                                 });

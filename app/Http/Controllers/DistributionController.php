@@ -10,6 +10,7 @@ use App\Models\Sales;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Models\DetailDistribusi;
 
@@ -35,7 +36,7 @@ class DistributionController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.distribusi.index', compact('tokos','sales', 'beras','distri','pembayaranTotals'));
+        return view('admin.distribusi.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
     }
 
     public function store(Request $request)

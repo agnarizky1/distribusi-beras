@@ -22,6 +22,7 @@ class CreateTokosTable extends Migration
             $table->string('foto_ktp');
             $table->string('alamat');
             $table->string('nomor_tlp');
+            $table->string('koordinat');
             $table->timestamps();
         });
     }

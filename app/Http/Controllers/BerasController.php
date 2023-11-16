@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Beras;
 use App\Models\Merk;
 use App\Models\totalStock;
+use App\Models\Ukuran;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -20,7 +21,8 @@ class BerasController extends Controller
         $beras = Beras::all();
         $merk = Merk::all();
         $total = totalStock::all();
-        return view('admin.stock.index', compact('beras','merk','total'));
+        $ukuran = Ukuran::all();
+        return view('admin.stock.index', compact('beras','merk','total','ukuran'));
     }
 
     /**,
