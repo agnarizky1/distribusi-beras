@@ -4,16 +4,17 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 @endsection
 @section('content')
-<style>
-    .select2-container {
-        border: 1px solid #dce7f1;
-        padding: 0.275rem 0.75rem;
-        border-radius: 0.25rem;
-    }
-    .select2-container--default .select2-selection--single {
-    border: 1px solid #fff;
-    }
-</style>
+    <style>
+        .select2-container {
+            border: 1px solid #dce7f1;
+            padding: 0.275rem 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #fff;
+        }
+    </style>
     <div class="page-heading">
         <h3>Data Distribusi</h3>
     </div>
@@ -148,20 +149,25 @@
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
                                                         <br>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko" required data-live-search="true">
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required
+                                                            data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}">
-                                                                {{ $toko->nama_toko }}
-                                                            </option>
+                                                                <option value="{{ $toko->id_toko }}"
+                                                                    data-pemilik="{{ $toko->pemilik }}"
+                                                                    data-alamat="{{ $toko->alamat }}"
+                                                                    data-nomor_tlp="{{ $toko->nomor_tlp }}"
+                                                                    data-sales="{{ $toko->sales }}">
+                                                                    {{ $toko->nama_toko }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="tanggal_distribusi">Tanggal Distribusi</label>
-                                                        <input type="date" class="form-control" id="tanggal_distribusi"
-                                                            value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
-                                                            required>
+                                                        <input type="date" class="form-control"
+                                                            id="tanggal_distribusi" value="{{ date('Y-m-d') }}"
+                                                            name="tanggal_distribusi" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -178,14 +184,14 @@
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col-md-6">
-                                                        <label for="nomor_hp_toko">No.Telp Toko</label>
-                                                        <input type="text" class="form-control" id="nomor_hp_toko"
-                                                            name="nomor_hp_toko" required>
+                                                        <label for="nomor_tlp">No.Telp Toko</label>
+                                                        <input type="text" class="form-control" id="nomor_tlp"
+                                                            name="nomor_tlp" disabled>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="sales">Nama Sales</label>
                                                         <input type="text" class="form-control" id="sales"
-                                                            name="sales" required>
+                                                            name="sales" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -204,16 +210,13 @@
                                                 <div class="row">
                                                     <div class="col-md-3 mb-3">
                                                         <label for="beras">Beras</label>
-                                                        <select name="beras" id="beras"
-                                                            class="form-control">
+                                                        <select name="beras" id="beras" class="form-control">
                                                             <option value="0">Pilih Beras</option>
                                                             @foreach ($beras as $item)
-                                                            <option value="{{ $item->id }}" 
-                                                                data-price="{{ $item->harga }}"
-                                                                data-satuan="">
-                                                                {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
-                                                            </option>
-
+                                                                <option value="{{ $item->id }}"
+                                                                    data-price="{{ $item->harga }}" data-satuan="">
+                                                                    {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -274,9 +277,9 @@
                                     </div>
                                 </section>
                             </div>
-                            
+
                             <script>
-                                $(document).on('shown.bs.modal',function() {
+                                $(document).on('shown.bs.modal', function() {
                                     $('#nama_toko').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
@@ -299,14 +302,20 @@
                                 const selecttoko = $('#nama_toko');
                                 const inputPemilik = $('#pemilik');
                                 const inputAlamat = $('#alamat');
+                                const inputNomor_tlp = $('#nomor_tlp');
+                                const inputSales = $('#sales');
 
                                 selecttoko.on('change', function() {
                                     const selectedOption = $(this).find('option:selected');
                                     const pemilik = selectedOption.data('pemilik');
                                     const alamat = selectedOption.data('alamat');
+                                    const nomor_tlp = selectedOption.data('nomor_tlp');
+                                    const sales = selectedOption.data('sales');
 
                                     inputPemilik.val(pemilik);
                                     inputAlamat.val(alamat);
+                                    inputNomor_tlp.val(nomor_tlp);
+                                    inputSales.val(sales);
                                 });
 
                                 $(document).ready(function() {
@@ -482,7 +491,7 @@
                                             Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
                                                 .then((result) => {
                                                     if (result.isConfirmed) {
-                                                        window.location.href = '{{ route("distribution") }}';
+                                                        window.location.href = '{{ route('distribution') }}';
                                                     }
                                                 });
                                         },
@@ -500,9 +509,8 @@
         </div>
     </div>
     <script>
-    $(document).ready( function () {
-        $("#tabel-distribusi").DataTable();
-    } );
-
+        $(document).ready(function() {
+            $("#tabel-distribusi").DataTable();
+        });
     </script>
 @endsection

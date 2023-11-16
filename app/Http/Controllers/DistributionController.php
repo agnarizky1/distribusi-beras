@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distribusi;
-use App\Models\DetailDistribusi;
+use PDF;
+use Carbon\Carbon;
 use App\Models\Toko;
 use App\Models\Beras;
-use App\Models\totalStock;
+use App\Models\Sales;
+use App\Models\Distribusi;
 use App\Models\Pembayaran;
+use App\Models\totalStock;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use PDF;
+use App\Models\DetailDistribusi;
 
 
 class DistributionController extends Controller
@@ -23,6 +24,7 @@ class DistributionController extends Controller
     public function index(Request $request)
     {
         $tokos = Toko::all();
+        $sales = Sales::all();
         $beras = totalStock::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
@@ -33,7 +35,7 @@ class DistributionController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.distribusi.index', compact('tokos', 'beras','distri','pembayaranTotals'));
+        return view('admin.distribusi.index', compact('tokos','sales', 'beras','distri','pembayaranTotals'));
     }
 
     public function store(Request $request)
@@ -73,7 +75,7 @@ class DistributionController extends Controller
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
-        
+
         $pembayaran->save();
 
         // Kemudian, simpan setiap Distribusi ke dalam tabel DetailDistribusi
