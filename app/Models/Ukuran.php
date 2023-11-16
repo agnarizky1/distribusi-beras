@@ -10,4 +10,6 @@ class Ukuran extends Model
     use HasFactory;
     protected $table = 'ukurans';
     protected $fillable = ['berat'];
+    
+
 }

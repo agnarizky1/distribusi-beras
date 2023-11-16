@@ -1,5 +1,17 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .select2-container {
+        border: 1px solid #dce7f1;
+        padding: 0.275rem 0.75rem;
+        border-radius: 0.25rem;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border: 1px solid #fff;
+    }
+
+</style>
     <div class="page-heading">
         <h3>Form Edit Data Toko</h3>
     </div>
@@ -14,11 +26,19 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="sales" class="form-label">Sales:</label>
-                                <input type="text" name="sales" value="{{ $toko->sales }}"
-                                    class="form-control @error('sales') is-invalid @enderror" placeholder="Nama sales..">
+                                <br>
+                                <select class="form-select" id="sales" name="sales" required
+                                    data-live-search="true">
+                                    <option value="{{ $toko->sales }}">{{ $toko->sales }}</option>
+                                    @foreach ($sales as $s)
+                                    <option value="{{ $s->nama_sales }}">
+                                        {{ $s->nama_sales }}
+                                    </option>
+                                    @endforeach
+                                </select>
                                 <div class="text-danger">
                                     @error('sales')
-                                        {{ $message }}
+                                    Nama sales tidak boleh kosong.
                                     @enderror
                                 </div>
                             </div>
@@ -33,7 +53,7 @@
                                         @enderror
                                     </div>
                                     @if ($toko->foto_toko)
-                                        <img src="{{ asset('storage/toko/' . $toko->foto_toko) }}" alt="Foto Toko"
+                                        <img src="{{ asset('uploads/toko/' . $toko->foto_toko) }}" alt="Foto Toko" style="height: auto; max-width: 400px;"
                                             class="img-fluid mt-2">
                                     @endif
                                 </div>
@@ -47,7 +67,7 @@
                                         @enderror
                                     </div>
                                     @if ($toko->foto_ktp)
-                                        <img src="{{ asset('storage/ktp/' . $toko->foto_ktp) }}" alt="Foto KTP"
+                                        <img src="{{ asset('uploads/ktp/' . $toko->foto_ktp) }}" alt="Foto KTP" style="height: auto; max-width: 400px;"
                                             class="img-fluid mt-2">
                                     @endif
                                 </div>
@@ -57,7 +77,7 @@
                                     <label for="nama_toko" class="form-label">Nama toko :</label>
                                     <input type="text" name="nama_toko" value="{{ $toko->nama_toko }}"
                                         class="form-control @error('nama_toko') is-invalid @enderror"
-                                        placeholder="Nama toko..">
+                                        placeholder="Nama toko.." disabled>
                                     <div class="text-danger">
                                         @error('nama_toko')
                                             Nama toko tidak boleh kosong.
@@ -68,7 +88,7 @@
                                     <label for="pemilik" class="form-label">Nama Pemilik :</label>
                                     <input type="text" name="pemilik" value="{{ $toko->pemilik }}"
                                         class="form-control @error('pemilik') is-invalid @enderror"
-                                        placeholder="Nama pemilik..">
+                                        placeholder="Nama pemilik.." disabled>
                                     <div class="text-danger">
                                         @error('pemilik')
                                             Nama pemilik tidak boleh kosong.
@@ -81,7 +101,7 @@
                                     <label for="alamat">Alamat toko:</label>
                                     <input type="text" name="alamat" value="{{ $toko->alamat }}"
                                         class="form-control @error('alamat') is-invalid @enderror"
-                                        placeholder="Nama alamat..">
+                                        placeholder="Nama alamat.." disabled>
                                     <div class="text-danger">
                                         @error('alamat')
                                             Alamat tidak boleh kosong.
@@ -116,4 +136,10 @@
             </div>
         </section>
     </div>
+    <script>
+            $(document).ready(function () {
+                 $('#sales').select2({
+                });
+            });
+    </script>
 @endsection
