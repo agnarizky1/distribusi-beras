@@ -4,18 +4,19 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 @endsection
 @section('content')
-<style>
-    .select2-container {
-        border: 1px solid #dce7f1;
-        padding: 0.275rem 0.75rem;
-        border-radius: 0.25rem;
-    }
-    .select2-container--default .select2-selection--single {
-    border: 1px solid #fff;
-    }
-</style>
+    <style>
+        .select2-container {
+            border: 1px solid #dce7f1;
+            padding: 0.275rem 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #fff;
+        }
+    </style>
     <div class="page-heading">
-        <h3>Data Distribusi</h3>
+        <h3>Data Order</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -25,8 +26,7 @@
                     <div class="card-header row g-3">
                         <div class="col-md-4">
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
-                                <i class="fa-solid fa-folder-plus"></i> Tambah Data
-                                Distribusi</a>
+                                <i class="fa-solid fa-folder-plus"></i> Tambah Order</a>
                         </div>
                         {{-- <div class="col-md-3">
                                         <form action="/post">
@@ -51,11 +51,11 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th width="5%">No</th>
-                                        <th>Kode Distribusi</th>
+                                        <th>Kode Order</th>
                                         <th>Nama Toko</th>
                                         <th>Nama Sopir</th>
                                         <th>Plat No.</th>
-                                        <th>tgl Distribusi</th>
+                                        <th>tgl Order</th>
                                         <th>Total Berat(Kg)</th>
                                         <th>Total Harga</th>
                                         <th>Aksi</th>
@@ -114,7 +114,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus distribusi ini?
+                                        Apakah Anda yakin ingin menghapus Order ini?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -133,7 +133,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Distribusi</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Input Order</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <section class="row">
@@ -148,17 +148,21 @@
                                                     <div class="col-md-6">
                                                         <label for="nama_toko">Nama Toko</label>
                                                         <br>
-                                                        <select class="form-select" id="nama_toko" name="nama_toko" required data-live-search="true">
+                                                        <select class="form-select" id="nama_toko" name="nama_toko" required
+                                                            data-live-search="true">
                                                             <option value="">Pilih Nama Toko</option>
                                                             @foreach ($tokos as $toko)
-                                                            <option value="{{ $toko->id_toko }}" data-pemilik="{{ $toko->pemilik }}" data-alamat="{{ $toko->alamat }}" data-nomor_tlp="{{ $toko->nomor_tlp}}">
-                                                                {{ $toko->nama_toko }}
-                                                            </option>
+                                                                <option value="{{ $toko->id_toko }}"
+                                                                    data-pemilik="{{ $toko->pemilik }}"
+                                                                    data-alamat="{{ $toko->alamat }}"
+                                                                    data-nomor_tlp="{{ $toko->nomor_tlp }}">
+                                                                    {{ $toko->nama_toko }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="tanggal_distribusi">Tanggal Distribusi</label>
+                                                        <label for="tanggal_distribusi">Tanggal Order </label>
                                                         <input type="date" class="form-control" id="tanggal_distribusi"
                                                             value="{{ date('Y-m-d') }}" name="tanggal_distribusi"
                                                             required>
@@ -185,12 +189,13 @@
                                                     <div class="col-md-6">
                                                         <label for="sales">Nama Sales</label>
                                                         <br>
-                                                        <select class="form-select" id="sales" name="sales" required data-live-search="true">
+                                                        <select class="form-select" id="sales" name="sales"
+                                                            required data-live-search="true">
                                                             <option value="">Pilih Sales</option>
                                                             @foreach ($sales as $sales)
-                                                            <option value="{{ $sales->nama_sales }}">
-                                                                {{ $sales->nama_sales }}
-                                                            </option>
+                                                                <option value="{{ $sales->nama_sales }}">
+                                                                    {{ $sales->nama_sales }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -211,16 +216,13 @@
                                                 <div class="row">
                                                     <div class="col-md-3 mb-3">
                                                         <label for="beras">Beras</label>
-                                                        <select name="beras" id="beras"
-                                                            class="form-control">
+                                                        <select name="beras" id="beras" class="form-control">
                                                             <option value="0">Pilih Beras</option>
                                                             @foreach ($beras as $item)
-                                                            <option value="{{ $item->id }}" 
-                                                                data-price="{{ $item->harga }}"
-                                                                data-satuan="">
-                                                                {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
-                                                            </option>
-
+                                                                <option value="{{ $item->id }}"
+                                                                    data-price="{{ $item->harga }}" data-satuan="">
+                                                                    {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -274,21 +276,21 @@
                                                         data-bs-dismiss="modal">Close</button>
                                                     <button id="simpanDistribusiBtn" class="btn btn-primary rounded"><i
                                                             class="fa fa-save"></i>
-                                                        Simpan Distribusi</button>
+                                                        Simpan Order</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                             </div>
-                            
+
                             <script>
-                                $(document).on('shown.bs.modal',function() {
+                                $(document).on('shown.bs.modal', function() {
                                     $('#nama_toko').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
                                 });
-                                $(document).on('shown.bs.modal',function() {
+                                $(document).on('shown.bs.modal', function() {
                                     $('#sales').select2({
                                         dropdownParent: $('#exampleModal')
                                     });
@@ -494,7 +496,7 @@
                                             Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
                                                 .then((result) => {
                                                     if (result.isConfirmed) {
-                                                        window.location.href = '{{ route("distribution") }}';
+                                                        window.location.href = '{{ route('distribution') }}';
                                                     }
                                                 });
                                         },
@@ -512,9 +514,8 @@
         </div>
     </div>
     <script>
-    $(document).ready( function () {
-        $("#tabel-distribusi").DataTable();
-    } );
-
+        $(document).ready(function() {
+            $("#tabel-distribusi").DataTable();
+        });
     </script>
 @endsection

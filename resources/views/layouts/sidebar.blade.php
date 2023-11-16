@@ -75,8 +75,20 @@
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
                     <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-box-archive"></i>
+                        <i class="fa-solid fa-weight-hanging"></i>
                         <span>Data Ukuran Beras</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
+                    <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Data Penjualan</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
+                    <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Data Tagihan</span>
                     </a>
                 </li>
 
