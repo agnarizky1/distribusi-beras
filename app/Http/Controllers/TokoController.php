@@ -33,8 +33,8 @@ class TokoController extends Controller
     }
     
     public function store(Request $request)
-{
-    $request->validate([
+    {
+        $request->validate([
         'sales' => 'required',
         'foto_toko' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'nama_toko' => 'required',
@@ -42,47 +42,47 @@ class TokoController extends Controller
         'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'alamat' => 'required',
         'nomor_tlp' => 'required',
-    ]);
+        ]);
 
-    // Mencari ID yang belum digunakan
-    $nextId = $this->generateNextId();
+        // Mencari ID yang belum digunakan
+        $nextId = $this->generateNextId();
 
-    //foto toko
-    if ($request->hasFile('foto_toko') && $request->hasFile('foto_ktp')) {
-        $nama_toko = $request->file('foto_toko');
-        $namaGambartoko = time() . 'toko.' . $nama_toko->getClientOriginalExtension();
-        $nama_toko->move(public_path('uploads/toko'), $namaGambartoko); 
+        //foto toko
+        if ($request->hasFile('foto_toko') && $request->hasFile('foto_ktp')) {
+            $nama_toko = $request->file('foto_toko');
+            $namaGambartoko = time() . 'toko.' . $nama_toko->getClientOriginalExtension();
+            $nama_toko->move(public_path('uploads/toko'), $namaGambartoko); 
 
-        $foto_ktp = $request->file('foto_ktp');
-        $namaGambarktp = time() . 'ktp.' . $foto_ktp->getClientOriginalExtension();
-        $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp); 
-    } else {
-        $namaGambartoko = null; // Jika tidak ada gambar yang diunggah
-        $namaGambarktp = null; // Jika tidak ada gambar yang diunggah
+            $foto_ktp = $request->file('foto_ktp');
+            $namaGambarktp = time() . 'ktp.' . $foto_ktp->getClientOriginalExtension();
+            $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp); 
+        } else {
+            $namaGambartoko = null; // Jika tidak ada gambar yang diunggah
+            $namaGambarktp = null; // Jika tidak ada gambar yang diunggah
+        }
+
+        $toko = Toko::create([
+            'id_toko' => $nextId,
+            'sales' => $request->sales,
+            'foto_toko' => $namaGambartoko,
+            'nama_toko' => $request->nama_toko,
+            'pemilik' => $request->pemilik,
+            'foto_ktp' => $namaGambarktp,
+            'alamat' => $request->alamat,
+            'nomor_tlp' => $request->nomor_tlp,
+            'koordinat' => $request->koordinat,
+        ]);
+
+
+        if ($toko) {
+            //redirect dengan pesan sukses
+            return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
+        } else {
+            //redirect dengan pesan error
+            Alert::error('Data Toko Gagal Disimpan!');
+            return back();
+        }
     }
-
-    $toko = Toko::create([
-        'id_toko' => $nextId,
-        'sales' => $request->sales,
-        'foto_toko' => $namaGambartoko,
-        'nama_toko' => $request->nama_toko,
-        'pemilik' => $request->pemilik,
-        'foto_ktp' => $namaGambarktp,
-        'alamat' => $request->alamat,
-        'nomor_tlp' => $request->nomor_tlp,
-        'koordinat' => $request->koordinat,
-    ]);
-
-
-    if ($toko) {
-        //redirect dengan pesan sukses
-        return redirect()->route('admin.toko')->with('success', 'Data Toko Berhasil Disimpan!');
-    } else {
-        //redirect dengan pesan error
-        Alert::error('Data Toko Gagal Disimpan!');
-        return back();
-    }
-}
 
 
     private function generateNextId()
@@ -125,7 +125,8 @@ class TokoController extends Controller
     public function edit($id_toko)
     {
         $toko = Toko::find($id_toko);
-        return view('admin.toko.edit', compact('toko', ));
+        $sales = Sales::all();
+        return view('admin.toko.edit', compact('toko','sales' ));
     }
 
     public function update(Request $request, $id)
@@ -133,10 +134,7 @@ class TokoController extends Controller
     $request->validate([
         'sales' => 'required',
         'foto_toko' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'nama_toko' => 'required',
-        'pemilik' => 'required',
         'foto_ktp' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'alamat' => 'required',
         'nomor_tlp' => 'required',
     ]);
 
@@ -148,27 +146,34 @@ class TokoController extends Controller
         return back();
     }
 
+    // Menghapus file lama jika ada penggantian gambar
+    if ($request->hasFile('foto_toko')) {
+        File::delete(public_path('uploads/toko/' . $toko->foto_toko));
+    }
+
+    if ($request->hasFile('foto_ktp')) {
+        File::delete(public_path('uploads/ktp/' . $toko->foto_ktp));
+    }
+
     // Update fields that are not file uploads
     $toko->update([
         'sales' => $request->sales,
-        'nama_toko' => $request->nama_toko,
-        'pemilik' => $request->pemilik,
-        'alamat' => $request->alamat,
         'nomor_tlp' => $request->nomor_tlp,
     ]);
 
-    // Update foto toko if a new file is uploaded
+    // Update gambar jika ada penggantian
     if ($request->hasFile('foto_toko')) {
-        $foto_toko = $request->file('foto_toko');
-        $foto_toko->storeAs('public/toko/', $foto_toko->hashName());
-        $toko->update(['foto_toko' => $foto_toko->hashName()]);
+        $nama_toko = $request->file('foto_toko');
+        $namaGambartoko = time() . 'toko.' . $nama_toko->getClientOriginalExtension();
+        $nama_toko->move(public_path('uploads/toko'), $namaGambartoko);
+        $toko->update(['foto_toko' => $namaGambartoko]);
     }
 
-    // Update foto ktp if a new file is uploaded
     if ($request->hasFile('foto_ktp')) {
         $foto_ktp = $request->file('foto_ktp');
-        $foto_ktp->storeAs('public/ktp/', $foto_ktp->hashName());
-        $toko->update(['foto_ktp' => $foto_ktp->hashName()]);
+        $namaGambarktp = time() . 'ktp.' . $foto_ktp->getClientOriginalExtension();
+        $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp);
+        $toko->update(['foto_ktp' => $namaGambarktp]);
     }
 
     // Redirect with a success message

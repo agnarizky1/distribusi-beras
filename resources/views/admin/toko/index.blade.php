@@ -62,14 +62,15 @@
                                     @if (Auth::user()->role == 'admin')
                                     <td>
                                         <a href="{{ route('admin.toko.show', $t->id_toko) }}"
-                                            class="btn btn-warning btn-sm">
+                                            class="btn btn-warning btn-sm mb-1">
                                             <i class="fa fa-regular fa-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.toko.edit', $t->id_toko) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i>
+                                            class="btn btn-primary btn-sm mb-1"><i class="fa-solid fa-pen-to-square"></i>
                                         </a>
-                                        <a href="{{ route('admin.toko.destroy', $t->id_toko) }}"
-                                            class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
+                                        <a href="#" class="btn btn-danger btn-sm mb-1" data-toggle="modal"
+                                            data-target="#deleteConfirmationModal{{ $t->id_toko }}">
+                                            <i class="fa fa-trash-can"></i>
                                         </a>
                                     </td>
                                     @endif
@@ -77,6 +78,30 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @foreach ($toko as $t)
+                        <div class="modal fade" id="deleteConfirmationModal{{ $t->id_toko }}" tabindex="-1"
+                            role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah Anda yakin ingin menghapus distribusi ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <a href="{{ route('admin.toko.destroy', $t->id_toko) }}"
+                                            class="btn btn-danger">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                     </div>
                 </div>
             </div>
@@ -104,7 +129,7 @@
                                                     data-live-search="true">
                                                     <option value="">Pilih Nama Sales</option>
                                                     @foreach ($sales as $s)
-                                                    <option value="{{ $s->id_sales }}">
+                                                    <option value="{{ $s->nama_sales }}">
                                                         {{ $s->nama_sales }}
                                                     </option>
                                                     @endforeach
@@ -192,8 +217,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="latitude" id="latitude" />
-                                        <input type="hidden" name="longitude" id="longitude" />
+                                        <input type="hidden" id="latitude" />
+                                        <input type="hidden" id="longitude" />
                                         <div class="row mb-3">
                                             <label for="koordinat">Koordinat:</label>
                                             <div class="row">

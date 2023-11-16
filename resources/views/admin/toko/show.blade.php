@@ -63,6 +63,10 @@
                             </tbody>
                         </table>
                     <div class="mb-3">
+                        <label for="sales" class="form-label">Sales:</label>
+                        <input type="text" class="form-control" value="{{ $toko->sales }}" readonly>
+                    </div>    
+                    <div class="mb-3">
                         <label for="koordinat" class="form-label">Koordinat:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" value="{{ $toko->koordinat }}" readonly>
