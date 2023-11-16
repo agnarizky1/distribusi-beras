@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            // TokoSeeder::class,
+            TokoSeeder::class,
             MerkSeeder::class,
             SalesSeeder::class,
             ukuranSeeder::class,
