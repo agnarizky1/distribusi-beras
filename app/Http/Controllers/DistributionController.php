@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distribusi;
-use App\Models\DetailDistribusi;
+use PDF;
+use Carbon\Carbon;
 use App\Models\Toko;
 use App\Models\Beras;
-use App\Models\totalStock;
-use App\Models\Pembayaran;
 use App\Models\Sales;
+use App\Models\Distribusi;
+use App\Models\Pembayaran;
+use App\Models\totalStock;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use PDF;
+use App\Models\DetailDistribusi;
 
 
 class DistributionController extends Controller
@@ -65,6 +65,7 @@ class DistributionController extends Controller
         $distribusiModel->tanggal_distribusi = $tglDistri;
         $distribusiModel->jumlah_distribusi = $jumlahDistribusi;
         $distribusiModel->total_harga = $totalHarga;
+        $distribusiModel->status = 'Pending';
 
         $distribusiModel->save();
 
@@ -75,7 +76,7 @@ class DistributionController extends Controller
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
-        
+
         $pembayaran->save();
 
         // Kemudian, simpan setiap Distribusi ke dalam tabel DetailDistribusi
@@ -83,7 +84,6 @@ class DistributionController extends Controller
             $detailDistribusi = new DetailDistribusi();
             $detailDistribusi->id_distribusi = $distribusiModel->id_distribusi;
             $detailDistribusi->nama_beras = $item['nama'];
-            $detailDistribusi->jenis_beras = $item['jenis'];
             $detailDistribusi->harga = $item['harga'];
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];

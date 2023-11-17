@@ -14,7 +14,6 @@ class DetailDistribusi extends Model
     protected $fillable = [
         'id_distribusi',
         'nama_beras',
-        'jenis_beras',
         'harga',
         'jumlah_beras',
         'sub_total',

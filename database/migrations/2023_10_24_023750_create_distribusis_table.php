@@ -22,6 +22,7 @@ class CreateDistribusisTable extends Migration
             $table->date('tanggal_distribusi');
             $table->integer('jumlah_distribusi');
             $table->integer('total_harga');
+            $table->enum('status', ['Pending', 'Terkirim']);
             $table->timestamps();
             
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');

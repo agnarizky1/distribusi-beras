@@ -93,6 +93,10 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
     Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
 
+    Route::get('/admin/penjualan', [DistributionController::class, 'index'])->name('penjualan');
+    Route::get('/admin/penjualan/show/{id}', [DistributionController::class, 'show'])->name('penjualan.show');
+    Route::get('/admin/penjualan/destroy/{id}', [DistributionController::class, 'destroy'])->name('penjualan.destroy');
+
     //sales
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
     Route::post('/admin/sales/create', [SalesController::class, 'store'])->name('admin.sales.create');

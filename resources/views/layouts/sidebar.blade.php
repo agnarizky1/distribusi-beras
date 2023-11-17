@@ -107,49 +107,13 @@
                         <span>Order</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-title">Distribusi</li>
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-hexagon-fill"></i>
-                        <span>Keuangan</span>
+                <li
+                    class="sidebar-item {{ set_active(['penjualan', 'penjualan.show']) }}">
+                    <a href="{{ route('penjualan') }}" class='sidebar-link'>
+                        <i class="fa fa-box-open"></i>
+                        <span>Penjualan</span>
                     </a>
-
-                    <ul class="submenu ">
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-input.html" class="submenu-link">Input</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-input-group.html" class="submenu-link">Input Group</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-select.html" class="submenu-link">Select</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-radio.html" class="submenu-link">Radio</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-checkbox.html" class="submenu-link">Checkbox</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="form-element-textarea.html" class="submenu-link">Textarea</a>
-
-                        </li>
-
-                    </ul>
-
-
-                </li> --}}
+                </li>
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>

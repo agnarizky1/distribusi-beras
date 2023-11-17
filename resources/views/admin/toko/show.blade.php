@@ -42,6 +42,7 @@
                         <label for="nomor_tlp" class="form-label">Nomor Telepon:</label>
                         <input type="text" class="form-control" value="{{ $toko->nomor_tlp }}" readonly>
                     </div>
+                    <div class="table-responsive">
                     <table class="table table-bordered">
                             <thead>
                                 <tr  class="text-center">
@@ -61,7 +62,8 @@
                                 </td>
                                 </tr>
                             </tbody>
-                        </table>
+                    </table>
+                    </div>
                     <div class="mb-3">
                         <label for="sales" class="form-label">Sales:</label>
                         <input type="text" class="form-control" value="{{ $toko->sales }}" readonly>
@@ -96,8 +98,4 @@
         </div>
     </section>
 </div>
-
 @endsection
-
-
-
