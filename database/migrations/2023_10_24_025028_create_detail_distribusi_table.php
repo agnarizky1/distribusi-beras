@@ -12,7 +12,6 @@ class CreateDetailDistribusiTable extends Migration
             $table->id('id_detail_distribusi');
             $table->unsignedBigInteger('id_distribusi');
             $table->string('nama_beras');
-            $table->string('jenis_beras');
             $table->integer('harga');
             $table->integer('jumlah_beras');
             $table->integer('sub_total');

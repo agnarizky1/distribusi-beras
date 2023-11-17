@@ -65,6 +65,7 @@ class DistributionController extends Controller
         $distribusiModel->tanggal_distribusi = $tglDistri;
         $distribusiModel->jumlah_distribusi = $jumlahDistribusi;
         $distribusiModel->total_harga = $totalHarga;
+        $distribusiModel->status = 'Pending';
 
         $distribusiModel->save();
 
@@ -83,7 +84,6 @@ class DistributionController extends Controller
             $detailDistribusi = new DetailDistribusi();
             $detailDistribusi->id_distribusi = $distribusiModel->id_distribusi;
             $detailDistribusi->nama_beras = $item['nama'];
-            $detailDistribusi->jenis_beras = $item['jenis'];
             $detailDistribusi->harga = $item['harga'];
             $detailDistribusi->jumlah_beras = $item['jumlah'];
             $detailDistribusi->sub_total = $item['harga']*$item['jumlah'];
