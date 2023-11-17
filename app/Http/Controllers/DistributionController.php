@@ -10,7 +10,6 @@ use App\Models\Sales;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
-use App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Models\DetailDistribusi;
 
