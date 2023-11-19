@@ -15,8 +15,12 @@
                 <div class="card">
 
                     <div class="card-body">
-
-                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Nota Pembayaran: {{ $distribusi->kode_distribusi }}</h4>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Nama Toko : {{ $toko->nama_toko }}</p>
@@ -24,9 +28,9 @@
                                 <p>Sales : {{ $toko->sales }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p>Tanggal Order Beras : {{ $distribusi->tanggal_distribusi }}</p>
-                                <p>Jumlah Seluruh Orderan : {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Yang Harus Dibayar : {{ $distribusi->total_harga }}</p>
+                                <p>Tanggal Order : {{ $distribusi->tanggal_distribusi }}</p>
+                                <p>Tonase Orderan : {{ $distribusi->jumlah_distribusi }} KG</p>
+                                <p>Yang Harus Dibayar : Rp. {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -48,8 +52,8 @@
                                             <tr>
                                                 <td>{{ $detail->nama_beras }}</td>
                                                 <td>{{ $detail->jumlah_beras }}</td>
-                                                <td>{{ $detail->harga }}</td>
-                                                <td>{{ $detail->sub_total }}</td>
+                                                <td>Rp. {{ number_format($detail->harga, 0, '.', '.') }}</td>
+                                                <td>Rp. {{ number_format($detail->sub_total, 0, '.', '.') }}</td>
                                             </tr>
                                             @php
                                                 $totalHarga += $detail->sub_total;
@@ -59,13 +63,15 @@
                                             <td class="text-end" colspan="3">
                                                 <strong>Diskon :</strong>
                                             </td>
-                                            <td>{{ $totalHarga - $distribusi->total_harga }}</td>
+                                            <td>Rp.
+                                                {{ number_format($totalHarga - $distribusi->total_harga, 0, '.', '.') }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="text-end" colspan="3">
                                                 <strong>Total Harga :</strong>
                                             </td>
-                                            <td>{{ $totalHarga }}</td>
+                                            <td>Rp. {{ number_format($totalHarga, 0, '.', '.') }}</td>
                                         </tr>
 
                                     </tbody>
@@ -97,7 +103,7 @@
                                             <td class="text-end" colspan="3">
                                                 <strong>Total Harga :</strong>
                                             </td>
-                                            <td>{{ $totalHarga }}</td>
+                                            <td>Rp. {{ number_format($totalHarga, 0, '.', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-end" colspan="3">
@@ -162,7 +168,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -280,12 +286,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -362,5 +368,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endsection

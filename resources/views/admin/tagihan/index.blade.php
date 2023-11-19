@@ -65,13 +65,13 @@
                                             </td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
-                                                <!-- <br>
-                                                                                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
-    <span class="text-success">Lunas</span>
-@else
-    <span class="text-danger">Sisa Bayar: Rp.
-                                                                                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
-    @endif -->
+                                                {{-- <br>
+                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                                                    <span class="text-success">Lunas</span>
+                                                @else
+                                                    <span class="text-danger">Sisa Bayar: Rp.
+                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                @endif --}}
                                             </td>
                                             @if ($d->status == 'Terkirim')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
