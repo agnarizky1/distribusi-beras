@@ -13,7 +13,7 @@ class CreatePembayaransTable extends Migration
             $table->date('tanggal_tengat_pembayaran')->nullable();
             $table->date('tanggal_pembayaran')->nullable();
             $table->integer('jumlah_pembayaran')->nullable();
-            $table->enum('metode_pembayaran', ['tunai', 'transfer'])->nullable();
+            $table->enum('metode_pembayaran', ['cash', 'tempo'])->nullable();
             $table->timestamps();
 
             $table->foreign('id_distribusi')->references('id_distribusi')->on('distribusis')->onDelete('cascade');

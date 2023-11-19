@@ -95,7 +95,7 @@
                     </a>
                 </li>
                 <li
-                    class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show']) }}">
+                    class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show','admin.DeliveryOrder.index','admin.DeliveryOrder.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="fa fa-truck-moving"></i>
                         <span>Order</span>

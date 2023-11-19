@@ -44,10 +44,9 @@ class DistributionController extends Controller
         $namaToko = $request->input('namaToko');
         $totalHarga = $request->input('totalHarga');
         $tglDistri = $request->input('tglDistri');
-        $platNo = $request->input('PlatNo');
-        $namaSopir = $request->input('namaSopir');
         $jumlahDistribusi =$request->input('jumlahDistribusi');
         $distribusi = $request->input('Distribusi');
+        $metodeBayar = $request->input('metodeBayar');
 
         $timestamp = time(); // Waktu saat ini dalam detik
         $randomValue = mt_rand(1000, 9999); // Nilai acak antara 1000 dan 9999
@@ -59,8 +58,6 @@ class DistributionController extends Controller
         $distribusiModel = new Distribusi();
         $distribusiModel->id_toko = $namaToko;
         $distribusiModel->kode_distribusi = $kode_distribusi;
-        $distribusiModel->nama_sopir = $namaSopir;
-        $distribusiModel->plat_no = $platNo;
         $distribusiModel->total_harga = $totalHarga;
         $distribusiModel->tanggal_distribusi = $tglDistri;
         $distribusiModel->jumlah_distribusi = $jumlahDistribusi;
@@ -76,6 +73,7 @@ class DistributionController extends Controller
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
+        $pembayaran->metode_pembayaran = $metodeBayar;
 
         $pembayaran->save();
 
