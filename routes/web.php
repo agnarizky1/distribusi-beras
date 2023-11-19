@@ -11,10 +11,11 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UkuranController;
+use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DeliveryOrderController;
-use App\Http\Controllers\PenjualanController;
 
 
 /*
@@ -84,7 +85,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
-    
+
     // Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
     // route iki diganti ndk tagihan ae
 
@@ -124,6 +125,15 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/merk/edit/{id}', [MerkController::class, 'edit'])->name('admin.merk.edit');
     Route::put('/admin/merk/update/{id}', [MerkController::class, 'update'])->name('admin.merk.update');
     Route::get('/admin/merk/destroy/{id}', [MerkController::class, 'destroy'])->name('admin.merk.destroy');
+
+    //tagihan
+    Route::get('/admin/tagihan', [TagihanController::class, 'index'])->name('admin.tagihan');
+    Route::post('/admin/tagihan/create', [TagihanController::class, 'store'])->name('admin.tagihan.create');
+    Route::get('/admin/tagihan/add', [TagihanController::class, 'create'])->name('admin.tagihan.add');
+    Route::get('/admin/tagihan/edit/{id}', [TagihanController::class, 'edit'])->name('admin.tagihan.edit');
+    Route::put('/admin/tagihan/update/{id}', [TagihanController::class, 'update'])->name('admin.tagihan.update');
+    Route::get('/admin/tagihan/destroy/{id}', [TagihanController::class, 'destroy'])->name('admin.tagihan.destroy');
+    Route::get('/admin/tagihan/show/{id}', [TagihanController::class, 'show'])->name('admin.tagihan.show');
 
     //Pembayaran
     Route::post('/admin/pembayaran/store', [pembayaranController::class, 'store'])->name('pembayaran.store');

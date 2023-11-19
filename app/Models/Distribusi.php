@@ -15,6 +15,7 @@ class Distribusi extends Model
 
     protected $fillable = [
         'id_toko',
+        'sales',
         'kode_distribusi',
         'nama_sopir',
         'plat_no',

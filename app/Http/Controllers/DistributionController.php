@@ -28,6 +28,7 @@ class DistributionController extends Controller
         $beras = totalStock::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.nama_toko')
+            ->where('status', 'Pending')
             ->get();
 
         $pembayaranTotals = [];
@@ -42,6 +43,7 @@ class DistributionController extends Controller
     {
         // Mendapatkan data dari permintaan POST
         $namaToko = $request->input('namaToko');
+        $sales = $request->input('sales');
         $totalHarga = $request->input('totalHarga');
         $tglDistri = $request->input('tglDistri');
         $jumlahDistribusi =$request->input('jumlahDistribusi');
@@ -57,6 +59,7 @@ class DistributionController extends Controller
         // mngelola data dan menyimpannya ke dalam database sesuai dengan struktur tabel yang ada.
         $distribusiModel = new Distribusi();
         $distribusiModel->id_toko = $namaToko;
+        $distribusiModel->sales = $sales;
         $distribusiModel->kode_distribusi = $kode_distribusi;
         $distribusiModel->total_harga = $totalHarga;
         $distribusiModel->tanggal_distribusi = $tglDistri;

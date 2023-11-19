@@ -8,11 +8,14 @@ use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class PenjualanController extends Controller
+class TagihanController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $tokos = Toko::all();
@@ -28,7 +31,7 @@ class PenjualanController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.penjualan.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
+        return view('admin.tagihan.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
     }
 
     /**
@@ -72,7 +75,7 @@ class PenjualanController extends Controller
 
         $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
 
-        return view('admin.penjualan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
+        return view('admin.tagihan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
     /**
@@ -120,6 +123,6 @@ class PenjualanController extends Controller
 
         $distribusi->delete();
 
-        return redirect()->route('tagihan')->with('success', 'Transaksi telah dihapus.');
+        return redirect()->route('admin.tagihan')->with('success', 'Transaksi telah dihapus.');
     }
 }

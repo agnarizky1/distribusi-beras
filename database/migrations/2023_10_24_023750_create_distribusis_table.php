@@ -20,9 +20,11 @@ class CreateDistribusisTable extends Migration
             $table->date('tanggal_distribusi');
             $table->integer('jumlah_distribusi');
             $table->integer('total_harga');
+            $table->string('sales');
             $table->enum('status', ['Pending', 'Terkirim']);
+            $table->enum('status', ['Lunas', 'Belum-Lunas']);
             $table->timestamps();
-            
+
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');
         });
     }

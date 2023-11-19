@@ -48,98 +48,97 @@
                                         <i class="fa-solid fa-folder-plus"></i> Riwayat Orderan</a>
                                 </div>
                             </div>
-                        </div>
 
-                        @if (session('status'))
-                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @elseif(session('hapus'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('hapus') }}
-                            </div>
-                        @endif
-                        <table id="tabel-distribusi" class="table table-striped table-bordered " style="width:100%">
-                            <thead class="table-light">
-                                <tr class="text-center">
-                                    <th width="5%">No</th>
-                                    <th>Kode Order</th>
-                                    <th>Nama Toko</th>
-                                    <th>tgl Orderan</th>
-                                    <th>Total Berat(Kg)</th>
-                                    <th>Total Harga</th>
-                                    <th>Status Pengiriman</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($distri as $d)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $d->kode_distribusi }}</td>
-                                        <td>{{ $d->nama_toko }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
-                                        </td>
-                                        <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                        <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
-                                            <!-- <br>
-                                                            @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                            @if (session('status'))
+                                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @elseif(session('hapus'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session('hapus') }}
+                                </div>
+                            @endif
+                            <table id="tabel-distribusi" class="table table-striped table-bordered " style="width:100%">
+                                <thead class="table-light">
+                                    <tr class="text-center">
+                                        <th width="5%">No</th>
+                                        <th>Kode Order</th>
+                                        <th>Nama Toko</th>
+                                        <th>tgl Orderan</th>
+                                        <th>Total Berat(Kg)</th>
+                                        <th>Total Harga</th>
+                                        <th>Status Pengiriman</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($distri as $d)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $d->kode_distribusi }}</td>
+                                            <td>{{ $d->nama_toko }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
+                                            </td>
+                                            <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
+                                            <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
+                                                <!-- <br>
+                                                                                        @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
     <span class="text-success">Lunas</span>
 @else
     <span class="text-danger">Sisa Bayar: Rp.
-                                                                    {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                                                                {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
     @endif -->
-                                        </td>
-                                        @if ($d->status == 'Terkirim')
-                                            <td class="text-success text-center">{{ $d->status }}</td>
-                                        @endif
-                                        @if ($d->status == 'Pending')
-                                            <td class="text-danger text-center">{{ $d->status }}</td>
-                                        @endif
-                                        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
-                                            <td class="text-center">
-                                                <a href="{{ route('distribution.show', $d->id_distribusi) }}"
-                                                    class="btn btn-warning btn-sm">
-                                                    <i class="fa fa-regular fa-eye"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
-                                                    <i class="fa fa-trash-can"></i></a>
                                             </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            @if ($d->status == 'Terkirim')
+                                                <td class="text-success text-center">{{ $d->status }}</td>
+                                            @endif
+                                            @if ($d->status == 'Pending')
+                                                <td class="text-danger text-center">{{ $d->status }}</td>
+                                            @endif
+                                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
+                                                <td class="text-center">
+                                                    <a href="{{ route('distribution.show', $d->id_distribusi) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-regular fa-eye"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
+                                                        <i class="fa fa-trash-can"></i></a>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                @foreach ($distri as $d)
-                    <div class="modal fade" id="deleteConfirmationModal{{ $d->id_distribusi }}" tabindex="-1"
-                        role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Apakah Anda yakin ingin menghapus oderan ini?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
-                                        class="btn btn-danger">Hapus</a>
+                    @foreach ($distri as $d)
+                        <div class="modal fade" id="deleteConfirmationModal{{ $d->id_distribusi }}" tabindex="-1"
+                            role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah Anda yakin ingin menghapus oderan ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
+                                            class="btn btn-danger">Hapus</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-    </div>
-    </section>
+        </section>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -181,42 +180,29 @@
                                                             id="tanggal_distribusi" value="{{ date('Y-m-d') }}"
                                                             name="tanggal_distribusi" required>
                                                     </div>
-                                                    <div class="row mb-4">
-                                                        <div class="col-md-4">
-                                                            <label for="nomor-telp">No.Telp Toko</label>
-                                                            <input type="text" class="form-control" id="nomor-telp"
-                                                                name="nomor-telp" readonly>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="sales">Sales</label>
-                                                            <input type="text" class="form-control" id="sales"
-                                                                name="nomor-sales" readonly>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="pembayaran">Pembayaran</label>
-                                                            <select class="form-select" id="pembayaran" name="pembayaran"
-                                                                aria-label="Default select example" required>
-                                                                <option value="Cash">Cash</option>
-                                                                <option value="Tempo">Tempo</option>
-                                                            </select>
-                                                        </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-6">
+                                                        <label for="pemilik">Pemilik Toko</label>
+                                                        <input type="text" class="form-control" id="pemilik"
+                                                            name="pemilik" disabled>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="alamat">Alamat</label>
                                                         <input type="text" class="form-control" id="alamat"
-                                                            name="alamat" readonly>
+                                                            name="alamat" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <div class="col-md-4">
                                                         <label for="nomor-telp">No.Telp Toko</label>
                                                         <input type="text" class="form-control" id="nomor-telp"
-                                                            name="nomor-telp" readonly>
+                                                            name="nomor-telp" disabled>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="sales">Sales</label>
                                                         <input type="text" class="form-control" id="sales"
-                                                            name="nomor-sales" readonly>
+                                                            name="sales" readonly>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="pembayaran">Pembayaran</label>
@@ -244,12 +230,12 @@
                                                     <div class="col-md-3 mb-3">
                                                         <label for="hargakg">Harga per KG</label>
                                                         <input type="text" id="hargakg" class="form-control"
-                                                            readonly>
+                                                            disabled>
                                                     </div>
                                                     <div class="col-md-3 mb-3">
                                                         <label for="hargapcs">Harga Satuan</label>
                                                         <input type="text" id="hargapcs" class="form-control"
-                                                            readonly>
+                                                            disabled>
                                                     </div>
                                                     <div class="col-md-3 mb-3">
                                                         <label for="jumlah">Jumlah (qty)</label>
@@ -426,28 +412,20 @@
 
                                         if (isBerasExists) {
                                             alert(
-                                                'Beras dengan nama yang sama sudah ada dalam daftar Distribusi.');
+                                                'Beras dengan nama yang sama sudah ada dalam daftar Distribusi.'
+                                            );
                                         } else {
                                             tambahBerasKeTabel();
                                         }
                                     });
 
-                                    if (isBerasExists) {
-                                        alert(
-                                            'Beras dengan nama yang sama sudah ada dalam daftar Distribusi.'
-                                        );
-                                    } else {
-                                        tambahBerasKeTabel();
-                                    }
-                                });
-
-                                $('#diskon').on('input', function() {
-                                const diskonInput = $(this).val();
-                                const diskonValue = !isNaN(parseFloat(diskonInput)) && isFinite(
-                                    diskonInput) ? parseFloat(diskonInput) : 0;
-                                $(this).val(diskonValue);
-                                updateTotalHarga();
-                                });
+                                    $('#diskon').on('input', function() {
+                                        const diskonInput = $(this).val();
+                                        const diskonValue = !isNaN(parseFloat(diskonInput)) && isFinite(
+                                            diskonInput) ? parseFloat(diskonInput) : 0;
+                                        $(this).val(diskonValue);
+                                        updateTotalHarga();
+                                    });
                                 });
 
                                 function tambahBerasKeTabel() {
@@ -529,190 +507,117 @@
                                     if (kuantitas > 1) {
                                         kuantitas--;
                                         const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
-
-                                        let kuantitas = parseFloat(kuantitasInput.value);
-                                        kuantitas++;
-                                        kuantitasInput.value = kuantitas; // Mengubah nilai input
-
                                         const subtotal = kuantitas * hargapcs;
-                                        subtotalElement.textContent = subtotal; // Memperbarui subtotal
+
+                                        kuantitasInput.value = kuantitas; // Mengubah nilai input
+                                        subtotalElement.textContent = subtotal;
 
                                         updateTotalHarga()
                                     }
+                                }
 
-                                    function updateTotalHarga() {
-                                        let totalHarga = 0;
-                                        let totalDiskon = 0;
-                                        let totalBerat = 0;
+                                function updateTotalHarga() {
+                                    let totalHarga = 0;
+                                    let totalDiskon = 0;
+                                    let totalBerat = 0;
 
-                                        document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                                            const namaBeras = row.querySelector('.namaBeras').textContent;
-                                            const beratBeras = parseFloat(namaBeras.match(/\d+/));
-                                            const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
-                                            const kuantitas = parseInt(row.querySelector('.kuantitas').value);
-                                            totalHarga += hargapcs * kuantitas;
-                                            totalBerat += kuantitas * beratBeras;
-                                        });
+                                    document.querySelectorAll('#transaction-records tr').forEach(function(row) {
+                                        const namaBeras = row.querySelector('.namaBeras').textContent;
+                                        const beratBeras = parseFloat(namaBeras.match(/\d+/));
+                                        const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
+                                        const kuantitas = parseInt(row.querySelector('.kuantitas').value);
+                                        totalHarga += hargapcs * kuantitas;
+                                        totalBerat += kuantitas * beratBeras;
+                                    });
 
-                                        const diskonInput = parseFloat($('#diskon').val());
-                                        const selectedDiskonOption = $('#pilihanDiskon').val();
+                                    const diskonInput = parseFloat($('#diskon').val());
+                                    const selectedDiskonOption = $('#pilihanDiskon').val();
 
-                                        switch (selectedDiskonOption) {
-                                            case 'Persen':
-                                                totalDiskon = (diskonInput / 100) * totalHarga;
-                                                break;
-                                            case 'Harga Per-Kg':
-                                                totalDiskon = totalBerat * diskonInput;
-                                                break;
-                                            case 'Nominal':
-                                                totalDiskon = diskonInput;
-                                                break;
-                                        }
-
-                                        $('#total-diskon').text(totalDiskon);
-
-                                        const totalHargaSetelahDiskon = totalHarga - totalDiskon;
-
-                                        $('#total-price').text(totalHargaSetelahDiskon);
+                                    switch (selectedDiskonOption) {
+                                        case 'Persen':
+                                            totalDiskon = (diskonInput / 100) * totalHarga;
+                                            break;
+                                        case 'Harga Per-Kg':
+                                            totalDiskon = totalBerat * diskonInput;
+                                            break;
+                                        case 'Nominal':
+                                            totalDiskon = diskonInput;
+                                            break;
                                     }
 
-                                    document.getElementById('simpanDistribusiBtn').addEventListener('click', function() {
-                                                var Distribusi = [];
-                                                var namaToko = document.getElementById('nama_toko').value;
-                                                var tglDistribusi = document.getElementById('tanggal_distribusi').value;
-                                                var totalHarga = document.getElementById('total-price').textContent;
-                                                var pembayaran = document.getElementById('pembayaran').value;
-                                                var jumlahDistribusi = 0;
+                                    $('#total-diskon').text(totalDiskon);
 
-                                                document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                                                    var berasId = row.getAttribute('data-idberas');
-                                                    var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-                                                    var hargaBeras = parseFloat(row.querySelector('td:nth-child(3)')
-                                                        .textContent);
-                                                    var subtotal = parseInt(row.querySelector('td:nth-child(5)')
-                                                        .textContent, 10);
-                                                    var jumlah = subtotal / hargaBeras;
-                                                    var beratBeras = parseFloat(namaBeras.match(/\d+/));
-                                                    var subTotalBeras = jumlah * beratBeras;
-                                                    jumlahDistribusi += subTotalBeras;
+                                    const totalHargaSetelahDiskon = totalHarga - totalDiskon;
 
-                                                    Distribusi.push({
-                                                        idBeras: berasId,
-                                                        nama: namaBeras,
-                                                        harga: hargaBeras,
-                                                        jumlah: jumlah,
-                                                    });
+                                    $('#total-price').text(totalHargaSetelahDiskon);
+                                }
+
+                                document.getElementById('simpanDistribusiBtn').addEventListener('click', function() {
+                                    var Distribusi = [];
+                                    var namaToko = document.getElementById('nama_toko').value;
+                                    var tglDistribusi = document.getElementById('tanggal_distribusi').value;
+                                    var sales = document.getElementById('sales').value;
+                                    var totalHarga = document.getElementById('total-price').textContent;
+                                    var pembayaran = document.getElementById('pembayaran').value;
+                                    var jumlahDistribusi = 0;
+
+                                    document.querySelectorAll('#transaction-records tr').forEach(function(row) {
+                                        var berasId = row.getAttribute('data-idberas');
+                                        var namaBeras = row.querySelector('td:nth-child(1)').textContent;
+                                        var hargaBeras = parseFloat(row.querySelector('td:nth-child(3)')
+                                            .textContent);
+                                        var subtotal = parseInt(row.querySelector('td:nth-child(5)')
+                                            .textContent, 10);
+                                        var jumlah = subtotal / hargaBeras;
+                                        var beratBeras = parseFloat(namaBeras.match(/\d+/));
+                                        var subTotalBeras = jumlah * beratBeras;
+                                        jumlahDistribusi += subTotalBeras;
+
+                                        Distribusi.push({
+                                            idBeras: berasId,
+                                            nama: namaBeras,
+                                            harga: hargaBeras,
+                                            jumlah: jumlah,
+                                        });
+                                    });
+                                    console.table(Distribusi)
+                                    console.log(namaToko, tglDistribusi, totalHarga, jumlahDistribusi, pembayaran);
+
+                                    // Kirim data ke server menggunakan AJAX
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{{ url('admin/distribution/store') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
+                                        data: {
+                                            namaToko: namaToko,
+                                            sales: sales,
+                                            tglDistri: tglDistribusi,
+                                            totalHarga: totalHarga,
+                                            jumlahDistribusi: jumlahDistribusi,
+                                            metodeBayar: pembayaran,
+                                            Distribusi: Distribusi,
+                                            _token: '{{ csrf_token() }}'
+                                        },
+                                        success: function(response) {
+                                            // Distribusi berhasil disimpan
+                                            Swal.fire('Success', 'Orderan berhasil disimpan', 'success')
+                                                .then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        window.location.href = '{{ route('distribution') }}';
+                                                    }
                                                 });
-                                                console.table(Distribusi)
-                                                console.log(namaToko, tglDistribusi, totalHarga, jumlahDistribusi, pembayaran);
-
-                                                // Kirim data ke server menggunakan AJAX
-                                                $.ajax({
-                                                            type: 'POST',
-                                                            url: '{{ url('admin/distribution/store') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
-                                                            data: {
-                                                                namaToko: namaToko,
-                                                                tglDistri: tglDistribusi,
-                                                                totalHarga: totalHarga,
-                                                                jumlahDistribusi: jumlahDistribusi,
-                                                                metodeBayar: pembayaran,
-                                                                Distribusi: Distribusi,
-                                                                _token: '{{ csrf_token() }}'
-                                                            },
-                                                            success: function(response) {
-                                                                // Distribusi berhasil disimpan
-                                                                Swal.fire('Success', 'Orderan berhasil disimpan', 'success')
-                                                                    .then((result) => {
-                                                                        if (result.isConfirmed) {
-                                                                            window.location.href = '{{ route('distribution') }}';
-                                                                        }
-                                                                    });
-                                                            },
-                                                            error: function(xhr, textStatus, errorThrown) {
-                                                                console.error('Error:', errorThrown);
-                                                                Swal.fire('Error', 'Distribusi Gagal', 'error');
-                                                            }
-                                                        }
-
-                                                        function updateTotalHarga() {
-                                                            let totalHarga = 0;
-
-                                                            document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                                                                const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
-                                                                const kuantitas = parseInt(row.querySelector('.kuantitas').value);
-                                                                totalHarga += hargapcs * kuantitas;
-                                                            });
-
-                                                            document.getElementById('total-price').textContent = totalHarga;
-                                                        }
-
-                                                        document.getElementById('simpanDistribusiBtn').addEventListener('click', function() {
-                                                            var Distribusi = [];
-                                                            var namaToko = document.getElementById('nama_toko').value;
-                                                            var tglDistribusi = document.getElementById('tanggal_distribusi').value;
-                                                            var totalHarga = document.getElementById('total-price').textContent;
-                                                            var jumlahDistribusi = 0;
-
-                                                            document.querySelectorAll('#transaction-records tr').forEach(function(row) {
-                                                                var berasId = row.getAttribute('data-idberas');
-                                                                var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-                                                                var hargaBeras = parseFloat(row.querySelector('td:nth-child(3)')
-                                                                    .textContent);
-                                                                var subtotal = parseInt(row.querySelector('td:nth-child(5)')
-                                                                    .textContent, 10);
-                                                                var jumlah = subtotal / hargaBeras;
-                                                                var beratBeras = parseFloat(namaBeras.match(/\d+/));
-                                                                var subTotalBeras = jumlah * beratBeras;
-                                                                jumlahDistribusi += subTotalBeras;
-
-                                                                Distribusi.push({
-                                                                    idBeras: berasId,
-                                                                    nama: namaBeras,
-                                                                    harga: hargaBeras,
-                                                                    jumlah: jumlah,
-                                                                });
-                                                                console.log(beratBeras);
-                                                            });
-                                                            console.table(Distribusi)
-                                                            console.log(namaToko, namaSopir, PlatNo, tglDistribusi, totalHarga,
-                                                                jumlahDistribusi);
-
-                                                            // Kirim data ke server menggunakan AJAX
-                                                            $.ajax({
-                                                                type: 'POST',
-                                                                url: '{{ url('/admin/distribution/store') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
-                                                                data: {
-                                                                    namaToko: namaToko,
-                                                                    tglDistri: tglDistribusi,
-                                                                    totalHarga: totalHarga,
-                                                                    jumlahDistribusi: jumlahDistribusi,
-                                                                    Distribusi: Distribusi,
-                                                                    _token: '{{ csrf_token() }}'
-                                                                },
-                                                                success: function(response) {
-                                                                    // Distribusi berhasil disimpan
-                                                                    Swal.fire('Success', 'Distribusi berhasil disimpan',
-                                                                            'success')
-                                                                        .then((result) => {
-                                                                            if (result.isConfirmed) {
-                                                                                window.location.href =
-                                                                                    '{{ route('distribution') }}';
-                                                                            }
-                                                                        });
-                                                                },
-                                                                error: function(xhr, textStatus, errorThrown) {
-                                                                    console.error('Error:', errorThrown);
-                                                                    Swal.fire('Error', 'Distribusi Gagal', 'error');
-                                                                }
-                                                            });
-                                                        });
+                                        },
+                                        error: function(xhr, textStatus, errorThrown) {
+                                            console.error('Error:', errorThrown);
+                                            Swal.fire('Error', 'Distribusi Gagal', 'error');
+                                        }
+                                    });
+                                });
                             </script>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-    </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="pengirimanModal" tabindex="-1" aria-labelledby="pengirimanModalLabel"
@@ -823,8 +728,9 @@
     </div>
     <script>
         $(document).ready(function() {
-                    $("#tabel-distribusi").DataTable({
-                        responsive: true
-                    });
+            $("#tabel-distribusi").DataTable({
+                responsive: true
+            });
+        });
     </script>
 @endsection

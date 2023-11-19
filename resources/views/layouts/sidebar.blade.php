@@ -79,12 +79,7 @@
                         <span>Data Ukuran Beras</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
-                    <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Data Tagihan</span>
-                    </a>
-                </li>
+
 
                 <li class="sidebar-title">Transaksi</li>
                 <li
@@ -95,7 +90,7 @@
                     </a>
                 </li>
                 <li
-                    class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show','admin.DeliveryOrder.index','admin.DeliveryOrder.show']) }}">
+                    class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show', 'admin.DeliveryOrder.index', 'admin.DeliveryOrder.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="fa fa-truck-moving"></i>
                         <span>Order</span>
@@ -105,6 +100,13 @@
                     <a href="{{ route('penjualan') }}" class='sidebar-link'>
                         <i class="fa-solid fa-money-bill-transfer"></i>
                         <span>Penjualan</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item {{ set_active(['admin.tagihan', 'admin.tagihan.add', 'admin.tagihan.edit', 'admin.tagihan.show']) }} ">
+                    <a href="{{ route('admin.tagihan') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Tagihan</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Setting</li>
