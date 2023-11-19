@@ -81,12 +81,6 @@
                 </li>
                 <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
                     <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-money-bill-transfer"></i>
-                        <span>Data Penjualan</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ set_active(['admin.ukuran', 'admin.ukuran.add', 'admin.ukuran.edit']) }} ">
-                    <a href="{{ route('admin.ukuran') }}" class='sidebar-link'>
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <span>Data Tagihan</span>
                     </a>
@@ -107,10 +101,9 @@
                         <span>Order</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item {{ set_active(['penjualan', 'penjualan.show']) }}">
+                <li class="sidebar-item {{ set_active(['penjualan', 'penjualan.show']) }}">
                     <a href="{{ route('penjualan') }}" class='sidebar-link'>
-                        <i class="fa fa-box-open"></i>
+                        <i class="fa-solid fa-money-bill-transfer"></i>
                         <span>Penjualan</span>
                     </a>
                 </li>
