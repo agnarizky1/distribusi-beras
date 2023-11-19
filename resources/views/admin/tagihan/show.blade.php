@@ -156,12 +156,14 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <a href="{{ route('admin.tagihan') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.tagihan') }}" class="btn btn-warning"><i
+                                        class='nav-icon fas fa-arrow-left'></i>
+                                    &nbsp;
                                     Kembali
                                 </a>
                                 <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success ">Bayar</i>
                                 </a>
-                                <a href="#" class="btn btn-warning ">Print</i>
+                                <a href="#" class="btn btn-primary ">Print</i>
                                 </a>
                             </div>
                         </div>

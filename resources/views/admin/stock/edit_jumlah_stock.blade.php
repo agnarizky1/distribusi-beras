@@ -10,8 +10,7 @@
                 <div class="card">
                     <div class="card-header">
                     </div>
-                    <form action="{{ Route('admin.jumlahstock.update') }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ Route('admin.jumlahstock.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
@@ -24,14 +23,15 @@
                                 <div class="col-md-6">
                                     <label for="berat" class="form-label">Berat
                                         :</label>
-                                    <input type="number" name="berat" value="{{ $total->ukuran_beras }}" class="form-control " readonly>
+                                    <input type="number" name="berat" value="{{ $total->ukuran_beras }}"
+                                        class="form-control " readonly>
 
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label for="harga" class="form-label">Harga :</label>
-                                    <input type="number" name="harga" id="harga" value="{{$total->harga}}"
+                                    <input type="number" name="harga" id="harga" value="{{ $total->harga }}"
                                         class="form-control @error('harga') is-invalid @enderror"
                                         placeholder="Harga beras..">
                                     <div class="text-danger">
@@ -43,7 +43,7 @@
                                 <div class="col-md-6">
                                     <label for="stock" class="form-label">JumlahTotal stock
                                         :</label>
-                                        <input type="text" name="jumlah_stock" value="{{ $total->jumlah_stock }}"
+                                    <input type="text" name="jumlah_stock" value="{{ $total->jumlah_stock }}"
                                         class="form-control @error('stock') is-invalid @enderror"
                                         placeholder="Jumlah stock.."disabled>
                                     <div class="text-danger">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
+                        <div class="card-footer text-end">
                             <a href="{{ route('admin.stockberas') }}" type="button" class="btn btn-warning"><i
                                     class='nav-icon fas fa-arrow-left'></i> &nbsp;
                                 Kembali</a>

@@ -82,11 +82,11 @@
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
                                                 <!-- <br>
-                                                                                        @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                                                                                            @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
     <span class="text-success">Lunas</span>
 @else
     <span class="text-danger">Sisa Bayar: Rp.
-                                                                                                {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                                                                    {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
     @endif -->
                                             </td>
                                             @if ($d->status == 'Terkirim')
@@ -308,8 +308,10 @@
                                                     </table>
                                                 </div>
                                                 <div class="text-end">
-                                                    <button type="button" class="btn btn-secondary rounded"
-                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-warning rounded"
+                                                        data-bs-dismiss="modal"><i class='nav-icon fas fa-arrow-left'></i>
+                                                        &nbsp;
+                                                        Kembali</button>
                                                     <button id="simpanDistribusiBtn" class="btn btn-primary rounded"><i
                                                             class="fa fa-save"></i>
                                                         Simpan Order</button>

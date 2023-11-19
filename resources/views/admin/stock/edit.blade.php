@@ -25,7 +25,7 @@
                                     <label for="berat" class="form-label">Berat
                                         :</label>
                                     <input type="number" name="berat" value="{{ $beras->berat }}" class="form-control "
-                                    readonly>
+                                        readonly>
 
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
+                        <div class="card-footer text-end">
                             <a href="{{ route('admin.stockberas') }}" type="button" class="btn btn-warning"><i
                                     class='nav-icon fas fa-arrow-left'></i> &nbsp;
                                 Kembali</a>
