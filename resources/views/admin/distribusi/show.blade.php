@@ -2,7 +2,16 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Detail Distribusi</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Detail Distribusi</h3>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="{{ route('distribution') }}" class="btn btn-primary">
+                    Kembali
+                </a>
+            </div>
+        </div>
     </div>
     <div class="page-content">
         <section class="row">
@@ -11,25 +20,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Surat Jalan: {{ $distribusi->kode_distribusi }}</h4>
-                            </div>
-                            <div class="col-md-6 text-end">
-                                <a href="{{ route('distribution') }}" class="btn btn-primary">
-                                    Kembali
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Nama Toko: {{ $toko->nama_toko }}</p>
-                                <p>Nama Sopir: {{ $distribusi->nama_sopir }}</p>
-                                <p>Plat No.: {{ $distribusi->plat_no }}</p>
+                                <p>Nama Toko    : {{ $toko->nama_toko }}</p>
+                                <p>Alamat       : {{$toko->alamat}}</p>
                             </div>
                             <div class="col-md-6">
-                                <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
-                                <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Total Harga: {{ $distribusi->total_harga }}</p>
+                                <p>Tanggal Order Beras      : {{ $distribusi->tanggal_distribusi }}</p>
+                                <p>Jumlah Seluruh Orderan   : {{ $distribusi->jumlah_distribusi }} KG</p>
+                                <p>Yang Harus Dibayar : {{ $distribusi->total_harga }}</p>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -38,35 +35,52 @@
                                     <thead>
                                         <tr>
                                             <th>Nama Beras</th>
-                                            <th>Jenis Beras</th>
                                             <th>Jumlah (QTY)</th>
                                             <th>Harga (satuan)</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $totalHarga = 0;
+                                        @endphp
                                         @foreach ($detailDistribusi as $detail)
                                             <tr>
                                                 <td>{{ $detail->nama_beras }}</td>
-                                                <td>{{ $detail->jenis_beras }}</td>
                                                 <td>{{ $detail->jumlah_beras }}</td>
                                                 <td>{{ $detail->harga }}</td>
                                                 <td>{{ $detail->sub_total }}</td>
                                             </tr>
+                                            @php
+                                                $totalHarga += $detail->sub_total;
+                                            @endphp
                                         @endforeach
+                                        <tr>
+                                            <td class="text-end" colspan="3">
+                                                <strong>Total Harga :</strong>
+                                            </td>
+                                            <td>{{$totalHarga}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end" colspan="3">
+                                                <strong>Diskon :</strong>
+                                            </td>
+                                            <td>{{$totalHarga-$distribusi->total_harga}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
+
                             </div>
-                            <div class="text-end">
+                            {{--<div class="text-end">
                                 <a href="{{ route('distribution.cetak', $distribusi->id_distribusi) }}"
                                     class="btn btn-warning btn-sm">Print</i>
                                 </a>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
+                {{--<div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -183,12 +197,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </div>
         </section>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -265,5 +279,5 @@
                 }
             });
         });
-    </script>
+    </script> -->
 @endsection

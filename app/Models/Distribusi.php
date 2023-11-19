@@ -21,6 +21,7 @@ class Distribusi extends Model
         'tanggal_distribusi',
         'jumlah_distribusi',
         'total_harga',
+        'status',
     ];
 
     public function detailDistribusi()

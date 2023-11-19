@@ -13,7 +13,8 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UkuranController;
 use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
-
+use App\Http\Controllers\DeliveryOrderController;
+use App\Http\Controllers\PenjualanController;
 
 
 /*
@@ -26,11 +27,6 @@ use App\Http\Controllers\DistributionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-// Route::get('/pengembalian', function () {
-//         return view('admin.distribusi.retur');
-//     });
 
 // Route::get('/cetak', function () {
 //     return view('admin.distribusi.distribusi_pdf');
@@ -74,8 +70,6 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/toko/update/{id_toko}', [TokoController::class, 'update'])->name('admin.toko.update');
     Route::get('/admin/toko/destroy/{id_toko}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
 
-
-
     //user
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');
     Route::post('/admin/user/create', [UserController::class, 'store'])->name('admin.user.create');
@@ -90,12 +84,22 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
-    Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
-    Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+    
+    // Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+    // route iki diganti ndk tagihan ae
 
-    Route::get('/admin/penjualan', [DistributionController::class, 'index'])->name('penjualan');
-    Route::get('/admin/penjualan/show/{id}', [DistributionController::class, 'show'])->name('penjualan.show');
-    Route::get('/admin/penjualan/destroy/{id}', [DistributionController::class, 'destroy'])->name('penjualan.destroy');
+    // DeliveryOrder
+    Route::get('/admin/DeliveryOrder', [DeliveryOrderController::class, 'index'])->name('admin.DeliveryOrder.index');
+    Route::post('/admin/DeliveryOrder/store', [DeliveryOrderController::class, 'store'])->name('admin.DeliveryOrder.store');
+    Route::get('/admin/DeliveryOrder/show', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
+    Route::get('/admin/DeliveryOrder/destroy/{id}', [DeliveryOrderController::class, 'destroy'])->name('admin.DeliveryOrder.destroy');
+    Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak'); //iki nggo cetak DO/surat jalan sopir
+
+    // penjualan (yang digunakan yaitu tabel distribusi namun nanti yang ditampilkan ada beberapa filter )
+    Route::get('/admin/penjualan', [PenjualanController::class, 'index'])->name('penjualan');
+    Route::get('/admin/penjualan/show/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
+    Route::get('/admin/penjualan/destroy/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+    Route::get('/admin/penjualan/cetak/{id}', [PenjualanController::class, 'cetak'])->name('penjualan.cetak'); //iki nggo cetak nota
 
     //sales
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
