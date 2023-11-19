@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Toko;
+use App\Models\Sales;
+use App\Models\Distribusi;
+use App\Models\Pembayaran;
+use App\Models\totalStock;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PenjualanController extends Controller
 {
-    
+
     public function index()
     {
         $tokos = Toko::all();

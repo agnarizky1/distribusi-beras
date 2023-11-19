@@ -176,7 +176,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="tanggal_distribusi">Tanggal Distribusi</label>
+                                                    <label for="tanggal_distribusi">Tanggal Order</label>
                                                     <input type="date" class="form-control" id="tanggal_distribusi"
                                                         value="{{ date('Y-m-d') }}" name="tanggal_distribusi" required>
                                                 </div>
