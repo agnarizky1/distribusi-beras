@@ -16,7 +16,7 @@ class DeliveryOrderController extends Controller
         return view('admin.DeliveryOrder.index', compact('delivery'));
     }
 
-    
+
     public function store(Request $request)
     {
         $namaSopir = $request->input('namaSopir');
@@ -48,19 +48,22 @@ class DeliveryOrderController extends Controller
                 $totalberat += $distribusi->jumlah_distribusi;
                 $distribusi->update([
                     'status' => "Terkirim",
-                ]);            
+                ]);
             }
             $DetailDelivery->save();
         }
-        
+
         $delivery->jumlah_deliveryOrder = $totalberat;
         $delivery->save();
     }
 
     public function show($id)
-    {
-        //
-    }
+{
+    $delivery = DeliveryOrder::find($id);
+    return view('admin.DeliveryOrder.show', compact('delivery'));
+}
+
+
 
     public function edit($id)
     {

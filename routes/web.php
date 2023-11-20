@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     // DeliveryOrder
     Route::get('/admin/DeliveryOrder', [DeliveryOrderController::class, 'index'])->name('admin.DeliveryOrder.index');
     Route::post('/admin/DeliveryOrder/store', [DeliveryOrderController::class, 'store'])->name('admin.DeliveryOrder.store');
-    Route::get('/admin/DeliveryOrder/show', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
+    Route::get('/admin/DeliveryOrder/show/{id}', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
     Route::get('/admin/DeliveryOrder/destroy/{id}', [DeliveryOrderController::class, 'destroy'])->name('admin.DeliveryOrder.destroy');
     Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak'); //iki nggo cetak DO/surat jalan sopir
 

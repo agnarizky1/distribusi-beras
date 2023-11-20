@@ -82,11 +82,11 @@
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
                                                 <!-- <br>
-                                                                                            @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                                                                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
     <span class="text-success">Lunas</span>
 @else
     <span class="text-danger">Sisa Bayar: Rp.
-                                                                                                    {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
     @endif -->
                                             </td>
                                             @if ($d->status == 'Terkirim')
@@ -202,7 +202,7 @@
                                                     <div class="col-md-4">
                                                         <label for="sales">Sales</label>
                                                         <input type="text" class="form-control" id="sales"
-                                                            name="sales" readonly>
+                                                            name="sales" disabled>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="pembayaran">Pembayaran</label>
