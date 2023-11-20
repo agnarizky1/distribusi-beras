@@ -76,18 +76,11 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $d->kode_distribusi }}</td>
-                                            <td>{{ $d->nama_toko }}</td>
+                                            <td>{{ $d->toko->nama_toko }}</td>
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
-                                                <!-- <br>
-                                                                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
-    <span class="text-success">Lunas</span>
-@else
-    <span class="text-danger">Sisa Bayar: Rp.
-                                                                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
-    @endif -->
                                             </td>
                                             @if ($d->status == 'Terkirim')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
@@ -648,9 +641,10 @@
                                 <table id="tabel-distribusi" class="table table-striped table-bordered">
                                     <thead class="table-light">
                                         <tr class="text-center">
-                                            <th>Checklist</th>
+                                            <th>pilihan</th>
                                             <th>Kode Order</th>
                                             <th>Nama Toko</th>
+                                            <th>Alamat Toko</th>
                                             <th>Tanggal Orderan</th>
                                             <th>Total Berat(Kg)</th>
                                             <th>Total Harga</th>
@@ -669,7 +663,8 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $d->kode_distribusi }}</td>
-                                                    <td>{{ $d->nama_toko }}</td>
+                                                    <td>{{ $d->toko->nama_toko }}</td>
+                                                    <td>{{ $d->toko->alamat }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                                     </td>
                                                     <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>

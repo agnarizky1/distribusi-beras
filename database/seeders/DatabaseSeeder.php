@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\TokoSeeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\SalesSeeder;
+use Database\Seeders\berasSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,10 +21,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            // TokoSeeder::class,
             MerkSeeder::class,
             SalesSeeder::class,
             ukuranSeeder::class,
+            berasSeeder::class,
+            // TokoSeeder::class,
         ]);
         // User::factory(10)->create();
     }
