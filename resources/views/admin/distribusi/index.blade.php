@@ -42,10 +42,10 @@
                                 <div class="col-md-6 text-end">
                                     <a data-bs-toggle="modal" data-bs-target="#pengirimanModal" type="button"
                                         class="btn btn-primary">
-                                        <i class="fa-solid fa-folder-plus"></i> Kirim Orderan</a>
+                                        <i class="fa-solid fa-paper-plane"></i> Kirim Orderan</a>
                                     <a href="{{ route('admin.DeliveryOrder.index') }}" type="button"
-                                        class="btn btn-primary">
-                                        <i class="fa-solid fa-folder-plus"></i> Riwayat Orderan</a>
+                                        class="btn btn-success">
+                                        <i class="fa-solid fa-file-lines"></i> Riwayat Orderan</a>
                                 </div>
                             </div>
 
@@ -82,11 +82,11 @@
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
                                                 <!-- <br>
-                                                                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
+                                                                                                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
     <span class="text-success">Lunas</span>
 @else
     <span class="text-danger">Sisa Bayar: Rp.
-                                                                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                                                                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
     @endif -->
                                             </td>
                                             @if ($d->status == 'Terkirim')

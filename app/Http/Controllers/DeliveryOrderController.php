@@ -60,6 +60,8 @@ class DeliveryOrderController extends Controller
     public function show($id)
 {
     $delivery = DeliveryOrder::find($id);
+    $distri = DeliveryOrder::with('detailDelivery')->get();
+@dd($distri);
     return view('admin.DeliveryOrder.show', compact('delivery'));
 }
 
