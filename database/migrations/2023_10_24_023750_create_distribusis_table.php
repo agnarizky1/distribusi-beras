@@ -22,7 +22,7 @@ class CreateDistribusisTable extends Migration
             $table->integer('total_harga');
             $table->string('sales');
             $table->enum('status', ['Pending', 'Terkirim']);
-            $table->enum('status', ['Lunas', 'Belum-Lunas']);
+            $table->enum('status_bayar', ['Lunas', 'Belum-Lunas']);
             $table->timestamps();
 
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');

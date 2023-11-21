@@ -26,8 +26,8 @@ class DistributionController extends Controller
         $tokos = Toko::all();
         $sales = Sales::all();
         $beras = totalStock::all();
-        $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
-            ->select('distribusis.*', 'tokos.nama_toko')
+        $distri = Distribusi::with('toko')
+            // ->select('distribusis.*', 'tokos.*')
             ->where('status', 'Pending')
             ->get();
 
