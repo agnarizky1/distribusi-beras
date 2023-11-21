@@ -15,7 +15,7 @@ class CreateUkuransTable extends Migration
     {
         Schema::create('ukurans', function (Blueprint $table) {
             $table->id();
-            $table->integer('berat');
+            $table->decimal('berat');
             $table->timestamps();
         });
     }

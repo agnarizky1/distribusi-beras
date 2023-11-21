@@ -19,4 +19,9 @@ class DetailDelivery extends Model
     {
         return $this->belongsTo(DeliveryOrder::class, 'id_delivery');
     }
+
+    public function distribusi()
+    {
+        return $this->belongsTo(Distribusi::class, 'id_distribusi');
+    }
 }

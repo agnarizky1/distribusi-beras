@@ -16,19 +16,16 @@ class MerkSeeder extends Seeder
     {
         $merk = [
             [
-                'merk' => 'Jempol',
+                'merk' => 'Jempol Enak',
             ],
             [
-                'merk' => 'Wangi',
+                'merk' => 'Jempol Mantap Plastik',
             ],
             [
-                'merk' => 'Dua Anak',
+                'merk' => 'Jempol Mantap Laminasi',
             ],
             [
-                'merk' => 'Ratu',
-            ],
-            [
-                'merk' => 'Gajah',
+                'merk' => 'Nis Manis',
             ],
 
         ];

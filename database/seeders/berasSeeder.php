@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Beras;
-use App\Models\Ukuran;
 use App\Models\Merk;
 use App\Models\totalStock;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +15,27 @@ class BerasSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         $merk = Merk::all();
-        $ukuran = Ukuran::all();
+        $ukuranjEnak = [25, 5 , 3];
+        $ukuranJPlastik = [25, 5, 2.5];
+        $ukuranJLaminasi = [10, 5];
+        $ukuranNis = [25, 5, 10];
 
         $dataBeras = [];
         foreach ($merk as $m) {
+            $ukuran = [];
+            if($m->merk == "Jempol Enak"){
+                $ukuran = $ukuranjEnak;
+            }
+            elseif($m->merk == "Jempol Mantap Plastik"){
+                $ukuran = $ukuranJPlastik;
+            }
+            elseif($m->merk == "Jempol Mantap Laminasi"){
+                $ukuran = $ukuranJLaminasi;
+            }
+            elseif($m->merk == "Nis Manis"){
+                $ukuran = $ukuranNis;
+            }
+
             foreach ($ukuran as $u) {
                 $prefix = 'B-';
                 $lastId = Beras::max('id_beras');
@@ -36,7 +52,7 @@ class BerasSeeder extends Seeder
                 $beras = [
                     'id_beras' => $nextId,
                     'merk_beras' => $m->merk,
-                    'berat' => $u->berat,
+                    'berat' => $u,
                     'nama_sopir' => $faker->name,
                     'plat_no' => $faker->bothify('??? ###'),
                     'tanggal_masuk_beras' => now(),
@@ -47,14 +63,14 @@ class BerasSeeder extends Seeder
                 ];
                 $totalStock = [
                     'merk_beras' => $m->merk,
-                    'ukuran_beras' => $u->berat,
+                    'ukuran_beras' => $u,
                     'jumlah_stock' => $beras['stock'],
                     'harga' => 10000,
                 ];
 
                 Beras::insert($beras);
                 totalStock::insert($totalStock);
-                $dataBeras[] = $totalStock;
+                // $dataBeras[] = $beras;
             }
         }
         // foreach ($dataBeras as $d) {

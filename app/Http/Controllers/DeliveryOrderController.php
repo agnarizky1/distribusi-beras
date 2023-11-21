@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DeliveryOrder;
 use App\Models\DetailDelivery;
 use App\Models\Distribusi;
+use App\Models\totalStock;
 
 class DeliveryOrderController extends Controller
 {
@@ -59,23 +60,12 @@ class DeliveryOrderController extends Controller
 
     public function show($id)
 {
-    $delivery = DeliveryOrder::find($id);
-    $distri = DeliveryOrder::with('detailDelivery')->get();
-@dd($distri);
-    return view('admin.DeliveryOrder.show', compact('delivery'));
+    $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
+    $detailDeliveries = $delivery->detailDelivery;
+    $merk = totalStock::all();
+
+    return view('admin.DeliveryOrder.show', compact('delivery' ,'detailDeliveries', 'merk'));
 }
-
-
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     public function destroy($id)
     {

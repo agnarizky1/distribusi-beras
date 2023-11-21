@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             SalesSeeder::class,
             ukuranSeeder::class,
             berasSeeder::class,
-            // TokoSeeder::class,
+            TokoSeeder::class,
         ]);
         // User::factory(10)->create();
     }

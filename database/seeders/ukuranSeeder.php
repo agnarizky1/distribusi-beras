@@ -17,6 +17,9 @@ class ukuranSeeder extends Seeder
     {
         $ukuran = [
             [
+                'berat' => '2.5',
+            ],
+            [
                 'berat' => '3',
             ],
             [
@@ -27,12 +30,6 @@ class ukuranSeeder extends Seeder
             ],
             [
                 'berat' => '25',
-            ],
-            [
-                'berat' => '50',
-            ],
-            [
-                'berat' => '100',
             ],
         ];
         Ukuran::insert($ukuran);
