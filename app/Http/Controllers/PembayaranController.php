@@ -33,10 +33,6 @@ class PembayaranController extends Controller
         $id_distribusi = $request->input('id_distribusi');
         $bayar = Pembayaran::where('id_distribusi', $id_distribusi)->first();
 
-        if($bayar->jumlah_pembayaran == null ){
-            $bayar->delete();
-        }
-        
         $pembayaran = new Pembayaran();
         $pembayaran->id_distribusi = $id_distribusi;
         $pembayaran->tanggal_pembayaran = $request->input('tanggalPembayaran');

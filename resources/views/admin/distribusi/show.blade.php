@@ -61,15 +61,24 @@
                                         @endforeach
                                         <tr>
                                             <td class="text-end" colspan="3">
-                                                <strong>Total Harga :</strong>
+                                                <strong>Total :</strong>
                                             </td>
-                                            <td>{{ $totalHarga }}</td>
+                                            <td>Rp. {{ number_format($totalHarga, 0, '.', '.') }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-end" colspan="3">
                                                 <strong>Diskon :</strong>
                                             </td>
-                                            <td>{{ $totalHarga - $distribusi->total_harga }}</td>
+                                            <td>Rp.
+                                                {{ number_format($totalHarga - $distribusi->total_harga, 0, '.', '.') }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end" colspan="3">
+                                                <strong>Total Harga :</strong>
+                                            </td>
+                                            <td>Rp.
+                                                {{ number_format($distribusi->total_harga, 0, '.', '.') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
