@@ -15,7 +15,7 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <div class="col-md-6 ">
+                        <div class="col-md-6">
                             <a href="{{ route('distribution') }}" class="btn btn-primary">
                                 Kembali
                             </a>
@@ -84,133 +84,14 @@
                                 </table>
 
                             </div>
-                            {{-- <div class="text-end">
+                            <div class="text-end">
                                 <a href="{{ route('distribution.cetak', $distribusi->id_distribusi) }}"
                                     class="btn btn-warning btn-sm">Print</i>
                                 </a>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4>Nota Pembayaran: {{ $distribusi->kode_distribusi }}</h4>
-                            </div>
-                            <div class="col-md-6 text-end">
-                                <a href="{{ route('distribution') }}" class="btn btn-primary">
-                                    Kembali
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Nama Toko: {{ $toko->nama_toko }}</p>
-                                <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Total Harga: {{ $distribusi->total_harga }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
-                                <p>Tanggal Tengat Waktu: {{ $pembayaran->tanggal_tengat_pembayaran }}</p>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <table class="table table-bordered text-center">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal Bayar</th>
-                                            <th>Metode Pembayaran</th>
-                                            <th>Jumlah yang dibayar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $totalPembayaran = 0;
-                                        @endphp
-                                        @foreach ($bayar as $pembayaran)
-                                            <tr>
-                                                @if ($pembayaran->tanggal_pembayaran != null)
-                                                    <td>{{ $pembayaran->tanggal_pembayaran }}</td>
-                                                    <td>{{ $pembayaran->metode_pembayaran }}</td>
-                                                    <td>{{ $pembayaran->jumlah_pembayaran }}</td>
-                                                    @php
-                                                        $totalPembayaran += $pembayaran->jumlah_pembayaran;
-                                                    @endphp
-                                                @endif
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                @php
-                                    $sisaPembayaran = $distribusi->total_harga - $totalPembayaran;
-                                @endphp
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                @if ($sisaPembayaran > 0)
-                                    <p>Sisa yang harus dibayar: {{ $sisaPembayaran }}</p>
-                                @else
-                                    <p id="status">Status: Lunas</p>
-                                @endif
-                            </div>
-                            <div class="col-6 text-end">
-                                <a id="bayarButton" href="#" class="btn btn-success btn-sm" data-toggle="modal"
-                                    data-target="#pembayaranModal">Bayar</a>
-                                <a href="{{ route('pembayaran.cetak', $distribusi->id_distribusi) }}"
-                                    class="btn btn-warning btn-sm">Print</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="pembayaranModal" tabindex="-1" role="dialog"
-                        aria-labelledby="pembayaranModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="pembayaranModalLabel">Form Pembayaran</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <form id="formPembayaran">
-                                        <div class="form-group">
-                                            <input type="hidden" id="id_distribusi" name="id_distribusi"
-                                                value="{{ $distribusi->id_distribusi }}">
-                                            <label for="tanggalPembayaran">Tanggal Pembayaran:</label>
-                                            <input type="date" class="form-control" id="tanggalPembayaran"
-                                                name="tanggalPembayaran" value="{{ date('Y-m-d') }}" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="jumlahPembayaran">Jumlah Pembayaran:</label>
-                                            <input type="number"
-                                                placeholder="Sisa yang harus dibayar: {{ $sisaPembayaran }}"
-                                                class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="metodePembayaran">Metode Pembayaran:</label>
-                                            <select class="form-control" id="metodePembayaran" name="metodePembayaran"
-                                                required>
-                                                <option value="tunai">Tunai</option>
-                                                <option value="transfer">Transfer</option>
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                    <button id="simpanPembayaran" class="btn btn-primary" disable>Simpan Pembayaran</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </section>
     </div>

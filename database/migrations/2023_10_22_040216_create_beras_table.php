@@ -22,6 +22,7 @@ class CreateBerasTable extends Migration
             $table->date('tanggal_masuk_beras');
             $table->integer('harga');
             $table->integer('stock');
+            $table->enum('keterangan',['Beras Return', 'Dari Pabrik'])->default('Dari Pabrik');
             $table->timestamps();
         });
     }

@@ -73,11 +73,13 @@
                                                         {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
                                                 @endif --}}
                                             </td>
-                                            @if ($d->status_bayar == 'Lunas')
-                                                <td class="text-success text-center">{{ $d->status_bayar }}</td>
-                                            @endif
                                             @if ($d->status_bayar == 'Belum-Lunas')
-                                                <td class="text-danger text-center">{{ $d->status_bayar }}</td>
+                                                <td class="text-danger text-center"><strong>{{ $d->status_bayar }}</strong>
+                                                </td>
+                                            @endif
+                                            @if ($d->status_bayar == 'Lunas')
+                                                <td class="text-success text-center"><strong>{{ $d->status_bayar }}</strong>
+                                                </td>
                                             @endif
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">

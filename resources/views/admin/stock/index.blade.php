@@ -41,7 +41,12 @@
                                     @foreach ($beras as $b)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
+                                            @if($b->keterangan == "Beras Return")
+                                            <td class="text-danger text-center">{{$b->keterangan}} {{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            @endif
+                                            @if($b->keterangan == "Dari Pabrik")
                                             <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            @endif
                                             <td>{{ $b->tanggal_masuk_beras }}</td>
                                             <td>{{ $b->nama_sopir }}</td>
                                             <td>{{ $b->plat_no }}</td>

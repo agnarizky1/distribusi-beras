@@ -12,6 +12,8 @@ use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
 use App\Models\DetailDistribusi;
+use App\Models\DetailDelivery;
+use App\Models\DeliveryOrder;
 
 
 class DistributionController extends Controller
@@ -28,7 +30,7 @@ class DistributionController extends Controller
         $beras = totalStock::all();
         $distri = Distribusi::with('toko')
             // ->select('distribusis.*', 'tokos.*')
-            ->where('status', 'Pending')
+            ->whereIn('status', ['Pending', 'Dikirim'])
             ->get();
 
         $pembayaranTotals = [];
@@ -61,11 +63,11 @@ class DistributionController extends Controller
         $distribusiModel->id_toko = $namaToko;
         $distribusiModel->sales = $sales;
         $distribusiModel->kode_distribusi = $kode_distribusi;
-        $distribusiModel->total_harga = $totalHarga;
         $distribusiModel->tanggal_distribusi = $tglDistri;
         $distribusiModel->jumlah_distribusi = $jumlahDistribusi;
         $distribusiModel->total_harga = $totalHarga;
         $distribusiModel->status = 'Pending';
+        $distribusiModel->jenis_pembayaran = $metodeBayar;
 
         $distribusiModel->save();
 
@@ -76,7 +78,7 @@ class DistributionController extends Controller
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
-        $pembayaran->metode_pembayaran = $metodeBayar;
+        $pembayaran->metode_pembayaran = 'tunai';
 
         $pembayaran->save();
 
@@ -104,22 +106,107 @@ class DistributionController extends Controller
         }
     }
 
+    // ndk kene
+    public function update(Request $request){
+        $id_distribusi = $request->input('id');
+        $status = $request->input('statusPenerimaan');
+        $dataBeras = $request->input('formData');
+
+        if($status == 'Dikembalikan'){
+            $status = 'Diterima';
+
+        }
+
+        $distribusi = Distribusi::find($id_distribusi);
+        $jumlahReturn = 0;
+
+        if($dataBeras != null){
+            foreach($dataBeras as $data){
+                $nextId = $this->generateNextId();
+
+                $detail = DetailDistribusi::find($data['idDetail']);
+                if ($detail) {
+                    $detail->update([
+                        'jumlah_return' => $data['jumlah'],
+                    ]);
+                }
+                $produkString = $detail->nama_beras;
+                $namaProduk = trim(preg_replace('/\d+(\.\d+)? Kg$/', '', $produkString));
+
+                $beratString = preg_match('/(\d+(\.\d+)?) Kg$/', $produkString, $matches) ? $matches[1] : null;
+                $berat = $beratString ? floatval($beratString) : null;
+
+                $orderDetail = DetailDelivery::where('id_distribusi', $distribusi->id_distribusi)->get();
+                $idDelivery = $orderDetail->first()->id_delivery;
+
+                $delivery = DeliveryOrder::find($idDelivery);
+                $hargaPcs = $detail->harga;
+                $hargaKG = $hargaPcs/$berat;
+
+                // beras return dan menambah stok
+                $berasReturn = New Beras();
+                $berasReturn->id_beras = $nextId;
+                $berasReturn->merk_beras = $namaProduk;
+                $berasReturn->berat = $berat;
+                $berasReturn->nama_sopir = $delivery->nama_sopir;
+                $berasReturn->plat_no = $delivery->plat_no;
+                $berasReturn->tanggal_masuk_beras = $delivery->tanggal_kirim;
+                $berasReturn->harga = $hargaKG;
+                $berasReturn->stock = $data['jumlah'];
+                $berasReturn->keterangan = 'Beras Return';
+
+                $jumlahReturn += $hargaPcs*$data['jumlah'];
+                $berasReturn->save();
+
+                $tStock = totalStock::where('merk_beras', $namaProduk)
+                    ->where('ukuran_beras', $berat)
+                    ->first();
+
+                if ($tStock) {
+                    $tStock->jumlah_stock += intval($data['jumlah']);
+                    $tStock->harga = $hargaKG;
+                    $tStock->save();
+                }
+            }
+        }
+
+        if ($distribusi) {
+            $distribusi->update([
+                'status' => $status,
+                'uang_return' => $jumlahReturn,
+            ]);
+        }
+    }
+
+    private function generateNextId()
+    {
+         $prefix = 'B-';
+         $lastId = Beras::max('id_beras');
+
+         if (!$lastId) {
+             // Jika belum ada data laporan, gunakan nomor 1
+             return $prefix . '00001';
+         }
+
+         // Ambil angka dari ID terakhir, tambahkan 1, dan lakukan padding
+         $lastNumber = intval(substr($lastId, strlen($prefix)));
+         $nextNumber = $lastNumber + 1;
+         $nextId = $prefix . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+
+         return $nextId;
+    }
+
     public function show($id)
     {
-        $distribusi = Distribusi::find($id); // Gantilah 'Distribusi' sesuai dengan model Anda
+        $distribusi = Distribusi::find($id);
         if (!$distribusi) {
             return redirect()->route('distribution')->with('error', 'Distribusi tidak ditemukan.');
         }
 
-        // Jika Distribusi ditemukan, Anda dapat mengambil data terkait di sini
         $toko = $distribusi->toko; // Anda perlu memiliki relasi antara Distribusi dan Toko dalam model Anda
         $detailDistribusi = $distribusi->detailDistribusi;
-        $pembayaran = $distribusi->pembayaran->first();
-        dd($pembayaran);
 
-        $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
-
-        return view('admin.penjualan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
+        return view('admin.distribusi.show', compact('distribusi', 'toko', 'detailDistribusi'));
     }
 
     public function destroy($id)

@@ -185,17 +185,21 @@ class BerasController extends Controller
     public function destroy(Beras $id_beras)
     {
         $tStock = totalStock::where('merk_beras', $id_beras->merk_beras)
-        ->where('ukuran_beras', $id_beras->berat)
-        ->first();
+            ->where('ukuran_beras', $id_beras->berat)
+            ->first();
 
         if ($tStock) {
             $tStock->jumlah_stock -= $id_beras->stock;
-            if($tStock->jumlah_stock < 0){
-                $tStock->jumlah_stock = 0;
+
+            if ($tStock->jumlah_stock <= 0) {
+                $tStock->delete();
+            } else {
+                $tStock->save();
             }
-            $tStock->save();
+
             $id_beras->delete();
         }
+
         Alert::error('Data Beras Berhasil Dihapus!');
         return back();
     }

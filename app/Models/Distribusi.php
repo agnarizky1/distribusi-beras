@@ -23,6 +23,8 @@ class Distribusi extends Model
         'jumlah_distribusi',
         'total_harga',
         'status',
+        'status_bayar',
+        'uang_return',
     ];
 
     public function detailDistribusi()
@@ -36,6 +38,6 @@ class Distribusi extends Model
     }
     public function pembayaran()
     {
-        return $this->hasMany(Pembayaran::class, 'id_distribusi', 'id_distribusi');
+        return $this->hasMany(Pembayaran::class, 'id_distribusi');
     }
 }

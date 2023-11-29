@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Grade;
-use App\Models\Jenis;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,16 +12,17 @@ class Beras extends Model
     protected $keyType = 'string';
     protected $primaryKey = 'id_beras';
 
-//     public function grade()
-// {
-//     return $this->belongsTo(Grade::class, 'id_grade');
-// }
-
-// public function jenis()
-// {
-//     return $this->belongsTo(Jenis::class, 'id_jenis');
-// }
-
+    protected $fillable = [
+        'id_beras',
+        'merk_beras',
+        'berat',
+        'nama_sopir',
+        'plat_no',
+        'tanggal_masuk_beras',
+        'harga',
+        'stock',
+        'keterangan',
+    ];
 }
 
 
