@@ -16,11 +16,9 @@ class PenjualanController extends Controller
     public function index()
     {
         $tokos = Toko::all();
-        $sales = Sales::all();
-        $beras = totalStock::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
-            ->select('distribusis.*', 'tokos.nama_toko')
-            ->where('status', 'terkirim')
+            ->select('distribusis.*', 'tokos.*')
+            ->where('status', 'Diterima')
             ->get();
 
         $pembayaranTotals = [];
@@ -28,7 +26,7 @@ class PenjualanController extends Controller
             $pembayaranTotal = Pembayaran::where('id_distribusi', $d->id_distribusi)->sum('jumlah_pembayaran');
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
-        return view('admin.penjualan.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
+        return view('admin.penjualan.index', compact('tokos','distri','pembayaranTotals'));
     }
 
     /**
@@ -68,7 +66,7 @@ class PenjualanController extends Controller
         // Jika Distribusi ditemukan, Anda dapat mengambil data terkait di sini
         $toko = $distribusi->toko; // Anda perlu memiliki relasi antara Distribusi dan Toko dalam model Anda
         $detailDistribusi = $distribusi->detailDistribusi;
-        $pembayaran = $distribusi->pembayaran->first();
+        $pembayaran = $distribusi->pembayaran;
 
         $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
 
@@ -120,6 +118,6 @@ class PenjualanController extends Controller
 
         $distribusi->delete();
 
-        return redirect()->route('tagihan')->with('success', 'Transaksi telah dihapus.');
+        return redirect()->route('penjualan')->with('success', 'Transaksi telah dihapus.');
     }
 }

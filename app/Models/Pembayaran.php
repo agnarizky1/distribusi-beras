@@ -16,6 +16,6 @@ class Pembayaran extends Model
 
     public function distribusi()
     {
-        return $this->belongsTo(Distribusi::class, 'id_distribusi', 'id_distribusi');
+        return $this->belongsTo(Distribusi::class, 'id_distribusi');
     }
 }

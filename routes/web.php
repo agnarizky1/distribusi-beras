@@ -85,14 +85,14 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/create', [DistributionController::class, 'create'])->name('distribution.add');
     Route::get('/admin/distribution/show/{id}', [DistributionController::class, 'show'])->name('distribution.show');
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
-
-    // Route::get('/admin/distribution/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
-    // route iki diganti ndk tagihan ae
+    Route::post('/admin/distribution/update', [DistributionController::class, 'update'])->name('distribution.update');
+    Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
 
     // DeliveryOrder
     Route::get('/admin/DeliveryOrder', [DeliveryOrderController::class, 'index'])->name('admin.DeliveryOrder.index');
     Route::post('/admin/DeliveryOrder/store', [DeliveryOrderController::class, 'store'])->name('admin.DeliveryOrder.store');
     Route::get('/admin/DeliveryOrder/show/{id}', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
+    Route::get('/admin/DeliveryOrder/showDO/{id}', [DeliveryOrderController::class, 'showDO'])->name('admin.DeliveryOrder.showDO');
     Route::get('/admin/DeliveryOrder/destroy/{id}', [DeliveryOrderController::class, 'destroy'])->name('admin.DeliveryOrder.destroy');
     Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak'); //iki nggo cetak DO/surat jalan sopir
 
@@ -100,7 +100,6 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/penjualan', [PenjualanController::class, 'index'])->name('penjualan');
     Route::get('/admin/penjualan/show/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
     Route::get('/admin/penjualan/destroy/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
-    Route::get('/admin/penjualan/cetak/{id}', [PenjualanController::class, 'cetak'])->name('penjualan.cetak'); //iki nggo cetak nota
 
     //sales
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
@@ -126,15 +125,11 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::put('/admin/merk/update/{id}', [MerkController::class, 'update'])->name('admin.merk.update');
     Route::get('/admin/merk/destroy/{id}', [MerkController::class, 'destroy'])->name('admin.merk.destroy');
 
-    //tagihan
-    Route::get('/admin/tagihan', [TagihanController::class, 'index'])->name('admin.tagihan');
-    Route::post('/admin/tagihan/create', [TagihanController::class, 'store'])->name('admin.tagihan.create');
-    Route::get('/admin/tagihan/add', [TagihanController::class, 'create'])->name('admin.tagihan.add');
-    Route::get('/admin/tagihan/edit/{id}', [TagihanController::class, 'edit'])->name('admin.tagihan.edit');
-    Route::put('/admin/tagihan/update/{id}', [TagihanController::class, 'update'])->name('admin.tagihan.update');
-    Route::get('/admin/tagihan/destroy/{id}', [TagihanController::class, 'destroy'])->name('admin.tagihan.destroy');
-    Route::get('/admin/tagihan/show/{id}', [TagihanController::class, 'show'])->name('admin.tagihan.show');
+    //Pembayaran (tagihan)
+    Route::get('/admin/tagihan', [pembayaranController::class, 'index'])->name('admin.tagihan');
+    Route::post('/admin/tagihan/store', [pembayaranController::class, 'store'])->name('tagihan.store');
+    Route::get('/admin/tagihan/destroy/{id}', [pembayaranController::class, 'destroy'])->name('admin.tagihan.destroy');
+    Route::get('/admin/tagihan/show/{id}', [pembayaranController::class, 'show'])->name('admin.tagihan.show');
+    Route::get('/admin/tagihan/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
 
-    //Pembayaran
-    Route::post('/admin/pembayaran/store', [pembayaranController::class, 'store'])->name('pembayaran.store');
 });

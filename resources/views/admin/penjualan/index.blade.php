@@ -63,18 +63,12 @@
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td>{{ $d->sales }}</td>
-                                            <!-- <br>
-                                                                                    @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
-    <span class="text-success">Lunas</span>
-@else
-    <span class="text-danger">Sisa Bayar: Rp.
-                                                                                            {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
-    @endif -->
+                                            
                                             </td>
-                                            @if ($d->status == 'Terkirim')
+                                            @if ($d->status == 'Diterima')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
                                             @endif
-                                            @if ($d->status == 'Pending')
+                                            @if ($d->status == 'Ditolak')
                                                 <td class="text-danger text-center">{{ $d->status }}</td>
                                             @endif
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')

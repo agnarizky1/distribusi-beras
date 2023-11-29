@@ -16,12 +16,13 @@ class CreateBerasTable extends Migration
         Schema::create('beras', function (Blueprint $table) {
             $table->char('id_beras',30)->primary();
             $table->string('merk_beras');
-            $table->integer('berat');
+            $table->string('berat');
             $table->string('nama_sopir');
             $table->string('plat_no');
             $table->date('tanggal_masuk_beras');
             $table->integer('harga');
             $table->integer('stock');
+            $table->enum('keterangan',['Beras Return', 'Dari Pabrik'])->default('Dari Pabrik');
             $table->timestamps();
         });
     }

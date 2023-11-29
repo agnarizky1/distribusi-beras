@@ -8,6 +8,8 @@ use App\Models\DeliveryOrder;
 use App\Models\DetailDelivery;
 use App\Models\Distribusi;
 use App\Models\totalStock;
+use App\Models\DetailDistribusi;
+
 
 class DeliveryOrderController extends Controller
 {
@@ -48,7 +50,7 @@ class DeliveryOrderController extends Controller
             if ($distribusi) {
                 $totalberat += $distribusi->jumlah_distribusi;
                 $distribusi->update([
-                    'status' => "Terkirim",
+                    'status' => "Dikirim",
                 ]);
             }
             $DetailDelivery->save();
@@ -59,13 +61,33 @@ class DeliveryOrderController extends Controller
     }
 
     public function show($id)
-{
-    $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
-    $detailDeliveries = $delivery->detailDelivery;
-    $merk = totalStock::all();
+    {
+        $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
+        $detailDeliveries = DetailDelivery::where('id_delivery', $id)->get();
+        $merk = totalStock::all();
 
-    return view('admin.DeliveryOrder.show', compact('delivery' ,'detailDeliveries', 'merk'));
-}
+        return view('admin.DeliveryOrder.show', compact('delivery' ,'detailDeliveries', 'merk'));
+    }
+
+    public function showDO($id)
+    {
+        $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
+        $detailDeliveries = DetailDelivery::where('id_delivery', $id)->get();
+        $detailDistribusi = [];
+
+        if (!$detailDeliveries->isEmpty()) {
+            foreach( $detailDeliveries as $del){
+                $id_distribusi = $del->id_distribusi;
+                $detailDistribusi[] = DetailDistribusi::where('id_distribusi', $id_distribusi)->get();
+            }
+        }
+
+        $merk = totalStock::all();
+        // dd($delivery, $detailDeliveries, $detailDistribusi);
+
+        return view('admin.DeliveryOrder.printDO', compact('delivery', 'detailDeliveries', 'merk', 'detailDistribusi'));
+    }
+
 
     public function destroy($id)
     {

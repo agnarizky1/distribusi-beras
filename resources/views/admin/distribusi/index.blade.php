@@ -82,7 +82,7 @@
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
                                             <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
                                             </td>
-                                            @if ($d->status == 'Terkirim')
+                                            @if ($d->status == 'Dikirim')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
                                             @endif
                                             @if ($d->status == 'Pending')
@@ -90,13 +90,20 @@
                                             @endif
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
+                                                    @if ($d->status == 'Dikirim')
+                                                    <a href="#" class="btn btn-success btn-sm mb-1" data-toggle="modal"
+                                                        data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
+                                                        <i class="fa fa-pen"></i>
+                                                    </a>
+                                                    @endif
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-warning btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <a href="#" class="btn btn-danger btn-sm mb-1" data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
-                                                        <i class="fa fa-trash-can"></i></a>
+                                                        <i class="fa fa-trash-can"></i>
+                                                    </a>
                                                 </td>
                                             @endif
                                         </tr>
@@ -105,6 +112,141 @@
                             </table>
                         </div>
                     </div>
+
+                    <!-- modal kirim order -->
+                    @foreach ($distri as $d)
+                        <div class="modal fade" id="ConfirmationDeliveryModal{{ $d->id_distribusi }}" tabindex="-1"
+                            role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">Konfirmasi Pengiriman
+                                        </h5>
+                                        <div id="id_distribusi" data-id-distribusi="{{ $d->id_distribusi }}" hidden></div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Status Saat Ini:</strong> {{ $d->status }}</p>
+                                        <!-- Menampilkan daftar beras yang dikirim -->
+                                        <strong>Barang Yang Dikirim</strong>
+                                        <ul id="listBeratDikirim">
+                                            @foreach ($d->detailDistribusi as $detail)
+                                                <li>{{ $detail->nama_beras }} - ({{ $detail->jumlah_beras }} pcs)</li>
+                                            @endforeach
+                                        </ul>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="statusPenerimaan">Ubah Status:</label>
+                                                <select class="form-control" id="statusPenerimaan" name="statusPenerimaan" required>
+                                                    <option value="Diterima">Diterima</option>    
+                                                    <option value="Ditolak">Ditolak</option>
+                                                    <option value="Dikembalikan">Dikembalikan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Formulir untuk memilih beras yang dikembalikan -->
+                                        <form id="formKonfirmasiPengiriman" style="display: none;">
+                                        <p>jumlah yang dikembalikan:</p>
+                                            @foreach ($d->detailDistribusi as $detail)
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="beras_{{ $detail->id_detail_distribusi }}">
+                                                                {{ $detail->nama_beras }}:
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}]" id="beras_{{ $detail->id_detail_distribusi }}"
+                                                            data-id-detail="{{ $detail->id_detail_distribusi }}" value="{{ $detail->jumlah_beras }}" min="0" max="{{ $detail->jumlah_beras }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <!-- Tombol untuk mengonfirmasi pengiriman dan kembalikan beras -->
+                                        <button type="button" class="btn btn-success" onclick="confirmDelivery()">Konfirmasi Pengiriman</button>
+                                    </div>
+
+                                    <!-- Skrip jQuery dan AJAX -->
+                                    <script>
+                                        var formData = [];
+
+                                        $('#statusPenerimaan').on('change', function() {
+                                            const selectedDiskonOption = $(this).val();
+                                            switch (selectedDiskonOption) {
+                                                case 'Dikembalikan':
+                                                    $('#formKonfirmasiPengiriman').show();
+                                                    break;
+                                                default:
+                                                    $('#formKonfirmasiPengiriman').css('display', 'none');
+                                                    break;
+                                            }
+                                        });
+
+                                        function confirmDelivery() {
+                                            // Ambil data dari formulir
+                                            var statusPenerimaan = $('#statusPenerimaan').val();
+                                            var id_distribusi = $('#id_distribusi').data('id-distribusi');
+
+                                            if(statusPenerimaan =='Dikembalikan'){
+                                                formData = [];
+                                                document.querySelectorAll('input[type="number"]').forEach(function(input) {
+                                                    var idDetail = $(input).data('id-detail'); 
+                                                    formData.push({
+                                                        idDetail: idDetail,
+                                                        jumlah: input.value,
+                                                    });
+                                                });
+                                            }else{
+                                                formData = []; 
+                                            }
+
+                                            // Menghapus entri yang memiliki jumlah kosong
+                                            formData = formData.filter(entry => entry.jumlah !== '');
+
+                                            console.log(formData);
+                                            
+                                            // Kirim data ke server dengan AJAX
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '{{ url('admin/distribution/update') }}',
+                                                data: {
+                                                    id : id_distribusi,
+                                                    statusPenerimaan: statusPenerimaan,
+                                                    formData : formData,
+                                                    _token: '{{ csrf_token() }}'
+                                                },
+                                                success: function (response) {
+                                                    // Tampilkan pesan sukses atau lakukan tindakan sesuai kebutuhan
+                                                    Swal.fire('Success', 'Konfirmasi pengiriman berhasil!', 'success')
+                                                        .then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.location.href = '{{ route('distribution') }}';
+                                                            }
+                                                        });
+                                                },
+                                                error: function (xhr, textStatus, errorThrown) {
+                                                    console.error('Error:', errorThrown);
+                                                }
+                                            });
+                                        }
+                                    </script>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <!-- modal delete -->
                     @foreach ($distri as $d)
                         <div class="modal fade" id="deleteConfirmationModal{{ $d->id_distribusi }}" tabindex="-1"
                             role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -133,7 +275,7 @@
             </div>
         </section>
     </div>
-    <!-- Modal -->
+    <!-- Modal order--> 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -328,7 +470,11 @@
                                 $('#beras').change(function() {
                                     var selectedOption = $(this).find('option:selected');
                                     var price = selectedOption.data('price');
-                                    var berat = parseFloat(selectedOption.text().match(/\d+/)[0]);
+                                    var beratOption = selectedOption.text().match(/\d+(\.\d+)?/);
+                                    var berat = beratOption ? parseFloat(beratOption[0]) : 0;
+                                    
+                                    console.log(price, berat);
+
 
                                     $('#hargakg').val(price);
                                     $('#hargapcs').val(price * berat);
@@ -354,39 +500,6 @@
                                     intputNomorTelp.val(NomorTelp);
                                     intputSales.val(sales);
                                 });
-
-                                const selectDiskon = $('#pilihandiskon');
-                                const inputDiskon = $('#diskon');
-                                const totalSebelumDiskon = parseFloat($('#total-price').text());
-
-                                selectDiskon.on('change', function() {
-                                    const selectedOption = $(this).val();
-                                    let totalSetelahDiskon = 0;
-
-                                    switch (selectedOption) {
-                                        case 'Persen':
-                                            inputDiskon.on('input', function() {
-                                                const diskonPersen = parseFloat(inputDiskon.val());
-                                                const diskonValuePersen = (diskonPersen / 100) *
-                                                    totalSebelumDiskon;
-                                                totalSetelahDiskon = totalSebelumDiskon - diskonValuePersen;
-                                                $('#total-price').text(totalSetelahDiskon);
-                                            });
-                                            break;
-                                        case 'Harga Per-KG':
-                                            // Logika untuk opsi ini
-                                            break;
-
-                                        case 'Nominal':
-                                            inputDiskon.on('input', function() {
-                                                const diskonNominal = parseFloat(inputDiskon.val());
-                                                totalSetelahDiskon = totalSebelumDiskon - diskonNominal;
-                                                $('#total-price').text(totalSetelahDiskon);
-                                            });
-                                            break;
-                                    }
-                                });
-                                inputDiskon.off('input');
 
                                 $(document).ready(function() {
 
@@ -415,12 +528,13 @@
                                     });
 
                                     $('#diskon').on('input', function() {
-                                        const diskonInput = $(this).val();
-                                        const diskonValue = !isNaN(parseFloat(diskonInput)) && isFinite(
-                                            diskonInput) ? parseFloat(diskonInput) : 0;
-                                        $(this).val(diskonValue);
                                         updateTotalHarga();
                                     });
+
+                                    $('#pilihanDiskon').change(function() {
+                                        $('#diskon').val('');
+                                    });
+
                                 });
 
                                 function tambahBerasKeTabel() {
@@ -594,12 +708,8 @@
                                         },
                                         success: function(response) {
                                             // Distribusi berhasil disimpan
-                                            Swal.fire('Success', 'Orderan berhasil disimpan', 'success')
-                                                .then((result) => {
-                                                    if (result.isConfirmed) {
-                                                        window.location.href = '{{ route('distribution') }}';
-                                                    }
-                                                });
+                                            Swal.fire('Success', 'Orderan berhasil disimpan', 'success');
+                                            window.location.href = '{{ route('distribution') }}';
                                         },
                                         error: function(xhr, textStatus, errorThrown) {
                                             console.error('Error:', errorThrown);
@@ -614,7 +724,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal pengiriman-->
     <div class="modal fade" id="pengirimanModal" tabindex="-1" aria-labelledby="pengirimanModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -693,9 +803,6 @@
                             orders.push(checkbox.value);
                         });
 
-                        console.table(orders);
-                        console.log(namaSopir, platNomor, '{{ csrf_token() }}')
-
                         // Kirim data ke server atau lakukan operasi lain sesuai kebutuhan
                         $.ajax({
                             type: 'POST',
@@ -707,12 +814,8 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(response) {
-                                Swal.fire('Success', 'Orderan Dikirim', 'success')
-                                    .then((result) => {
-                                        if (result.isConfirmed) {
-                                            window.location.href = '{{ route('distribution') }}';
-                                        }
-                                    });
+                                Swal.fire('Success', 'Orderan Dikirim', 'success');
+                                window.location.href = '{{ route('distribution') }}';
                             },
                             error: function(xhr, textStatus, errorThrown) {
                                 console.error('Error:', errorThrown);
