@@ -115,10 +115,11 @@ class DistributionController extends Controller
         $toko = $distribusi->toko; // Anda perlu memiliki relasi antara Distribusi dan Toko dalam model Anda
         $detailDistribusi = $distribusi->detailDistribusi;
         $pembayaran = $distribusi->pembayaran->first();
+        dd($pembayaran);
 
         $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
 
-        return view('admin.distribusi.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
+        return view('admin.penjualan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
     public function destroy($id)

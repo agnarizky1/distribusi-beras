@@ -25,67 +25,49 @@ class BerasController extends Controller
         return view('admin.stock.index', compact('beras','merk','total','ukuran'));
     }
 
-    /**,
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        $request->validate([
-            'merk_beras' => 'required',
-            'berat' => 'required',
-            'nama_sopir' => 'required',
-            'plat_no' => 'required',
-            'tanggal_masuk_beras' =>'required',
-            'harga' => 'required',
-            'stock' => 'required',
-        ]);
+{
+    $berasArray = $request->input ('beras');
+    $namaSopir = $request->input ('namaSopir');
+    $platNo = $request->input ('platNo');
+    $tanggal_masuk = $request->input ('tanggal_masuk');
 
-        // Mencari ID yang belum digunakan
+    foreach ($berasArray as $d) {
         $nextId = $this->generateNextId();
+        $beras = new Beras();
+        $beras->id_beras = $nextId;
+        $beras->merk_beras = $d['merk'];
+        $beras->berat = $d['berat'];
+        $beras->harga = $d['harga'];
+        $beras->stock = $d['jumlah'];
+        $beras->nama_sopir = $namaSopir;
+        $beras->plat_no = $platNo;
+        $beras->tanggal_masuk_beras = $tanggal_masuk;
 
-        $beras = Beras::create([
-            'id_beras'   =>  $nextId,
-            'merk_beras' => $request->merk_beras,
-            'berat' => $request->berat,
-            'nama_sopir' => $request->nama_sopir,
-            'plat_no'=>$request->plat_no,
-            'tanggal_masuk_beras' => $request->tanggal_masuk_beras,
-            'harga' => $request->harga,
-            'stock' => $request->stock,
-        ]);
+        $beras->save();
 
-        $tStock = totalStock::where('merk_beras', $request->merk_beras)
-            ->where('ukuran_beras', $request->berat)
-            ->first();
+        $tStock = totalStock::where('merk_beras', $d['merk'])
+        ->where('ukuran_beras', $d['berat'])
+        ->first();
 
         if ($tStock) {
-            $tStock->jumlah_stock += $request->stock;
-            $tStock->harga = $request->harga;
+            $tStock->jumlah_stock += $d['jumlah'];
+            $tStock->harga = $d['harga'];
             $tStock->save();
-        }else {
+        } else {
             // Jika total_stock belum ada, buat yang baru
             totalStock::create([
-                'merk_beras' => $request->merk_beras,
-                'ukuran_beras' => $request->berat,
-                'jumlah_stock' => $request->stock,
-                'harga' => $request->harga,
+                'merk_beras' =>  $d['merk'],
+                'ukuran_beras' =>  $d['berat'],
+                'jumlah_stock' =>  $d['jumlah'],
+                'harga' =>  $d['harga'],
             ]);
         }
 
-        $updateharga = TotalStock::where('merk_beras', $request->merk_beras)->update(['harga' => $request->harga]);
-
-        if ($beras) {
-            //redirect dengan pesan sukses
-            return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
-        } else {
-            //redirect dengan pesan error
-            Alert::error('Data Beras Gagal Disimpan!');
-            return back();
-        }
+        $updateharga = TotalStock::where('merk_beras',  $d['merk'])->update(['harga' => $d['harga']]);
     }
+}
+
 
     private function generateNextId()
     {
@@ -145,7 +127,7 @@ class BerasController extends Controller
 
         $merk_beras = $request->input('nama_beras');
         $berat = $request->input('berat');
-        
+
         $tStock = totalStock::where('merk_beras', $merk_beras)
         ->where('ukuran_beras', $berat)
         ->first();

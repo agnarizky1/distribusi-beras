@@ -124,25 +124,25 @@
 
                                     @foreach ($stockMap as $stock)
                                         @if ($stock->jumlah_stock != 0 || $stock->jumlah_stock != null)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $stock->merk_beras }}</td>
-                                            <td>{{ $stock->ukuran_beras }} Kg</td>
-                                            <td class="text-center">{{ $stock->jumlah_stock }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.jumlahstock.edit', ['id' => $stock->id]) }}"
-                                                    class="btn btn-warning btn-sm">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td>{{ $stock->merk_beras }}</td>
+                                                <td>{{ $stock->ukuran_beras }} Kg</td>
+                                                <td class="text-center">{{ $stock->jumlah_stock }}</td>
+                                                <td>
+                                                    <a href="{{ route('admin.jumlahstock.edit', ['id' => $stock->id]) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         @endif
                                     @endforeach
 
                                     <!-- <tr>
-                                                    <td colspan="4">Jumlah Total:</td>
-                                                    <td class="text-center" colspan="2">10000</td>
-                                                </tr> -->
+                                                                                                                                                                                                                                                                                            <td colspan="4">Jumlah Total:</td>
+                                                                                                                                                                                                                                                                                            <td class="text-center" colspan="2">10000</td>
+                                                                                                                                                                                                                                                                                        </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -157,106 +157,99 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="tambahBerasModalLabel">Tambah Beras</h5>
                             </div>
-                            <form action="{{ route('admin.stockberas.create') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="nama_sopir">Nama Sopir</label>
-                                            <input type="text" class="form-control" id="nama_sopir" name="nama_sopir"
-                                                required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="plat_no">Plat No.</label>
-                                            <input type="text" class="form-control" id="plat_no" name="plat_no"
-                                                required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="tanggal_masuk_beras">Tanggal Masuk</label>
-                                            <input type="date" class="form-control" id="tanggal_masuk_beras"
-                                                value="{{ date('Y-m-d') }}" name="tanggal_masuk_beras" required>
-                                        </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="nama_sopir">Nama Sopir</label>
+                                        <input type="text" class="form-control" id="nama_sopir" name="nama_sopir"
+                                            required>
                                     </div>
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <label for="merk_beras" class="form-label">Merk Beras :</label>
-                                            <select class="form-select @error('beras') is-invalid @enderror"
-                                                id="merk_beras" name="merk_beras" aria-label="Default select example"
-                                                required>
-                                                @foreach ($merk as $item)
-                                                    <option value="{{ $item->merk }}">{{ $item->merk }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="text-danger">
-                                                @error('beras')
-                                                    Merk tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="berat" class="form-label">Berat :</label>
-                                            <select class="form-select @error('berat') is-invalid @enderror"
-                                                id="berat" name="berat" aria-label="Default select example"
-                                                required>
-                                                @foreach ($ukuran as $ukuran)
-                                                    <option value="{{ $ukuran->berat }}">{{ $ukuran->berat }} KG</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="plat_no">Plat No.</label>
+                                        <input type="text" class="form-control" id="plat_no" name="plat_no" required>
                                     </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="tanggal_masuk_beras">Tanggal Masuk</label>
+                                        <input type="date" class="form-control" id="tanggal_masuk_beras"
+                                            value="{{ date('Y-m-d') }}" name="tanggal_masuk_beras" required>
+                                    </div>
+                                </div>
 
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <label for="harga" class="form-label">Harga per KG :</label>
-                                            <input type="number" name="harga" id="harga"
-                                                class="form-control @error('harga') is-invalid @enderror"
-                                                placeholder="Harga beras..">
-                                            <div class="text-danger">
-                                                @error('harga')
-                                                    Harga tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="harga" class="form-label">Harga satuan :</label>
-                                            <input type="number" name="hargapcs" id="hargapcs"
-                                                class="form-control @error('hargapcs') is-invalid @enderror"
-                                                placeholder="Harga beras.." readonly>
-                                            <div class="text-danger">
-                                                @error('harga')
-                                                    Harga tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label for="merk_beras" class="form-label">Merk Beras :</label>
+                                        <select class="form-select merk_beras" name="merk_beras[]">
+                                            @foreach ($merk as $item)
+                                                <option value="{{ $item->merk }}">{{ $item->merk }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="row mb-4">
-                                        <div class="col-md-12">
-                                            <label for="stock" class="form-label">Jumlah stock :</label>
-                                            <input type="number" name="stock"
-                                                class="form-control @error('stock') is-invalid @enderror"
-                                                placeholder="Jumlah stock..">
-                                            <div class="text-danger">
-                                                @error('stock')
-                                                    Jumlah stock tidak boleh kosong.
-                                                @enderror
-                                            </div>
-                                        </div>
+                                    <div class="col-md-6">
+                                        <label for="berat" class="form-label">Berat :</label>
+                                        <select class="form-select berat" name="berat[]">
+                                            @foreach ($ukuran as $ukuran)
+                                                <option value="{{ $ukuran->berat }}">{{ $ukuran->berat }} KG</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div>
 
-                                    <div class="modal-footer">
-                                        <button type="button" id="tutupbtn" class="btn btn-secondary"
-                                            data-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label for="harga" class="form-label">Harga per KG :</label>
+                                        <input type="number" name="harga[]" class="form-control harga "
+                                            placeholder="Harga beras..">
                                     </div>
-                            </form>
+                                    <div class="col-md-6">
+                                        <label for="hargapcs" class="form-label">Harga satuan :</label>
+                                        <input type="number" name="hargapcs[]" class="form-control hargapcs"
+                                            placeholder="Harga beras.." readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label for="stock" class="form-label">Jumlah stock :</label>
+                                        <input type="number" name="stock[]" class="form-control stock "
+                                            placeholder="Jumlah stock..">
+                                    </div>
+                                </div>
+
+                                <div class="text-end mb-3">
+                                    <button type="button" id="tambahBtn"
+                                        class="btn btn-success btn-sm text-white rounded"><i class="fa fa-save"></i>
+                                        Tambah Barang</button>
+                                </div>
+                                <!-- Tabel untuk menampilkan data beras yang telah ditambahkan -->
+                                <table class="table table-bordered" id="berasTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Merk Beras</th>
+                                            <th>Berat (KG)</th>
+                                            <th>Harga per KG</th>
+                                            <th>Harga satuan</th>
+                                            <th>Jumlah Stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transaction-records">
+                                        <!-- Data beras yang telah ditambahkan akan ditampilkan di sini -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" id="tutupbtn" class="btn btn-secondary"
+                                    data-dismiss="modal">Tutup</button>
+                                <button id="simpanberas" type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -283,6 +276,121 @@
 
                 hargapcs.val(harga * berat);
             }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk menambahkan data beras ke dalam tabel
+            function addBerasToTable(merk_beras, berat, harga, hargapcs, stock) {
+                var newRow = '<tr>' +
+                    '<td>' + merk_beras + '</td>' +
+                    '<td>' + berat + ' KG</td>' +
+                    '<td>' + harga + '</td>' +
+                    '<td>' + hargapcs + '</td>' +
+                    '<td>' + stock + '</td>' +
+                    '<td><button type="button" class="btn btn-danger btn-sm  hapus-btn">Hapus</button></td>' +
+                    '</tr>';
+                $('#berasTable tbody').append(newRow);
+
+                // Menambahkan event listener setelah menambahkan baris baru
+                $('.hapus-btn').off('click').on('click', function() {
+                    hapusBaris(this);
+                });
+            }
+
+            function hapusBaris(button) {
+                var row = $(button).closest('tr');
+                row.remove();
+            }
+
+
+
+            // Fungsi untuk mereset nilai input setelah data beras ditambahkan
+            function resetInputValues() {
+                $('.merk_beras, .berat, .harga, .hargapcs, .stock').val('');
+            }
+
+            // Fungsi untuk menghitung harga satuan saat mengisi harga per KG
+            $(document).on('input', '.harga', function() {
+                var hargaPerKG = parseFloat($(this).val()) || 0;
+                var berat = parseFloat($('.berat').val()) || 1;
+                $('.hargapcs').val(hargaPerKG * berat);
+            });
+
+            // Event listener untuk tombol "Tambah Barang"
+            $('#tambahBtn').click(function() {
+                // Validasi input sebelum menambahkan ke dalam tabel
+                var merk_beras = $('.merk_beras').val();
+                var berat = $('.berat').val();
+                var harga = $('.harga').val();
+                var hargapcs = $('.hargapcs').val();
+                var stock = $('.stock').val();
+
+                // Validasi elemen select
+                if (merk_beras && berat && harga && hargapcs && stock) {
+                    // Tambahkan data beras ke dalam tabel
+                    addBerasToTable(merk_beras, berat, harga, hargapcs, stock);
+
+
+
+                    // Reset nilai input
+                    resetInputValues();
+                } else {
+                    alert('Semua kolom harus diisi, termasuk pemilihan Merk Beras dan Berat.');
+                }
+            });
+
+            document.getElementById('simpanberas').addEventListener('click', function() {
+                var beras = [];
+                var namaSopir = document.getElementById('nama_sopir').value;
+                var platNo = document.getElementById('plat_no').value;
+                var tanggal_masuk = document.getElementById('tanggal_masuk_beras').value;
+
+                document.querySelectorAll('#transaction-records tr').forEach(function(row) {
+                    var merkBeras = row.querySelector('td:nth-child(1)').textContent;
+                    var beratBeras = row.querySelector('td:nth-child(2)').textContent;
+                    var hargaBeras = parseFloat(row.querySelector('td:nth-child(3)')
+                        .textContent);
+                    var jumlahStock = parseInt(row.querySelector('td:nth-child(5)')
+                        .textContent);
+                    var ukuranBeras = parseFloat(beratBeras);
+
+                    beras.push({
+                        merk: merkBeras,
+                        berat: ukuranBeras,
+                        harga: hargaBeras,
+                        jumlah: jumlahStock,
+                    });
+                });
+                console.table(beras)
+                console.log(namaSopir, platNo, tanggal_masuk);
+
+                // Kirim data ke server menggunakan AJAX
+                $.ajax({
+                    url: '{{ url('/admin/stockberas/create') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        namaSopir: namaSopir,
+                        platNo: platNo,
+                        tanggal_masuk: tanggal_masuk,
+                        beras: beras
+                    },
+                    success: function(response) {
+                        Swal.fire('Success', 'beras berhasil disimpan', 'success')
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href =
+                                        '{{ route('admin.stockberas') }}';
+                                }
+                            });
+                    },
+                    error: function(xhr, status, error) {
+                        // Penanganan kesalahan (jika diperlukan)
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
         });
     </script>
 @endsection
