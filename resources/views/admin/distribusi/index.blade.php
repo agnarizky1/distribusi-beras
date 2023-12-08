@@ -91,10 +91,11 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     @if ($d->status == 'Dikirim')
-                                                    <a href="#" class="btn btn-success btn-sm mb-1" data-toggle="modal"
-                                                        data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
-                                                        <i class="fa fa-pen"></i>
-                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-sm mb-1"
+                                                            data-toggle="modal"
+                                                            data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
+                                                            <i class="fa fa-pen"></i>
+                                                        </a>
                                                     @endif
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
                                                         class="btn btn-warning btn-sm mb-1">
@@ -116,11 +117,13 @@
                     <!-- modal kirim order -->
                     @foreach ($distri as $d)
                         <div class="modal fade" id="ConfirmationDeliveryModal{{ $d->id_distribusi }}" tabindex="-1"
-                            role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}" aria-hidden="true">
+                            role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}"
+                            aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">Konfirmasi Pengiriman
+                                        <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">
+                                            Konfirmasi Pengiriman
                                         </h5>
                                         <div id="id_distribusi" data-id-distribusi="{{ $d->id_distribusi }}" hidden></div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,8 +143,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="statusPenerimaan">Ubah Status:</label>
-                                                <select class="form-control" id="statusPenerimaan" name="statusPenerimaan" required>
-                                                    <option value="Diterima">Diterima</option>    
+                                                <select class="form-control" id="statusPenerimaan" name="statusPenerimaan"
+                                                    required>
+                                                    <option value="Diterima">Diterima</option>
                                                     <option value="Ditolak">Ditolak</option>
                                                     <option value="Dikembalikan">Dikembalikan</option>
                                                 </select>
@@ -150,7 +154,7 @@
 
                                         <!-- Formulir untuk memilih beras yang dikembalikan -->
                                         <form id="formKonfirmasiPengiriman" style="display: none;">
-                                        <p>jumlah yang dikembalikan:</p>
+                                            <p>jumlah yang dikembalikan:</p>
                                             @foreach ($d->detailDistribusi as $detail)
                                                 <div class="form-group">
                                                     <div class="row">
@@ -160,8 +164,12 @@
                                                             </label>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}]" id="beras_{{ $detail->id_detail_distribusi }}"
-                                                            data-id-detail="{{ $detail->id_detail_distribusi }}" value="{{ $detail->jumlah_beras }}" min="0" max="{{ $detail->jumlah_beras }}">
+                                                            <input type="number"
+                                                                name="beras[{{ $detail->id_detail_distribusi }}]"
+                                                                id="beras_{{ $detail->id_detail_distribusi }}"
+                                                                data-id-detail="{{ $detail->id_detail_distribusi }}"
+                                                                value="{{ $detail->jumlah_beras }}" min="0"
+                                                                max="{{ $detail->jumlah_beras }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -170,9 +178,11 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Batal</button>
                                         <!-- Tombol untuk mengonfirmasi pengiriman dan kembalikan beras -->
-                                        <button type="button" class="btn btn-success" onclick="confirmDelivery()">Konfirmasi Pengiriman</button>
+                                        <button type="button" class="btn btn-success"
+                                            onclick="confirmDelivery()">Konfirmasi Pengiriman</button>
                                     </div>
 
                                     <!-- Skrip jQuery dan AJAX -->
@@ -196,35 +206,35 @@
                                             var statusPenerimaan = $('#statusPenerimaan').val();
                                             var id_distribusi = $('#id_distribusi').data('id-distribusi');
 
-                                            if(statusPenerimaan =='Dikembalikan'){
+                                            if (statusPenerimaan == 'Dikembalikan') {
                                                 formData = [];
                                                 document.querySelectorAll('input[type="number"]').forEach(function(input) {
-                                                    var idDetail = $(input).data('id-detail'); 
+                                                    var idDetail = $(input).data('id-detail');
                                                     formData.push({
                                                         idDetail: idDetail,
                                                         jumlah: input.value,
                                                     });
                                                 });
-                                            }else{
-                                                formData = []; 
+                                            } else {
+                                                formData = [];
                                             }
 
                                             // Menghapus entri yang memiliki jumlah kosong
                                             formData = formData.filter(entry => entry.jumlah !== '');
 
                                             console.log(formData);
-                                            
+
                                             // Kirim data ke server dengan AJAX
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '{{ url('admin/distribution/update') }}',
                                                 data: {
-                                                    id : id_distribusi,
+                                                    id: id_distribusi,
                                                     statusPenerimaan: statusPenerimaan,
-                                                    formData : formData,
+                                                    formData: formData,
                                                     _token: '{{ csrf_token() }}'
                                                 },
-                                                success: function (response) {
+                                                success: function(response) {
                                                     // Tampilkan pesan sukses atau lakukan tindakan sesuai kebutuhan
                                                     Swal.fire('Success', 'Konfirmasi pengiriman berhasil!', 'success')
                                                         .then((result) => {
@@ -233,7 +243,7 @@
                                                             }
                                                         });
                                                 },
-                                                error: function (xhr, textStatus, errorThrown) {
+                                                error: function(xhr, textStatus, errorThrown) {
                                                     console.error('Error:', errorThrown);
                                                 }
                                             });
@@ -263,7 +273,8 @@
                                         Apakah Anda yakin ingin menghapus oderan ini?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Batal</button>
                                         <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
                                             class="btn btn-danger">Hapus</a>
                                     </div>
@@ -275,7 +286,7 @@
             </div>
         </section>
     </div>
-    <!-- Modal order--> 
+    <!-- Modal order-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -392,6 +403,7 @@
                                                                 <th>Harga Satuan</th>
                                                                 <th>Jumlah</th>
                                                                 <th>Subtotal</th>
+                                                                <th>Tonase</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -431,7 +443,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td colspan="2" class="text-end">
+                                                                <td colspan="3" class="text-end">
                                                                     <strong>Total Jumlah Harga :</strong>
                                                                 </td>
                                                                 <td colspan="2">
@@ -472,8 +484,7 @@
                                     var price = selectedOption.data('price');
                                     var beratOption = selectedOption.text().match(/\d+(\.\d+)?/);
                                     var berat = beratOption ? parseFloat(beratOption[0]) : 0;
-                                    
-                                    console.log(price, berat);
+
 
 
                                     $('#hargakg').val(price);
@@ -551,25 +562,31 @@
                                         return;
                                     }
 
+                                    // Pastikan bahwa atribut berat diambil dengan benar
+                                    const beratBeras = parseFloat(berasNama.match(/\d+/));
+                                    const tonase = berasJumlah * beratBeras;
+                                    console.log(beratBeras, berasJumlah);
+
+
                                     const subtotal = berasHargaPcs * berasJumlah;
                                     const row = `
-                                    <tr data-idberas=${berasId}>
-                                        <td class="namaBeras">${berasNama}</td>
-                                        <td class="hargakg">${berasHargaKg}</td>
-                                        <td class="hargapcs">${berasHargaPcs}</td>
-                                        <td>
-                                            <div class="input-group">
-                                                <button class="btn btn-primary btn-sm" onclick="tambahBeras(this)">+</button>
-                                                <input class="kuantitas" value="${berasJumlah}" readonly>
-                                                <button class="btn btn-primary btn-sm" onclick="kurangBeras(this)">-</button>
-                                            </div>
-                                        </td>
-                                        <td class="subtotal">${subtotal}</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" onclick="hapusBeras(this)">Hapus</button>
-
-                                        </td>
-                                    </tr>
+                                        <tr data-idberas=${berasId}>
+                                            <td class="namaBeras">${berasNama}</td>
+                                            <td class="hargakg">${berasHargaKg}</td>
+                                            <td class="hargapcs">${berasHargaPcs}</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <button class="btn btn-primary btn-sm" onclick="tambahBeras(this)">+</button>
+                                                    <input class="kuantitas" value="${berasJumlah}" readonly>
+                                                    <button class="btn btn-primary btn-sm" onclick="kurangBeras(this)">-</button>
+                                                </div>
+                                            </td>
+                                            <td class="subtotal">${berasHargaPcs * berasJumlah}</td>
+                                            <td class="tonase">${tonase} Kg</td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="hapusBeras(this)">Hapus</button>
+                                            </td>
+                                        </tr>
                                     `;
 
                                     $('#transaction-records').append(row);
@@ -595,14 +612,20 @@
                                     const row = button.closest('tr');
                                     const kuantitasInput = row.querySelector('.kuantitas'); // Mengambil input kuantitas
                                     const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
+                                    const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
                                     const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
+                                    const berasNama = row.querySelector('.namaBeras').textContent;
+                                    const berat = parseFloat(berasNama.match(/\d+/));
 
                                     let kuantitas = parseFloat(kuantitasInput.value);
                                     kuantitas++;
                                     kuantitasInput.value = kuantitas; // Mengubah nilai input
 
+
                                     const subtotal = kuantitas * hargapcs;
+                                    const tonase = kuantitas * berat;
                                     subtotalElement.textContent = subtotal; // Memperbarui subtotal
+                                    tonaseElement.textContent = tonase + ' KG';
 
                                     updateTotalHarga()
                                 }
@@ -611,15 +634,20 @@
                                     const row = button.closest('tr');
                                     const kuantitasInput = row.querySelector('.kuantitas'); // Mengambil input kuantitas
                                     const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
+                                    const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
+                                    const berasNama = row.querySelector('.namaBeras').textContent;
+                                    const berat = parseFloat(berasNama.match(/\d+/));
 
                                     let kuantitas = parseInt(kuantitasInput.value);
-                                    if (kuantitas > 1) {
+                                    if (kuantitas > 0) {
                                         kuantitas--;
                                         const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
                                         const subtotal = kuantitas * hargapcs;
+                                        const tonase = kuantitas * berat;
 
                                         kuantitasInput.value = kuantitas; // Mengubah nilai input
                                         subtotalElement.textContent = subtotal;
+                                        tonaseElement.textContent = tonase + ' KG';
 
                                         updateTotalHarga()
                                     }

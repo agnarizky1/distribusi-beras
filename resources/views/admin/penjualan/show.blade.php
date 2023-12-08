@@ -111,7 +111,7 @@
                                             @endphp
                                         </div>
                                     @endforeach
-                                    <p>harga total yang direturn:
+                                    <p>harga total yang direturn: Rp.
                                         {{ number_format($distribusi->uang_return, 0, '.', '.') }}</p>
                                 </small>
                             </div>

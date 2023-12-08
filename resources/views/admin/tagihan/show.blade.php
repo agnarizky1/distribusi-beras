@@ -30,7 +30,8 @@
                             <div class="col-md-6">
                                 <p>Nama Toko: {{ $toko->nama_toko }}</p>
                                 <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Total Harga: {{ $distribusi->total_harga }}</p>
+                                <p>Total Harga: Rp.
+                                    {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
@@ -56,7 +57,9 @@
                                                 @if ($pembayaran->tanggal_pembayaran != null)
                                                     <td>{{ $pembayaran->tanggal_pembayaran }}</td>
                                                     <td>{{ $pembayaran->metode_pembayaran }}</td>
-                                                    <td>{{ $pembayaran->jumlah_pembayaran }}</td>
+                                                    <td> Rp.
+                                                        {{ number_format($pembayaran->jumlah_pembayaran, 0, '.', '.') }}
+                                                    </td>
                                                     @php
                                                         $totalPembayaran += $pembayaran->jumlah_pembayaran;
                                                     @endphp
@@ -65,7 +68,7 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="2"><strong>Total yang sudah terbayarkan</strong></td>
-                                            <td>{{ $totalPembayaran }}</td>
+                                            <td> Rp. {{ number_format($totalPembayaran, 0, '.', '.') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -77,7 +80,8 @@
                         <div class="row">
                             <div class="col-6">
                                 @if ($sisaPembayaran > 0)
-                                    <p>Sisa yang harus dibayar: {{ $sisaPembayaran }}</p>
+                                    <p>Sisa yang harus dibayar: Rp.
+                                        {{ number_format($sisaPembayaran, 0, '.', '.') }}</p>
                                 @else
                                     <p id="status">Status: Lunas</p>
                                 @endif
