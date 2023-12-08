@@ -12,17 +12,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endsection
 @section('content')
-    <style>
-        .select2-container {
-            border: 1px solid #dce7f1;
-            padding: 0.275rem 0.75rem;
-            border-radius: 0.25rem;
-        }
-
-        .select2-container--default .select2-selection--single {
-            border: 1px solid #fff;
-        }
-    </style>
     <div class="page-heading">
         <h3>Data Penjualan</h3>
     </div>

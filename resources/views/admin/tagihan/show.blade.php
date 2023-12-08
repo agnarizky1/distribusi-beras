@@ -30,7 +30,9 @@
                             <div class="col-md-6">
                                 <p>Nama Toko: {{ $toko->nama_toko }}</p>
                                 <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Total Harga: {{ $distribusi->total_harga }}</p>
+                                <p>Total Harga Pembelian: {{ $distribusi->total_harga }}</p>
+                                <p>Total Harga Yang Direturn: {{$uangReturn}}</p>
+                                <p>Total Yang Harus Dibayarkan: {{$distribusi->total_harga-$distribusi->uang_return}}</p>
                             </div>
                             <div class="col-md-6">
                                 <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
@@ -50,6 +52,7 @@
                                     <tbody>
                                         @php
                                             $totalPembayaran = 0;
+                                            $yangDibayarkan = $distribusi->total_harga-$distribusi->uang_return;
                                         @endphp
                                         @foreach ($bayar as $pembayaran)
                                             <tr>
@@ -70,7 +73,7 @@
                                     </tbody>
                                 </table>
                                 @php
-                                    $sisaPembayaran = $distribusi->total_harga - $totalPembayaran;
+                                    $sisaPembayaran = $yangDibayarkan - $totalPembayaran;
                                 @endphp
                             </div>
                         </div>
@@ -231,12 +234,8 @@
             },
             success: function(response) {
                 // Pembayaran berhasil disimpan
-                Swal.fire('Success', 'Pembayaran Berhasil', 'success')
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
+                Swal.fire('Success', 'Pembayaran Berhasil', 'success');
+                window.location.reload();
             },
             error: function(xhr, textStatus, errorThrown) {
                 console.error('Error:', errorThrown);

@@ -91,6 +91,15 @@ class DeliveryOrderController extends Controller
 
     public function destroy($id)
     {
-        //
+        $delivery = DeliveryOrder::find($id);
+        $dataDetails = DetailDelivery::where('id_delivery', $delivery->id_delivery)->get();
+
+        foreach ($dataDetails as $detail) {
+            $detail->delete();
+        }
+
+        $delivery->delete();
+
+        return redirect()->route('admin.DeliveryOrder.index')->with('success', 'Riwayat Delivery Order telah dihapus.');
     }
 }

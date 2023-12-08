@@ -16,7 +16,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DeliveryOrderController;
-
+use App\Http\Controllers\PengembalianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +36,6 @@ use App\Http\Controllers\DeliveryOrderController;
 // Route::get('/l', function () {
 //         return view('auth.x');
 //     });
-// Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
 Route::get('/', [AuthController::class, "login"])->name('login');
@@ -131,5 +130,12 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/tagihan/destroy/{id}', [pembayaranController::class, 'destroy'])->name('admin.tagihan.destroy');
     Route::get('/admin/tagihan/show/{id}', [pembayaranController::class, 'show'])->name('admin.tagihan.show');
     Route::get('/admin/tagihan/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+
+    //Pengembalian
+    Route::get('/admin/pengembalian', [PengembalianController::class, 'index'])->name('admin.pengembalian');
+    Route::post('/admin/pengembalian/store', [PengembalianController::class, 'store'])->name('pengembalian.store');
+    Route::get('/admin/pengembalian/show/{id}', [PengembalianController::class, 'show'])->name('admin.pengembalian.show');
+    Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianTerakhir'])->name('getPembelianTerakhir');
+
 
 });

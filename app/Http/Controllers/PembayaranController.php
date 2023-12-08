@@ -17,7 +17,7 @@ class PembayaranController extends Controller
         $tokos = Toko::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.*')
-            // ->where('status', 'terkirim')
+            ->where('status', 'Diterima')
             ->get();
 
         $pembayaranTotals = [];
@@ -46,18 +46,23 @@ class PembayaranController extends Controller
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
         $pembayaran->save();
 
-        $distri = Distribusi::find($id_distribusi);
-        $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
-        $totalBayar = intval($pembayaranTotal);
-        $totalHarga = intval($distri->total_harga);
-
-        if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
-            $distri->update([
-                'status_bayar' => "Lunas",
-            ]);
+        if($bayar->jumlah_pembayaran == null ){
+            $bayar->delete();
         }
 
-        return redirect()->route('distribution.show', $pembayaran->id_distribusi);
+        $distri = Distribusi::find($id_distribusi);
+        $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
+        
+        $uangReturn = Distribusi::where('id_toko', $distri->id_toko)->sum('sisa_uang_return');
+        $totalBayar = intval($pembayaranTotal);
+        $totalHargaAwal = intval($distri->total_harga);
+        $totalHarga = $totalHargaAwal -  $distri->uang_return - $uangReturn;
+        if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
+            $distri->update([
+                'status_bayar' => 'Lunas',
+                'sisa_uang_return' => 0,
+            ]);
+        }
     }
 
     public function show($id)
@@ -71,9 +76,11 @@ class PembayaranController extends Controller
         $detailDistribusi = $distribusi->detailDistribusi;
         $pembayaran = $distribusi->pembayaran->first();
 
+        $uangReturn = Distribusi::where('id_toko', $distribusi->id_toko)->sum('sisa_uang_return');
+
         $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
 
-        return view('admin.tagihan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
+        return view('admin.tagihan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar', 'uangReturn'));
     }
 
     public function destroy($id)

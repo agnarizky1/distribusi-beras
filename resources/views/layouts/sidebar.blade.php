@@ -109,6 +109,13 @@
                         <span>Tagihan</span>
                     </a>
                 </li>
+                <li
+                    class="sidebar-item {{ set_active(['admin.pengembalian', 'admin.pengembalian.add', 'admin.pengembalian.show']) }} ">
+                    <a href="{{ route('admin.pengembalian') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Pengembalian</span>
+                    </a>
+                </li>
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>

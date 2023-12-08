@@ -21,10 +21,12 @@ class Distribusi extends Model
         'plat_no',
         'tanggal_distribusi',
         'jumlah_distribusi',
+        'jumlah_return',
         'total_harga',
         'status',
         'status_bayar',
         'uang_return',
+        'sisa_uang_return'
     ];
 
     public function detailDistribusi()

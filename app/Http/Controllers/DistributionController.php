@@ -27,9 +27,8 @@ class DistributionController extends Controller
     {
         $tokos = Toko::all();
         $sales = Sales::all();
-        $beras = totalStock::all();
+        $beras = totalStock::where('status', 'Baik')->get();
         $distri = Distribusi::with('toko')
-            // ->select('distribusis.*', 'tokos.*')
             ->whereIn('status', ['Pending', 'Dikirim'])
             ->get();
 
@@ -56,7 +55,7 @@ class DistributionController extends Controller
         $randomValue = mt_rand(1000, 9999); // Nilai acak antara 1000 dan 9999
 
         // Gabungkan elemen-elemen tersebut untuk membuat kode transaksi
-        $kode_distribusi = 'DS' . date('mdH', $timestamp) . $randomValue;
+        $kode_distribusi = 'OB' . date('mdH', $timestamp) . $randomValue;
 
         // mngelola data dan menyimpannya ke dalam database sesuai dengan struktur tabel yang ada.
         $distribusiModel = new Distribusi();
@@ -106,11 +105,11 @@ class DistributionController extends Controller
         }
     }
 
-    // ndk kene
     public function update(Request $request){
         $id_distribusi = $request->input('id');
         $status = $request->input('statusPenerimaan');
         $dataBeras = $request->input('formData');
+        $jumlahTonaseReturn = $request->input('jumlahReturn');
 
         if($status == 'Dikembalikan'){
             $status = 'Diterima';
@@ -127,9 +126,10 @@ class DistributionController extends Controller
                 $detail = DetailDistribusi::find($data['idDetail']);
                 if ($detail) {
                     $detail->update([
-                        'jumlah_return' => $data['jumlah'],
+                        'jumlah_return' => $data['jumlahBaik']+$data['jumlahRusak'],
                     ]);
                 }
+
                 $produkString = $detail->nama_beras;
                 $namaProduk = trim(preg_replace('/\d+(\.\d+)? Kg$/', '', $produkString));
 
@@ -143,30 +143,54 @@ class DistributionController extends Controller
                 $hargaPcs = $detail->harga;
                 $hargaKG = $hargaPcs/$berat;
 
-                // beras return dan menambah stok
-                $berasReturn = New Beras();
-                $berasReturn->id_beras = $nextId;
-                $berasReturn->merk_beras = $namaProduk;
-                $berasReturn->berat = $berat;
-                $berasReturn->nama_sopir = $delivery->nama_sopir;
-                $berasReturn->plat_no = $delivery->plat_no;
-                $berasReturn->tanggal_masuk_beras = $delivery->tanggal_kirim;
-                $berasReturn->harga = $hargaKG;
-                $berasReturn->stock = $data['jumlah'];
-                $berasReturn->keterangan = 'Beras Return';
+                if($data['jumlahBaik'] > 0){
+                    // beras return dan menambah stok
+                    $berasReturn = New Beras();
+                    $berasReturn->id_beras = $nextId;
+                    $berasReturn->merk_beras = $namaProduk;
+                    $berasReturn->berat = $berat;
+                    $berasReturn->nama_sopir = $delivery->nama_sopir;
+                    $berasReturn->plat_no = $delivery->plat_no;
+                    $berasReturn->tanggal_masuk_beras = $delivery->tanggal_kirim;
+                    $berasReturn->harga = $hargaKG;
+                    $berasReturn->stock = $data['jumlahBaik'];
+                    $berasReturn->keterangan = 'Beras Return';
+                    $berasReturn->save();
 
-                $jumlahReturn += $hargaPcs*$data['jumlah'];
-                $berasReturn->save();
-
-                $tStock = totalStock::where('merk_beras', $namaProduk)
-                    ->where('ukuran_beras', $berat)
-                    ->first();
+                    $tStock = totalStock::where('merk_beras', $namaProduk)
+                        ->where('ukuran_beras', $berat)
+                        ->first();
                 
-                if ($tStock) {
-                    $tStock->jumlah_stock += intval($data['jumlah']);
-                    $tStock->harga = $hargaKG;
-                    $tStock->save();
+                    if ($tStock) {
+                        $tStock->jumlah_stock += intval($data['jumlahBaik']);
+                        $tStock->harga = $hargaKG;
+                        $tStock->save();
+                    }
                 }
+                
+                if($data['jumlahRusak'] > 0){
+                    $berasRusak = 'Rusak';
+
+                    $stockRusak = totalStock::where('merk_beras', $namaProduk)
+                        ->where('ukuran_beras', $berat)
+                        ->where('status', $berasRusak)//status rusak ->kari iki wes
+                        ->first();
+
+                    if ($stockRusak) {
+                        $stockRusak->jumlah_stock += intval($data['jumlahRusak']);
+                        $stockRusak->harga = $hargaKG;
+                        $stockRusak->save();
+                    } else {
+                        $berasRusakToStock = new totalStock();
+                        $berasRusakToStock->merk_beras = $namaProduk;
+                        $berasRusakToStock->ukuran_beras = $berat;
+                        $berasRusakToStock->jumlah_stock = $data['jumlahRusak'];
+                        $berasRusakToStock->harga = $hargaKG;
+                        $berasRusakToStock->status = 'Rusak';
+                        $berasRusakToStock->save();
+                    }
+                }
+                $jumlahReturn += $hargaPcs*($data['jumlahBaik']+$data['jumlahRusak']);
             }
         }
 
@@ -174,6 +198,8 @@ class DistributionController extends Controller
             $distribusi->update([
                 'status' => $status,
                 'uang_return' => $jumlahReturn,
+                'sisa_uang_return' => $jumlahReturn,
+                'jumlah_return' => $jumlahTonaseReturn,
             ]);
         }
     }
@@ -214,6 +240,7 @@ class DistributionController extends Controller
         $distribusi = Distribusi::find($id);
         $dataDetails = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->get();
         $pembayaranDetails = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
+        $detailDO = DetailDelivery::where('id_distribusi', $distribusi->id_distribusi)->get();
 
         foreach ($dataDetails as $detail) {
             $detail->delete();
@@ -221,6 +248,10 @@ class DistributionController extends Controller
 
         foreach ($pembayaranDetails as $bayar) {
             $bayar->delete();
+        }
+
+        foreach ($detailDO as $detailDO) {
+            $detailDO->delete();
         }
 
         $distribusi->delete();

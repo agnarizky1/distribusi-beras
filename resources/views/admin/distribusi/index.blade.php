@@ -117,7 +117,7 @@
                     @foreach ($distri as $d)
                         <div class="modal fade" id="ConfirmationDeliveryModal{{ $d->id_distribusi }}" tabindex="-1"
                             role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">Konfirmasi Pengiriman
@@ -150,7 +150,7 @@
 
                                         <!-- Formulir untuk memilih beras yang dikembalikan -->
                                         <form id="formKonfirmasiPengiriman" style="display: none;">
-                                        <p>jumlah yang dikembalikan:</p>
+                                            <p>Jumlah yang dikembalikan:</p>
                                             @foreach ($d->detailDistribusi as $detail)
                                                 <div class="form-group">
                                                     <div class="row">
@@ -159,14 +159,23 @@
                                                                 {{ $detail->nama_beras }}:
                                                             </label>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}]" id="beras_{{ $detail->id_detail_distribusi }}"
-                                                            data-id-detail="{{ $detail->id_detail_distribusi }}" value="{{ $detail->jumlah_beras }}" min="0" max="{{ $detail->jumlah_beras }}">
+                                                        <div class="col-md-3">
+                                                            <label for="barang_rusak_{{ $detail->id_detail_distribusi }}">Barang Rusak</label>
+                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}][rusak]" id="beras_rusak_{{ $detail->id_detail_distribusi }}"
+                                                                data-nama="{{ $detail->nama_beras }}" data-id-detail="{{ $detail->id_detail_distribusi }}"  
+                                                                value="0" min="0" max="{{ $detail->jumlah_beras }}">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label for="barang_baik_{{ $detail->id_detail_distribusi }}">Barang Baik</label>
+                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}][baik]" id="beras_baik_{{ $detail->id_detail_distribusi }}"
+                                                                data-nama="{{ $detail->nama_beras }}" data-id-detail="{{ $detail->id_detail_distribusi }}"  
+                                                                value="0" min="0" max="{{ $detail->jumlah_beras }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
                                         </form>
+
                                     </div>
 
                                     <div class="modal-footer">
@@ -195,24 +204,38 @@
                                             // Ambil data dari formulir
                                             var statusPenerimaan = $('#statusPenerimaan').val();
                                             var id_distribusi = $('#id_distribusi').data('id-distribusi');
-
+                                            jumlahReturn = 0;
+                                            
                                             if(statusPenerimaan =='Dikembalikan'){
-                                                formData = [];
+                                                var formData = {};
+                                                jumlahReturn = 0;
                                                 document.querySelectorAll('input[type="number"]').forEach(function(input) {
-                                                    var idDetail = $(input).data('id-detail'); 
-                                                    formData.push({
+                                                    var namaDataBeras = $(input).data('nama');
+                                                    var idDetail = $(input).data('id-detail');
+                                                    if (namaDataBeras) {
+                                                        var beratBerasPcs = parseFloat(namaDataBeras.match(/\d+/)[0]);
+                                                        var subBeras = beratBerasPcs * input.value;
+                                                        jumlahReturn += subBeras;
+                                                    }
+
+                                                    var rusakValue = $('#beras_rusak_' + idDetail).val();
+                                                    var baikValue = $('#beras_baik_' + idDetail).val();
+
+                                                    formData[idDetail] = {
                                                         idDetail: idDetail,
-                                                        jumlah: input.value,
-                                                    });
+                                                        jumlahRusak: rusakValue,
+                                                        jumlahBaik: baikValue,
+                                                    };
                                                 });
+                                                var finalFormData = Object.values(formData);
                                             }else{
-                                                formData = []; 
+                                                var finalFormData = []; 
                                             }
 
                                             // Menghapus entri yang memiliki jumlah kosong
-                                            formData = formData.filter(entry => entry.jumlah !== '');
+                                            finalFormData = finalFormData.filter(entry => entry.jumlahRusak !== undefined && entry.jumlahRusak !== '' || entry.jumlahBaik !== undefined && entry.jumlahBaik !== '');
 
-                                            console.log(formData);
+                                            console.log(finalFormData,jumlahReturn);
                                             
                                             // Kirim data ke server dengan AJAX
                                             $.ajax({
@@ -221,7 +244,8 @@
                                                 data: {
                                                     id : id_distribusi,
                                                     statusPenerimaan: statusPenerimaan,
-                                                    formData : formData,
+                                                    formData : finalFormData,
+                                                    jumlahReturn : jumlahReturn,
                                                     _token: '{{ csrf_token() }}'
                                                 },
                                                 success: function (response) {
@@ -813,12 +837,13 @@
                                 orders: orders,
                                 _token: '{{ csrf_token() }}'
                             },
-                            success: function(response) {
-                                Swal.fire('Success', 'Orderan Dikirim', 'success');
-                                window.location.href = '{{ route('distribution') }}';
+                            success: function (response) {
+                                Swal.fire('Success', 'Pengembalian berhasil disimpan', 'success').then((res) => {
+                                    location.reload()
+                                });
                             },
                             error: function(xhr, textStatus, errorThrown) {
-                                console.error('Error:', errorThrown);
+                                Swal.fire('Error', 'Orderan Gagal Dikirim', 'error');
                             }
                         });
                     }

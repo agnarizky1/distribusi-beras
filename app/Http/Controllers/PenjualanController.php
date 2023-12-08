@@ -18,7 +18,7 @@ class PenjualanController extends Controller
         $tokos = Toko::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.*')
-            ->where('status', 'Diterima')
+            ->whereIn('status', ['Diterima','Ditolak'])
             ->get();
 
         $pembayaranTotals = [];

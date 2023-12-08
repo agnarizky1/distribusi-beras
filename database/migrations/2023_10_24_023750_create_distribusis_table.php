@@ -20,11 +20,13 @@ class CreateDistribusisTable extends Migration
             $table->char('kode_distribusi');
             $table->date('tanggal_distribusi');
             $table->integer('jumlah_distribusi');
+            $table->integer('jumlah_return')->default(0);
             $table->integer('total_harga');
             $table->enum('status', ['Pending', 'Dikirim', 'Diterima', 'Ditolak']);
             $table->enum('status_bayar', ['Lunas', 'Belum-Lunas'])->default('Belum-Lunas');
             $table->enum('jenis_pembayaran', ['Cash', 'Tempo']);
             $table->integer('uang_return')->default(0);
+            $table->integer('sisa_uang_return')->default(0);
             $table->timestamps();
 
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');
