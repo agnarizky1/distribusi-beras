@@ -22,8 +22,10 @@
         .select2-container--default .select2-selection--single {
             border: 1px solid #fff;
         }
+
         .body {
-            box-sizing: border-box; /* tambahkan ini */
+            box-sizing: border-box;
+            /* tambahkan ini */
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
@@ -42,7 +44,8 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-md-6">
-                                    <a data-bs-toggle="modal" data-bs-target="#returnModal" type="button" class="btn btn-primary">
+                                    <a data-bs-toggle="modal" data-bs-target="#returnModal" type="button"
+                                        class="btn btn-primary">
                                         <i class="fa-solid fa-folder-plus"></i> Tambah Pengembalian
                                     </a>
                                 </div>
@@ -76,8 +79,8 @@
                                             <td>{{ $p->kode_pengembalian }}</td>
                                             <td>{{ $p->distribusi->toko->nama_toko }}</td>
                                             <td>{{ \Carbon\Carbon::parse($p->tanggal_pengembalian)->format('d F Y') }}</td>
-                                            <td>{{$p->jumlah_return}}</td>
-                                            <td>{{$p->uang_return}}</td>                                            
+                                            <td>{{ $p->jumlah_return }}</td>
+                                            <td>Rp. {{ number_format($p->uang_return, 0, '.', '.') }}</td>
                                             </td>
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
@@ -119,19 +122,22 @@
                     @endforeach
 
                     <!-- Modal Pengembalian -->
-                    <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="returnModalLabel">Tambah Pengembalian</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form id="returnForm" action="" method="post">
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="selectToko" class="form-label">Pilih Toko</label>
-                                                <select class="form-control" id="selectToko" name="id_toko" required data-live-search="true">
+                                                <select class="form-control" id="selectToko" name="id_toko" required
+                                                    data-live-search="true">
                                                     <option value="">Pilih Nama Toko</option>
                                                     @foreach ($distri as $distri)
                                                         <option value="{{ $distri->id_distribusi }}"
@@ -145,7 +151,8 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="tglPengembalian" class="form-label">Tanggal Pengembalian</label>
-                                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}" id="tglPengembalian" name="tgl_pengembalian">
+                                                <input type="date" class="form-control" value="{{ date('Y-m-d') }}"
+                                                    id="tglPengembalian" name="tgl_pengembalian">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -161,16 +168,19 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="pemilikToko" class="form-label">Pemilik Toko</label>
-                                                <input type="text" class="form-control" id="pemilikToko" name="pemilik_toko">
+                                                <input type="text" class="form-control" id="pemilikToko"
+                                                    name="pemilik_toko">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="nomorToko" class="form-label">Nomor Tepl. Toko</label>
-                                                <input type="text" class="form-control" id="nomorToko" name="nomor_toko">
+                                                <input type="text" class="form-control" id="nomorToko"
+                                                    name="nomor_toko">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <label for="alamatToko" class="form-label">Alamat Toko</label>
-                                            <input type="text" class="form-control" id="alamatToko" name="alamat_toko">
+                                            <input type="text" class="form-control" id="alamatToko"
+                                                name="alamat_toko">
                                         </div>
 
                                         <div id="daftarPembelianTerakhir" style="margin-top: 20px; display: none;">
@@ -202,11 +212,13 @@
 
                                             </div>
                                         </div>
-                                       
+
 
                                         <div class="col mt-1 text-end">
-                                            <button type="button" id="cariBtn" class="btn btn-primary" onclick="cariData()">Cari Order Terakhir</button>
-                                            <button type="submit" id="simpanBtn" class="btn btn-primary" style="display: none;" onclick="kembalikan()">Kembalikan</button>
+                                            <button type="button" id="cariBtn" class="btn btn-primary"
+                                                onclick="cariData()">Cari Order Terakhir</button>
+                                            <button type="submit" id="simpanBtn" class="btn btn-primary"
+                                                style="display: none;" onclick="kembalikan()">Kembalikan</button>
                                         </div>
                                     </form>
                                 </div>
@@ -214,7 +226,7 @@
                         </div>
                     </div>
                     <script>
-                        $('#returnForm').submit(function(e){
+                        $('#returnForm').submit(function(e) {
                             e.preventDefault()
                         })
 
@@ -225,22 +237,22 @@
                             // Tampilkan daftar pembelian terakhir
                             $('#daftarPembelianTerakhir').show();
                             $('#cariBtn').hide();
-                            $('#simpanBtn').show();    
-                            $('#total-harga').text(0);                        
+                            $('#simpanBtn').show();
+                            $('#total-harga').text(0);
 
                             // Ambil dan tampilkan detail pembelian terakhir
                             $.ajax({
                                 type: 'GET',
-                                url: '{{ route("getPembelianTerakhir") }}',  // Gantilah dengan rute yang sesuai
+                                url: '{{ route('getPembelianTerakhir') }}', // Gantilah dengan rute yang sesuai
                                 data: {
                                     idDistri: idDistri
                                 },
-                                success: function (response) {
+                                success: function(response) {
                                     var listPembelianTerakhir = $('#listPembelianTerakhir');
-                                    listPembelianTerakhir.empty();  // Hapus isi sebelumnya
+                                    listPembelianTerakhir.empty(); // Hapus isi sebelumnya
 
-                                    response.forEach(function (detailDistribusi) {
-                                        var tableRow = 
+                                    response.forEach(function(detailDistribusi) {
+                                        var tableRow =
                                             `<tr class="text-center" data-id-detail=${detailDistribusi.id_detail_distribusi}>
                                                 <td>${detailDistribusi.nama_beras}</td>
                                                 <td class="hargapcs">${detailDistribusi.harga}</td>
@@ -262,11 +274,11 @@
                                                 <td class="subtotal">0</td>
                                             </tr>`;
 
-                                            // Tambahkan baris ke tabel
-                                            listPembelianTerakhir.append(tableRow);
+                                        // Tambahkan baris ke tabel
+                                        listPembelianTerakhir.append(tableRow);
                                     });
                                 },
-                                error: function (xhr, textStatus, errorThrown) {
+                                error: function(xhr, textStatus, errorThrown) {
                                     console.error('Error:', errorThrown);
                                 }
                             });
@@ -275,7 +287,7 @@
                         function tambahBerasRusak(button) {
                             const row = $(button).closest('tr');
                             const rusakInput = row.find('.Rusak');
-                            const baikInput = row.find('.Baik'); 
+                            const baikInput = row.find('.Baik');
                             const subtotalElement = row.find('.subtotal');
                             const jumlahPcs = parseFloat(row.find('.jumlahPcs').text());
                             const hargapcs = parseFloat(row.find('.hargapcs').text());
@@ -284,22 +296,22 @@
                             let rusak = parseFloat(rusakInput.val());
                             let kuantitas = rusak + baik;
 
-                            if(kuantitas < jumlahPcs){
+                            if (kuantitas < jumlahPcs) {
                                 rusak++;
                                 rusakInput.val(rusak);
 
-                                const subtotal = (rusak+baik) * hargapcs;
+                                const subtotal = (rusak + baik) * hargapcs;
                                 subtotalElement.text(subtotal);
 
                                 updateTotalHarga();
                             }
-                            
+
                         }
 
                         function kurangBerasRusak(button) {
                             const row = $(button).closest('tr');
                             const rusakInput = row.find('.Rusak');
-                            const baikInput = row.find('.Baik'); 
+                            const baikInput = row.find('.Baik');
                             const subtotalElement = row.find('.subtotal');
                             const hargapcs = parseFloat(row.find('.hargapcs').text());
 
@@ -307,7 +319,7 @@
                             let rusak = parseInt(rusakInput.val());
                             if (rusak > 0) {
                                 rusak--;
-                                const subtotal = (rusak+baik) * hargapcs;
+                                const subtotal = (rusak + baik) * hargapcs;
 
                                 rusakInput.val(rusak);
                                 subtotalElement.text(subtotal);
@@ -328,7 +340,7 @@
                             let baik = parseFloat(baikInput.val());
                             let kuantitas = rusak + baik;
 
-                            if(kuantitas < jumlahPcs){
+                            if (kuantitas < jumlahPcs) {
                                 baik++;
                                 baikInput.val(baik);
 
@@ -362,7 +374,7 @@
                         function updateTotalHarga() {
                             let totalHarga = 0;
 
-                            $('#listPembelianTerakhir tr').each(function () {
+                            $('#listPembelianTerakhir tr').each(function() {
                                 const hargapcs = parseFloat($(this).find('.hargapcs').text());
                                 const rusak = parseInt($(this).find('.Rusak').val());
                                 const baik = parseInt($(this).find('.Baik').val());
@@ -372,7 +384,7 @@
                             $('#total-harga').text(totalHarga); // Ganti total-price menjadi total-harga
                         }
 
-                        $(document).ready(function () {
+                        $(document).ready(function() {
                             $('#returnModal').on('shown.bs.modal', function() {
                                 $('#selectToko').select2({
                                     dropdownParent: $('#returnModal')
@@ -394,12 +406,12 @@
                                 inputAlamat.val(alamat);
                                 intputNomorTelp.val(NomorTelp);
                                 $('#cariBtn').show();
-                                $('#simpanBtn').hide();    
+                                $('#simpanBtn').hide();
                                 $('#daftarPembelianTerakhir').hide();
-                        
+
                             });
                         });
-                        
+
                         function kembalikan() {
                             var pengembalian = [];
                             var selectedOption = $('#selectToko').find(':selected');
@@ -419,7 +431,7 @@
                                 var baik = parseInt(row.querySelector('td:nth-child(5) input').value);
                                 var beratBeras = parseFloat(namaBeras.match(/\d+/));
                                 var subTotalBeras = parseFloat(row.querySelector('td:nth-child(6)').textContent);
-                                var jumlahBerat = (rusak+baik)*beratBeras;
+                                var jumlahBerat = (rusak + baik) * beratBeras;
                                 jumlahReturn += jumlahBerat;
 
                                 pengembalian.push({
@@ -433,7 +445,7 @@
                             // Kirim data ke server menggunakan AJAX
                             $.ajax({
                                 type: 'POST',
-                                url: '{{ route("pengembalian.store") }}',
+                                url: '{{ route('pengembalian.store') }}',
                                 data: {
                                     idDistri: idDistri,
                                     tglPengembalian: tglPengembalian,
@@ -444,12 +456,12 @@
                                     pengembalian: pengembalian,
                                     _token: '{{ csrf_token() }}',
                                 },
-                                success: function (response) {
+                                success: function(response) {
                                     Swal.fire('Success', 'Pengembalian berhasil disimpan', 'success').then((res) => {
                                         location.reload()
                                     });
                                 },
-                                error: function (xhr, textStatus, errorThrown) {
+                                error: function(xhr, textStatus, errorThrown) {
                                     console.error('Error:', errorThrown);
                                 }
                             });

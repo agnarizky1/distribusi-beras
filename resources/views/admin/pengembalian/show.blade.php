@@ -29,7 +29,7 @@
                 <hr>
 
                 <h4>Detail Pembelian</h4>
-                @if(count($detailDistribusi) > 0)
+                @if (count($detailDistribusi) > 0)
                     <table class="table">
                         <thead>
                             <tr class="text-center">
@@ -40,23 +40,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php 
-                            $total = 0;
+                            @php
+                                $total = 0;
                             @endphp
-                            @foreach($detailDistribusi as $detail)
+                            @foreach ($detailDistribusi as $detail)
                                 <tr class="text-center">
                                     <td>{{ $detail->nama_beras }}</td>
-                                    <td>{{$detail->jumlah_return}}</td>
-                                    <td>{{ $detail->harga }}</td>
-                                    <td>{{ $detail->harga *  $detail->jumlah_return }}</td>
-                                    @php 
-                                    $total += $detail->harga *  $detail->jumlah_return;
+                                    <td>{{ $detail->jumlah_return }}</td>
+                                    <td> Rp. {{ number_format($detail->harga, 0, '.', '.') }}</td>
+                                    <td>Rp. {{ number_format($detail->harga * $detail->jumlah_return, 0, '.', '.') }}</td>
+                                    @php
+                                        $total += $detail->harga * $detail->jumlah_return;
                                     @endphp
                                 </tr>
                             @endforeach
                             <tr>
                                 <th colspan="3" class="text-end"> Total Uang Return:</th>
-                                <td class="text-center">{{$total}}</td>
+                                <td class="text-center"> Rp. {{ number_format($total, 0, '.', '.') }}</td>
                             </tr>
                         </tbody>
                     </table>
