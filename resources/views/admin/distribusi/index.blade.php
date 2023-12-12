@@ -91,13 +91,14 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     @if ($d->status == 'Dikirim')
-                                                    <a href="#" class="btn btn-success btn-sm mb-1" data-toggle="modal"
-                                                        data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
-                                                        <i class="fa fa-pen"></i>
-                                                    </a>
+                                                        <a href="#" class="btn btn-success btn-sm mb-1"
+                                                            data-toggle="modal"
+                                                            data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
+                                                            <i class="fa fa-pen"></i>
+                                                        </a>
                                                     @endif
                                                     <a href="{{ route('distribution.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm mb-1">
+                                                        class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm mb-1" data-toggle="modal"
@@ -116,11 +117,13 @@
                     <!-- modal kirim order -->
                     @foreach ($distri as $d)
                         <div class="modal fade" id="ConfirmationDeliveryModal{{ $d->id_distribusi }}" tabindex="-1"
-                            role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}" aria-hidden="true">
+                            role="dialog" aria-labelledby="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}"
+                            aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">Konfirmasi Pengiriman
+                                        <h5 class="modal-title" id="ConfirmationDeliveryModalLabel{{ $d->id_distribusi }}">
+                                            Konfirmasi Pengiriman
                                         </h5>
                                         <div id="id_distribusi" data-id-distribusi="{{ $d->id_distribusi }}" hidden></div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,8 +143,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="statusPenerimaan">Ubah Status:</label>
-                                                <select class="form-control" id="statusPenerimaan" name="statusPenerimaan" required>
-                                                    <option value="Diterima">Diterima</option>    
+                                                <select class="form-control" id="statusPenerimaan" name="statusPenerimaan"
+                                                    required>
+                                                    <option value="Diterima">Diterima</option>
                                                     <option value="Ditolak">Ditolak</option>
                                                     <option value="Dikembalikan">Dikembalikan</option>
                                                 </select>
@@ -160,16 +164,28 @@
                                                             </label>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label for="barang_rusak_{{ $detail->id_detail_distribusi }}">Barang Rusak</label>
-                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}][rusak]" id="beras_rusak_{{ $detail->id_detail_distribusi }}"
-                                                                data-nama="{{ $detail->nama_beras }}" data-id-detail="{{ $detail->id_detail_distribusi }}"  
-                                                                value="0" min="0" max="{{ $detail->jumlah_beras }}">
+                                                            <label
+                                                                for="barang_rusak_{{ $detail->id_detail_distribusi }}">Barang
+                                                                Rusak</label>
+                                                            <input type="number"
+                                                                name="beras[{{ $detail->id_detail_distribusi }}][rusak]"
+                                                                id="beras_rusak_{{ $detail->id_detail_distribusi }}"
+                                                                data-nama="{{ $detail->nama_beras }}"
+                                                                data-id-detail="{{ $detail->id_detail_distribusi }}"
+                                                                value="0" min="0"
+                                                                max="{{ $detail->jumlah_beras }}">
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label for="barang_baik_{{ $detail->id_detail_distribusi }}">Barang Baik</label>
-                                                            <input type="number" name="beras[{{ $detail->id_detail_distribusi }}][baik]" id="beras_baik_{{ $detail->id_detail_distribusi }}"
-                                                                data-nama="{{ $detail->nama_beras }}" data-id-detail="{{ $detail->id_detail_distribusi }}"  
-                                                                value="0" min="0" max="{{ $detail->jumlah_beras }}">
+                                                            <label
+                                                                for="barang_baik_{{ $detail->id_detail_distribusi }}">Barang
+                                                                Baik</label>
+                                                            <input type="number"
+                                                                name="beras[{{ $detail->id_detail_distribusi }}][baik]"
+                                                                id="beras_baik_{{ $detail->id_detail_distribusi }}"
+                                                                data-nama="{{ $detail->nama_beras }}"
+                                                                data-id-detail="{{ $detail->id_detail_distribusi }}"
+                                                                value="0" min="0"
+                                                                max="{{ $detail->jumlah_beras }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -179,9 +195,11 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Batal</button>
                                         <!-- Tombol untuk mengonfirmasi pengiriman dan kembalikan beras -->
-                                        <button type="button" class="btn btn-success" onclick="confirmDelivery()">Konfirmasi Pengiriman</button>
+                                        <button type="button" class="btn btn-success"
+                                            onclick="confirmDelivery()">Konfirmasi Pengiriman</button>
                                     </div>
 
                                     <!-- Skrip jQuery dan AJAX -->
@@ -205,8 +223,8 @@
                                             var statusPenerimaan = $('#statusPenerimaan').val();
                                             var id_distribusi = $('#id_distribusi').data('id-distribusi');
                                             jumlahReturn = 0;
-                                            
-                                            if(statusPenerimaan =='Dikembalikan'){
+
+                                            if (statusPenerimaan == 'Dikembalikan') {
                                                 var formData = {};
                                                 jumlahReturn = 0;
                                                 document.querySelectorAll('input[type="number"]').forEach(function(input) {
@@ -228,27 +246,28 @@
                                                     };
                                                 });
                                                 var finalFormData = Object.values(formData);
-                                            }else{
-                                                var finalFormData = []; 
+                                            } else {
+                                                var finalFormData = [];
                                             }
 
                                             // Menghapus entri yang memiliki jumlah kosong
-                                            finalFormData = finalFormData.filter(entry => entry.jumlahRusak !== undefined && entry.jumlahRusak !== '' || entry.jumlahBaik !== undefined && entry.jumlahBaik !== '');
+                                            finalFormData = finalFormData.filter(entry => entry.jumlahRusak !== undefined && entry.jumlahRusak !== '' ||
+                                                entry.jumlahBaik !== undefined && entry.jumlahBaik !== '');
 
-                                            console.log(finalFormData,jumlahReturn);
-                                            
+                                            console.log(finalFormData, jumlahReturn);
+
                                             // Kirim data ke server dengan AJAX
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '{{ url('admin/distribution/update') }}',
                                                 data: {
-                                                    id : id_distribusi,
+                                                    id: id_distribusi,
                                                     statusPenerimaan: statusPenerimaan,
-                                                    formData : finalFormData,
-                                                    jumlahReturn : jumlahReturn,
+                                                    formData: finalFormData,
+                                                    jumlahReturn: jumlahReturn,
                                                     _token: '{{ csrf_token() }}'
                                                 },
-                                                success: function (response) {
+                                                success: function(response) {
                                                     // Tampilkan pesan sukses atau lakukan tindakan sesuai kebutuhan
                                                     Swal.fire('Success', 'Konfirmasi pengiriman berhasil!', 'success')
                                                         .then((result) => {
@@ -257,7 +276,7 @@
                                                             }
                                                         });
                                                 },
-                                                error: function (xhr, textStatus, errorThrown) {
+                                                error: function(xhr, textStatus, errorThrown) {
                                                     console.error('Error:', errorThrown);
                                                 }
                                             });
@@ -287,7 +306,8 @@
                                         Apakah Anda yakin ingin menghapus oderan ini?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Batal</button>
                                         <a href="{{ route('distribution.destroy', $d->id_distribusi) }}"
                                             class="btn btn-danger">Hapus</a>
                                     </div>
@@ -299,7 +319,7 @@
             </div>
         </section>
     </div>
-    <!-- Modal order--> 
+    <!-- Modal order-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -496,7 +516,7 @@
                                     var price = selectedOption.data('price');
                                     var beratOption = selectedOption.text().match(/\d+(\.\d+)?/);
                                     var berat = beratOption ? parseFloat(beratOption[0]) : 0;
-                                    
+
                                     console.log(price, berat);
 
 
@@ -837,7 +857,7 @@
                                 orders: orders,
                                 _token: '{{ csrf_token() }}'
                             },
-                            success: function (response) {
+                            success: function(response) {
                                 Swal.fire('Success', 'Pengembalian berhasil disimpan', 'success').then((res) => {
                                     location.reload()
                                 });

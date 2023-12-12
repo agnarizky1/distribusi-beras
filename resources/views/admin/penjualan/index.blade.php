@@ -52,7 +52,7 @@
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td>{{ $d->sales }}</td>
-                                            
+
                                             </td>
                                             @if ($d->status == 'Diterima')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
@@ -63,7 +63,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     <a href="{{ route('penjualan.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
