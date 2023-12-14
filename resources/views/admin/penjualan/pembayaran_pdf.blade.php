@@ -11,20 +11,6 @@
             position: relative;
         }
 
-        /* Gaya untuk setiap teks */
-        p {
-            margin: 0;
-            /* Menghilangkan margin bawaan */
-        }
-
-        /* Gaya untuk masing-masing elemen teks */
-        .driver,
-        .pengirim,
-        .diterima-oleh {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
 
         /* Gaya untuk masing-masing elemen <ul> */
         .info-list {
