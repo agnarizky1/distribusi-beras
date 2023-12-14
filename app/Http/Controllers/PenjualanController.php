@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Toko;
 use App\Models\Sales;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
+use App\Models\DeliveryOrder;
+use App\Models\DetailDelivery;
 use Illuminate\Routing\Controller;
-use PDF;
 
 class PenjualanController extends Controller
 {
