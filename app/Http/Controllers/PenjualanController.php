@@ -9,6 +9,7 @@ use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use PDF;
 
 class PenjualanController extends Controller
 {
@@ -119,5 +120,16 @@ class PenjualanController extends Controller
         $distribusi->delete();
 
         return redirect()->route('penjualan')->with('success', 'Transaksi telah dihapus.');
+    }
+
+    public function cetak($id) {
+        $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
+        $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
+        $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+
+        $pdf = PDF::loadview('admin.distribusi.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        return $pdf->download('nota' . $kode_distribusi . '.pdf');
     }
 }

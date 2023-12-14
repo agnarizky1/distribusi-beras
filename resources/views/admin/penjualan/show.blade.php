@@ -135,6 +135,8 @@
                                     &nbsp;
                                     Kembali
                                 </a>
+                                <a href="{{ route('penjualan.cetak', $distribusi->id_distribusi) }}"
+                                    class="btn btn-primary">Print</a>
                             </div>
                         </div>
                     </div>
