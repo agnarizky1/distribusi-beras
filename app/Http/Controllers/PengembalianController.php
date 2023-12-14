@@ -39,6 +39,26 @@ class PengembalianController extends Controller
         return response()->json($detailDistribusi);
     }
 
+    public function getPembelianDuaTerakhir(Request $request)
+    {
+        // Ambil id distribusi dari request
+        $idDistri = $request->input('idDistri');
+
+        $distribusi = Distribusi::find($idDistri);
+        $selectDistri = Distribusi::where('id_toko', $distribusi->id_toko)
+        ->orderBy('created_at', 'desc')
+        ->take(2)
+        ->get();        
+        $detailDistribusi = collect(); 
+
+        foreach($selectDistri as $sd){
+            $detail = DetailDistribusi::where('id_distribusi', $sd->id_distribusi)->get();
+            $detailDistribusi = $detailDistribusi->merge($detail);
+        }
+
+        return response()->json($detailDistribusi);
+    }
+
     public function store(Request $request)
     {
         $idDistri = $request->input('idDistri');

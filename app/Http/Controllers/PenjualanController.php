@@ -31,27 +31,6 @@ class PenjualanController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -74,28 +53,6 @@ class PenjualanController extends Controller
         return view('admin.penjualan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -122,14 +79,41 @@ class PenjualanController extends Controller
         return redirect()->route('penjualan')->with('success', 'Transaksi telah dihapus.');
     }
 
-    public function cetak($id) {
+    public function cetak1($id) {
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
         $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
         $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
-        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->first();
 
-        $pdf = PDF::loadview('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
-        return $pdf->download('nota' . $kode_distribusi . '.pdf');
+        $view = view('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+
+        $pdf = PDF::loadHtml($view);
+
+        // (Optional) Set the paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // (Optional) Add header and footer
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+        ]);
+
+        // (Optional) Set additional configuration options
+        $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+        return $pdf->download('Nota' . $kode_distribusi . '.pdf');
     }
+
+    public function cetak($id) {
+        $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
+        $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
+        $toko = Toko::where('id_toko', $id_toko)->get();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        
+        return view('admin.penjualan.pembayaran_pdf',compact('distribusi','toko','total_harga','kode_distribusi'));
+    }
+
 }
