@@ -61,11 +61,11 @@
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
                                                     <a href="{{ route('admin.toko.show', $t->id_toko) }}"
-                                                        class="btn btn-warning btn-sm mb-1">
+                                                        class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="{{ route('admin.toko.edit', $t->id_toko) }}"
-                                                        class="btn btn-primary btn-sm mb-1"><i
+                                                        class="btn btn-warning btn-sm mb-1"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm mb-1" data-toggle="modal"

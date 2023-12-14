@@ -69,6 +69,11 @@
                     <p>No details available.</p>
                 @endif
             </div>
+            <div class="card-footer text-end">
+                <a href="{{ route('admin.pengembalian') }}" type="button" class="btn btn-warning"><i
+                        class='nav-icon fas fa-arrow-left'></i> &nbsp;
+                    Kembali</a>
+            </div>
         </div>
     </div>
 @endsection

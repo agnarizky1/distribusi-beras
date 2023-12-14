@@ -19,11 +19,6 @@
                             <div class="col-md-6">
                                 <h4>Nota Pembayaran: {{ $distribusi->kode_distribusi }}</h4>
                             </div>
-                            <div class="col-md-6 text-end">
-                                <a href="{{ route('admin.tagihan') }}" class="btn btn-primary">
-                                    Kembali
-                                </a>
-                            </div>
                         </div>
                         <hr>
                         <div class="row">
@@ -103,9 +98,12 @@
                                 @endif
                             </div>
                             <div class="col-6 text-end">
+                                <a href="{{ route('admin.tagihan') }}" type="button" class="btn btn-warning btn-sm"><i
+                                        class='nav-icon fas fa-arrow-left'></i> &nbsp;
+                                    Kembali</a>
                                 <a id="bayarButton" href="#" class="btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#pembayaranModal">Bayar</a>
-                                <a href="#" class="btn btn-warning btn-sm">Print</a>
+                                <a href="#" class="btn btn-primary btn-sm">Print</a>
                             </div>
                         </div>
                     </div>
