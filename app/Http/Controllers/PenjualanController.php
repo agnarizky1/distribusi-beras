@@ -129,7 +129,7 @@ class PenjualanController extends Controller
         $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
         $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
 
-        $pdf = PDF::loadview('admin.distribusi.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        $pdf = PDF::loadview('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
         return $pdf->download('nota' . $kode_distribusi . '.pdf');
     }
 }
