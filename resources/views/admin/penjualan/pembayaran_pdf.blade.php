@@ -44,7 +44,6 @@
         <h3>UD. SUMBER REJEKI SEJATI</h3>
         <p>Jalan Letjen Suprapto 72E, Kebonsari, Sumbersari, Jember. No.Telp (082133208080)</p>
         @foreach ($distribusi as $distribusi)
-            <h4>nota # <span>{{ $distribusi->kode_distribusi }}</span></h4>
         @endforeach
     </Center>
     <br>
@@ -65,8 +64,8 @@
             <div class="info-list">
                 <ul style="list-style:none;">
                     <li>No. Nota Pengiriman : {{ $distribusi->kode_distribusi }}</li>
-                    <li>Nopol Armada : {{ $toko->alamat }}</li>
-                    <li>Sales : </li>
+                    <li>Nopol Armada : {{ $nopol->plat_no }}</li>
+                    <li>Sales : {{ $toko->sales }}</li>
                 </ul>
             </div>
         @endforeach

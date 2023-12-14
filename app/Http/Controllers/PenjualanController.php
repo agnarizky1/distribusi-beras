@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Toko;
 use App\Models\Sales;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
+use App\Models\DeliveryOrder;
+use App\Models\DetailDelivery;
 use Illuminate\Routing\Controller;
-use PDF;
 
 class PenjualanController extends Controller
 {
@@ -126,10 +128,12 @@ class PenjualanController extends Controller
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
         $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
-        $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
+        $toko = Toko::where('id_toko', $id_toko)->get();
         $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $delivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $nopol = DeliveryOrder::where('id_delivery', $delivery->id_delivery)->first();
 
-        $pdf = PDF::loadview('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        $pdf = PDF::loadview('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi','nopol',));
         return $pdf->download('nota' . $kode_distribusi . '.pdf');
     }
 }
