@@ -3,40 +3,83 @@
 
 <head>
     <title>Nota {{ $kode_distribusi }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        /* Container untuk mengatur posisi absolut */
         .container {
             position: relative;
         }
 
+        p {
+            margin: 0;
+        }
 
-        /* Gaya untuk masing-masing elemen <ul> */
+        .driver,
+        .pengirim,
+        .diterima-oleh {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
         .info-list {
             display: inline-block;
-            margin-right: 20px;
-            /* Atur margin antara elemen-elemen <ul> */
+            margin-right: 10px;
             vertical-align: top;
-            /* Atur vertikal align ke atas */
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .signatures p {
+            margin-right: 70px;
+            margin-top: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        center {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        h3,
+        p,
+        h4 {
+            margin: 0;
         }
     </style>
 </head>
 
-
 <body>
 
-    <Center>
+    <center>
         <h3>UD. SUMBER REJEKI SEJATI</h3>
         <p>Jalan Letjen Suprapto 72E, Kebonsari, Sumbersari, Jember. No.Telp (082133208080)</p>
         @foreach ($distribusi as $distribusi)
+            <h4>nota # <span>{{ $distribusi->kode_distribusi }}</span></h4>
         @endforeach
-    </Center>
+    </center>
     <br>
     <center>
-        <h4>Nota Pembelian</h4>
+        <h3>Nota Pembelian</h3>
     </center>
-    <div class="row">
+    <div class="row" style="display: flex; justify-content: space-between;">
 
         @foreach ($toko as $toko)
             <div class="info-list">
@@ -50,14 +93,14 @@
             <div class="info-list">
                 <ul style="list-style:none;">
                     <li>No. Nota Pengiriman : {{ $distribusi->kode_distribusi }}</li>
-                    <li>Nopol Armada : {{ $nopol->plat_no }}</li>
+                    <li>Nopol Armada : {{ $toko->alamat }}</li>
                     <li>Sales : {{ $toko->sales }}</li>
                 </ul>
             </div>
         @endforeach
     </div>
 
-    <table class="table table-bordered">
+    <table>
         <thead>
             <tr>
                 <th class="text-center">No.</th>
@@ -90,8 +133,11 @@
 
         </tbody>
     </table>
-    <p>Driver</p>&nbsp;<p>Pengirim</p>&nbsp;<p>Diterima Oleh</p>
-
+    <div class="signatures">
+        <p>Driver</p>
+        <p>Pengirim</p>
+        <p>Diterima Oleh</p>
+    </div>
 
 </body>
 
