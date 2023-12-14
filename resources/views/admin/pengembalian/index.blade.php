@@ -256,7 +256,7 @@
                                             `<tr class="text-center" data-id-detail=${detailDistribusi.id_detail_distribusi}>
                                                 <td>${detailDistribusi.nama_beras}</td>
                                                 <td class="hargapcs">${detailDistribusi.harga}</td>
-                                                <td class="jumlahPcs">${detailDistribusi.jumlah_beras - detailDistribusi.jumlah_return}</td>
+                                                <td class="jumlahPcs">${detailDistribusi.jumlah_beras - detailDistribusi.jumlah_return - detailDistribusi.return_toko}</td>
                                                 <td>
                                                     <div class="input-group">
                                                         <button type="button" class="btn btn-primary btn-sm" onclick="tambahBerasRusak(this)">+</button>

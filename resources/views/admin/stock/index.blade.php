@@ -167,28 +167,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $stockMap = [];
-                                    @endphp
-
                                     @foreach ($total as $t)
-                                        @php
-                                            $key = $t->merk_beras . $t->ukuran_beras;
-                                            if (array_key_exists($key, $stockMap)) {
-                                                $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
-                                            } else {
-                                                $stockMap[$key] = $t;
-                                            }
-                                        @endphp
-                                    @endforeach
-
-                                    @foreach ($stockMap as $stock)
-                                        @if ($stock->jumlah_stock != 0 || $stock->jumlah_stock != null)
+                                        @if ($t->status == "Rusak")
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td>{{ $stock->merk_beras }}</td>
-                                                <td>{{ $stock->ukuran_beras }} Kg</td>
-                                                <td class="text-center">{{ $stock->jumlah_stock }}</td>
+                                                <td>{{ $t->merk_beras }}</td>
+                                                <td>{{ $t->ukuran_beras }} Kg</td>
+                                                <td class="text-center">{{ $t->jumlah_stock }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
