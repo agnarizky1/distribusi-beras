@@ -81,14 +81,16 @@ class PenjualanController extends Controller
         return redirect()->route('penjualan')->with('success', 'Transaksi telah dihapus.');
     }
 
-    public function cetak1($id) {
+    public function cetak($id) {
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
-        $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        $distri = Distribusi::where('id_distribusi', $id)->first();
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
-        $toko = Toko::where('id_toko', $id_toko)->select('nama_toko','alamat','nomor_tlp')->get();
-        $total_harga = Distribusi::where('id_distribusi', $id)->first();
+        $toko = Toko::where('id_toko', $id_toko)->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $delivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $nopol = DeliveryOrder::where('id_delivery', $delivery->id_delivery)->first();
 
-        $view = view('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','kode_distribusi'));
+        $view = view('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','nopol'));
 
         $pdf = PDF::loadHtml($view);
 
@@ -105,17 +107,21 @@ class PenjualanController extends Controller
         // (Optional) Set additional configuration options
         $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
-        return $pdf->download('Nota' . $kode_distribusi . '.pdf');
+        return $pdf->download('Nota-' . $distri->kode_distribusi . '.pdf');
     }
 
-    public function cetak($id) {
+    // testing
+    public function cetakTes($id) {
         $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
         $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
         $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
-        $toko = Toko::where('id_toko', $id_toko)->get();
+        $toko = Toko::where('id_toko', $id_toko)->first();
         $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+
+        $delivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $nopol = DeliveryOrder::where('id_delivery', $delivery->id_delivery)->first();
         
-        return view('admin.penjualan.pembayaran_pdf',compact('distribusi','toko','total_harga','kode_distribusi'));
+        return view('admin.penjualan.pembayaran_pdf',compact('distribusi','toko','total_harga','kode_distribusi','nopol'));
     }
 
 }
