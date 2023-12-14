@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/DeliveryOrder/show/{id}', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
     Route::get('/admin/DeliveryOrder/showDO/{id}', [DeliveryOrderController::class, 'showDO'])->name('admin.DeliveryOrder.showDO');
     Route::get('/admin/DeliveryOrder/destroy/{id}', [DeliveryOrderController::class, 'destroy'])->name('admin.DeliveryOrder.destroy');
-    Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak'); //iki nggo cetak DO/surat jalan sopir
+    Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak');
 
     // penjualan (yang digunakan yaitu tabel distribusi namun nanti yang ditampilkan ada beberapa filter )
     Route::get('/admin/penjualan', [PenjualanController::class, 'index'])->name('penjualan');

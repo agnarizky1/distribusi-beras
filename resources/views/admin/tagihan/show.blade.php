@@ -26,10 +26,21 @@
                                 <p>Nama Toko: {{ $toko->nama_toko }}</p>
                                 <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
                                 <p>Total Harga Pembelian: Rp. {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
-                                <p>Total Harga Yang Direturn: Rp. {{ number_format($uangReturn, 0, '.', '.') }}</p>
+                                
+                                @if($distribusi->uang_return != 0)
+                                    <p class="text-danger">Uang Return Saat Pengiriman: Rp. {{ number_format($distribusi->uang_return, 0, '.', '.') }}</p>
+                                @endif
+    
+                                @if($distribusi->potongan_harga != 0)
+                                    <p class="text-danger">Potongan Harga Dari Return: Rp. {{ number_format($distribusi->potongan_harga, 0, '.', '.') }}</p>
+                                @endif
+
+                                @if($distribusi->potongan_harga != 0 || $distribusi->uang_return != 0) 
                                 <p>Total Yang Harus Dibayarkan: Rp.
-                                    {{ number_format($distribusi->total_harga - $distribusi->uang_return, 0, '.', '.') }}
+                                    {{ number_format($distribusi->total_harga - $distribusi->uang_return - $distribusi->potongan_harga, 0, '.', '.') }}
                                 </p>
+                                @endif
+
                             </div>
                             <div class="col-md-6">
                                 <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
@@ -49,7 +60,7 @@
                                     <tbody>
                                         @php
                                             $totalPembayaran = 0;
-                                            $yangDibayarkan = $distribusi->total_harga - $distribusi->uang_return;
+                                            $yangDibayarkan = $distribusi->total_harga - $distribusi->uang_return - $distribusi->potongan_harga;
                                         @endphp
                                         @foreach ($bayar as $pembayaran)
                                             <tr>

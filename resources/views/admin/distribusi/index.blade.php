@@ -269,12 +269,9 @@
                                                 },
                                                 success: function(response) {
                                                     // Tampilkan pesan sukses atau lakukan tindakan sesuai kebutuhan
-                                                    Swal.fire('Success', 'Konfirmasi pengiriman berhasil!', 'success')
-                                                        .then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = '{{ route('distribution') }}';
-                                                            }
-                                                        });
+                                                    Swal.fire('Success', 'Konfirmasi pengiriman berhasil!', 'success').then((res) => {
+                                                        location.reload()
+                                                    });
                                                 },
                                                 error: function(xhr, textStatus, errorThrown) {
                                                     console.error('Error:', errorThrown);
@@ -709,7 +706,6 @@
                                     var Distribusi = [];
                                     var namaToko = document.getElementById('nama_toko').value;
                                     var tglDistribusi = document.getElementById('tanggal_distribusi').value;
-                                    var sales = document.getElementById('sales').value;
                                     var totalHarga = document.getElementById('total-price').textContent;
                                     var pembayaran = document.getElementById('pembayaran').value;
                                     var jumlahDistribusi = 0;
@@ -742,7 +738,6 @@
                                         url: '{{ url('admin/distribution/store') }}', // Ganti dengan URL yang sesuai di aplikasi Anda
                                         data: {
                                             namaToko: namaToko,
-                                            sales: sales,
                                             tglDistri: tglDistribusi,
                                             totalHarga: totalHarga,
                                             jumlahDistribusi: jumlahDistribusi,
@@ -752,8 +747,9 @@
                                         },
                                         success: function(response) {
                                             // Distribusi berhasil disimpan
-                                            Swal.fire('Success', 'Orderan berhasil disimpan', 'success');
-                                            window.location.href = '{{ route('distribution') }}';
+                                            Swal.fire('Success', 'Orderan berhasil disimpan', 'success').then((res) => {
+                                                location.reload()
+                                            });
                                         },
                                         error: function(xhr, textStatus, errorThrown) {
                                             console.error('Error:', errorThrown);

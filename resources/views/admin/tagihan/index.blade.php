@@ -64,7 +64,7 @@
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                            <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
+                                            <td>{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
                                                 {{-- <br>
                                                 @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
                                                     <span class="text-success">Lunas</span>

@@ -11,4 +11,8 @@ class Toko extends Model
     protected $guarded = [];
     protected $keyType = 'string';
     protected $primaryKey = 'id_toko';
+
+    protected $fillable = [
+        'sisa_uang_return',
+    ];
 }

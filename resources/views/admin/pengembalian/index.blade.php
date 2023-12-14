@@ -84,8 +84,8 @@
                                             </td>
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
-                                                    <a href="{{ route('admin.pengembalian.show', $p->id_distribusi) }}"
-                                                        class="btn btn-success btn-sm mb-1">
+                                                    <a href="{{ route('admin.pengembalian.show', $p->id_pengembalian) }}"
+                                                        class="btn btn-warning btn-sm">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                 </td>

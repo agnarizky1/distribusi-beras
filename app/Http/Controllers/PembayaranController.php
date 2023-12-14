@@ -53,14 +53,12 @@ class PembayaranController extends Controller
         $distri = Distribusi::find($id_distribusi);
         $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
         
-        $uangReturn = Distribusi::where('id_toko', $distri->id_toko)->sum('sisa_uang_return');
         $totalBayar = intval($pembayaranTotal);
         $totalHargaAwal = intval($distri->total_harga);
-        $totalHarga = $totalHargaAwal -  $distri->uang_return - $uangReturn;
+        $totalHarga = $totalHargaAwal -  $distri->uang_return - $distri->potongan_harga;
         if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
             $distri->update([
                 'status_bayar' => 'Lunas',
-                'sisa_uang_return' => 0,
             ]);
         }
     }
@@ -76,11 +74,9 @@ class PembayaranController extends Controller
         $detailDistribusi = $distribusi->detailDistribusi;
         $pembayaran = $distribusi->pembayaran->first();
 
-        $uangReturn = Distribusi::where('id_toko', $distribusi->id_toko)->sum('sisa_uang_return');
-
         $bayar = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
 
-        return view('admin.tagihan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar', 'uangReturn'));
+        return view('admin.tagihan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
     public function destroy($id)

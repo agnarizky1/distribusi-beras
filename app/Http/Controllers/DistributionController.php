@@ -44,7 +44,6 @@ class DistributionController extends Controller
     {
         // Mendapatkan data dari permintaan POST
         $namaToko = $request->input('namaToko');
-        $sales = $request->input('sales');
         $totalHarga = $request->input('totalHarga');
         $tglDistri = $request->input('tglDistri');
         $jumlahDistribusi =$request->input('jumlahDistribusi');
@@ -57,16 +56,18 @@ class DistributionController extends Controller
         // Gabungkan elemen-elemen tersebut untuk membuat kode transaksi
         $kode_distribusi = 'OB' . date('mdH', $timestamp) . $randomValue;
 
+        $toko = Toko::find($namaToko);
+
         // mngelola data dan menyimpannya ke dalam database sesuai dengan struktur tabel yang ada.
         $distribusiModel = new Distribusi();
         $distribusiModel->id_toko = $namaToko;
-        $distribusiModel->sales = $sales;
         $distribusiModel->kode_distribusi = $kode_distribusi;
         $distribusiModel->tanggal_distribusi = $tglDistri;
         $distribusiModel->jumlah_distribusi = $jumlahDistribusi;
         $distribusiModel->total_harga = $totalHarga;
         $distribusiModel->status = 'Pending';
         $distribusiModel->jenis_pembayaran = $metodeBayar;
+        $distribusiModel->potongan_harga = $toko->sisa_uang_return;
 
         $distribusiModel->save();
 
@@ -103,6 +104,10 @@ class DistributionController extends Controller
             }
             $detailDistribusi->save();
         }
+
+        $toko->update([
+            'sisa_uang_return' => 0,
+        ]);
     }
 
     public function update(Request $request){
@@ -198,7 +203,6 @@ class DistributionController extends Controller
             $distribusi->update([
                 'status' => $status,
                 'uang_return' => $jumlahReturn,
-                'sisa_uang_return' => $jumlahReturn,
                 'jumlah_return' => $jumlahTonaseReturn,
             ]);
         }

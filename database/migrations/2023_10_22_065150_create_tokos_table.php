@@ -23,6 +23,7 @@ class CreateTokosTable extends Migration
             $table->string('alamat');
             $table->string('nomor_tlp');
             $table->string('koordinat');
+            $table->integer('sisa_uang_return')->default(0);
             $table->timestamps();
         });
     }

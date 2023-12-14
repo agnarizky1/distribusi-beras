@@ -46,11 +46,11 @@
                             @foreach ($detailDistribusi as $detail)
                                 <tr class="text-center">
                                     <td>{{ $detail->nama_beras }}</td>
-                                    <td>{{ $detail->jumlah_return }}</td>
+                                    <td>{{ $detail->return_toko }}</td>
                                     <td> Rp. {{ number_format($detail->harga, 0, '.', '.') }}</td>
-                                    <td>Rp. {{ number_format($detail->harga * $detail->jumlah_return, 0, '.', '.') }}</td>
+                                    <td>Rp. {{ number_format($detail->harga * $detail->return_toko, 0, '.', '.') }}</td>
                                     @php
-                                        $total += $detail->harga * $detail->jumlah_return;
+                                        $total += $detail->harga * $detail->return_toko;
                                     @endphp
                                 </tr>
                             @endforeach
@@ -60,6 +60,11 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="text-end">
+                                <a href="{{ route('admin.pengembalian') }}" class="btn btn-warning">
+                                    Kembali
+                                </a>
+                            </div>
                 @else
                     <p>No details available.</p>
                 @endif
