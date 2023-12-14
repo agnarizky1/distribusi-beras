@@ -8,6 +8,7 @@ use App\Models\Distribusi;
 use App\Models\DetailDistribusi;
 use App\Models\Pengembalian;
 use App\Models\Beras;
+use App\Models\Toko;
 use App\Models\totalStock;
 
 class PengembalianController extends Controller
@@ -71,7 +72,7 @@ class PengembalianController extends Controller
             $detail = DetailDistribusi::find($data['detailId']);
             if ($detail) {
                 $detail->update([
-                    'jumlah_return' => $detail->jumlah_return+$data['rusak']+$data['baik'],
+                    'return_toko' => $data['rusak']+$data['baik'],// iki diubah
                 ]);
             }
 
@@ -135,11 +136,11 @@ class PengembalianController extends Controller
 
         $distribusi = Distribusi::find($idDistri);
 
-        if ($distribusi) {
-            $distribusi->update([
-                'uang_return' => $distribusi->uang_return+$uangReturn,
-                'sisa_uang_return' => $distribusi->sisa_uang_return+$uangReturn,
-                'jumlah_return' => $distribusi->jumlah_return+$jumlahReturn,
+        $toko = Toko::where('id_toko', $distribusi->id_toko)->first();
+
+        if ($toko) {
+            $toko->update([
+                'sisa_uang_return' => $toko->sisa_uang_return+$uangReturn,
             ]);
         }
     }

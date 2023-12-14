@@ -16,6 +16,7 @@ class CreateDetailDistribusiTable extends Migration
             $table->integer('jumlah_beras');
             $table->integer('sub_total');
             $table->integer('jumlah_return')->default(0);
+            $table->integer('return_toko')->default(0);
             $table->timestamps();
 
             $table->foreign('id_distribusi')->references('id_distribusi')->on('distribusis');

@@ -18,6 +18,7 @@ class DetailDistribusi extends Model
         'jumlah_beras',
         'sub_total',
         'jumlah_return',
+        'return_toko',
     ];
 
     public function distribusi()
