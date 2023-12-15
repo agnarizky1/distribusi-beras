@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use PDF;
 
 use App\Models\DeliveryOrder;
 use App\Models\DetailDelivery;
@@ -82,7 +83,7 @@ class DeliveryOrderController extends Controller
             }
         }
 
-        $merk = totalStock::all();
+        $merk = totalStock::where('status','Baik')->get();
         // dd($delivery, $detailDeliveries, $detailDistribusi);
 
         return view('admin.DeliveryOrder.printDO', compact('delivery', 'detailDeliveries', 'merk', 'detailDistribusi'));
@@ -91,6 +92,51 @@ class DeliveryOrderController extends Controller
 
     public function destroy($id)
     {
-        //
+        $delivery = DeliveryOrder::find($id);
+        $dataDetails = DetailDelivery::where('id_delivery', $delivery->id_delivery)->get();
+
+        foreach ($dataDetails as $detail) {
+            $detail->delete();
+        }
+
+        $delivery->delete();
+
+        return redirect()->route('admin.DeliveryOrder.index')->with('success', 'Riwayat Delivery Order telah dihapus.');
+    }
+
+
+    public function cetak($id)
+    {
+        $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
+        $detailDeliveries = DetailDelivery::where('id_delivery', $id)->get();
+        $detailDistribusi = [];
+
+        if (!$detailDeliveries->isEmpty()) {
+            foreach( $detailDeliveries as $del){
+                $id_distribusi = $del->id_distribusi;
+                $detailDistribusi[] = DetailDistribusi::where('id_distribusi', $id_distribusi)->get();
+            }
+        }
+
+        $merk = totalStock::where('status','Baik')->get();
+
+        $view = view('admin.DeliveryOrder.printDO', compact('delivery', 'detailDeliveries', 'merk', 'detailDistribusi'));
+
+        $pdf = PDF::loadHtml($view);
+
+        // (Optional) Set the paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // (Optional) Add header and footer
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+        ]);
+
+        // (Optional) Set additional configuration options
+        $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+        return $pdf->download('Delivery-' .$delivery->kode_delivery_orders. '.pdf');
     }
 }

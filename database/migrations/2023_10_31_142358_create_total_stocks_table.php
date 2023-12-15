@@ -19,6 +19,7 @@ class CreateTotalStocksTable extends Migration
             $table->string('ukuran_beras');
             $table->integer('harga');
             $table->integer('jumlah_stock');
+            $table->enum('status',['Baik','Rusak'])->default('Baik');
             $table->timestamps();
         });
     }

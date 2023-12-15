@@ -331,36 +331,5 @@
                 }
             });
         });
-        console.table(Distribusi)
-
-        // Kirim data ke server menggunakan AJAX
-        $.ajax({
-        type: 'POST',
-        url: '{{ url('/admin/distribution/store ') }}',
-        data: {
-            namaToko: namaToko,
-            namaSopir: namaSopir,
-            PlatNo: PlatNo,
-            tglDistri: tglDistribusi,
-            totalHarga: totalHarga,
-            jumlahDistribusi: jumlahDistribusi,
-            Distribusi: Distribusi,
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(response) {
-            // Distribusi berhasil disimpan
-            Swal.fire('Success', 'Distribusi berhasil disimpan', 'success')
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '{{ route('distribution') }}';
-                    }
-                });
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            console.error('Error:', errorThrown);
-            Swal.fire('Error', 'Distribusi Gagal', 'error');
-        }
-        });
-        });
     </script>
 @endsection

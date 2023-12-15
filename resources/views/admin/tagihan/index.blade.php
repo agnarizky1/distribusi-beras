@@ -64,7 +64,7 @@
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                            <td>Rp. {{ number_format($d->total_harga, 0, '.', '.') }}
+                                            <td>{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
                                                 {{-- <br>
                                                 @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
                                                     <span class="text-success">Lunas</span>
@@ -84,7 +84,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     <a href="{{ route('admin.tagihan.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"

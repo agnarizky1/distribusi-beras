@@ -12,8 +12,8 @@
                 <a href="{{ route('admin.DeliveryOrder.index') }}" class="btn btn-primary">
                     Kembali
                 </a>
-                <a href="{{ route('admin.DeliveryOrder.showDO', $delivery->id_delivery) }}" class="btn btn-success">
-                    print
+                <a href="{{ route('admin.DeliveryOrder.cetak', $delivery->id_delivery) }}" class="btn btn-success">
+                    Print
                 </a>
             </div>
         </div>

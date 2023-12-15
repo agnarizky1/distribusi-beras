@@ -12,17 +12,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endsection
 @section('content')
-    <style>
-        .select2-container {
-            border: 1px solid #dce7f1;
-            padding: 0.275rem 0.75rem;
-            border-radius: 0.25rem;
-        }
-
-        .select2-container--default .select2-selection--single {
-            border: 1px solid #fff;
-        }
-    </style>
     <div class="page-heading">
         <h3>Data Penjualan</h3>
     </div>
@@ -63,7 +52,7 @@
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
                                             </td>
                                             <td>{{ $d->sales }}</td>
-                                            
+
                                             </td>
                                             @if ($d->status == 'Diterima')
                                                 <td class="text-success text-center">{{ $d->status }}</td>
@@ -74,7 +63,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     <a href="{{ route('penjualan.show', $d->id_distribusi) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"

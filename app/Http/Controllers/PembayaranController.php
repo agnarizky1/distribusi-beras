@@ -17,7 +17,7 @@ class PembayaranController extends Controller
         $tokos = Toko::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.*')
-            // ->where('status', 'terkirim')
+            ->where('status', 'Diterima')
             ->get();
 
         $pembayaranTotals = [];
@@ -46,18 +46,21 @@ class PembayaranController extends Controller
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
         $pembayaran->save();
 
-        $distri = Distribusi::find($id_distribusi);
-        $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
-        $totalBayar = intval($pembayaranTotal);
-        $totalHarga = intval($distri->total_harga);
-
-        if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
-            $distri->update([
-                'status_bayar' => "Lunas",
-            ]);
+        if($bayar->jumlah_pembayaran == null ){
+            $bayar->delete();
         }
 
-        return redirect()->route('distribution.show', $pembayaran->id_distribusi);
+        $distri = Distribusi::find($id_distribusi);
+        $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
+
+        $totalBayar = intval($pembayaranTotal);
+        $totalHargaAwal = intval($distri->total_harga);
+        $totalHarga = $totalHargaAwal -  $distri->uang_return - $distri->potongan_harga;
+        if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
+            $distri->update([
+                'status_bayar' => 'Lunas',
+            ]);
+        }
     }
 
     public function show($id)

@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailDistribusi extends Model
+class Pengembalian extends Model
 {
     use HasFactory;
+    protected $table = 'pengembalians'; 
 
-    protected $table = 'detail_distribusi'; // Nama tabel dalam basis data
-    protected $primaryKey = 'id_detail_distribusi'; // Kolom primary key
+    protected $primaryKey = 'id_pengembalian';
+
     protected $fillable = [
+        'kode_pengembalian',
         'id_distribusi',
-        'nama_beras',
-        'harga',
-        'jumlah_beras',
-        'sub_total',
+        'tanggal_pengembalian',
         'jumlah_return',
-        'return_toko',
+        'uang_return',
     ];
 
     public function distribusi()

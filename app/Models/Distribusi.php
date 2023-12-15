@@ -15,16 +15,17 @@ class Distribusi extends Model
 
     protected $fillable = [
         'id_toko',
-        'sales',
         'kode_distribusi',
         'nama_sopir',
         'plat_no',
         'tanggal_distribusi',
         'jumlah_distribusi',
+        'jumlah_return',
         'total_harga',
         'status',
         'status_bayar',
         'uang_return',
+        'potongan_harga',
     ];
 
     public function detailDistribusi()

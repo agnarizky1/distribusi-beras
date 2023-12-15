@@ -7,6 +7,7 @@
         <section class="row">
 
             <div class="col-12 col-lg-12">
+                <!-- data beras masuk -->
                 <div class="card">
                     <div class="card-header">
                         <h4>Data Beras Masuk</h4>
@@ -42,7 +43,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             @if($b->keterangan == "Beras Return")
-                                            <td class="text-danger text-center">{{$b->keterangan}} {{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            <td class="text-danger">{{$b->keterangan}} {{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
                                             @endif
                                             @if($b->keterangan == "Dari Pabrik")
                                             <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
@@ -71,32 +72,34 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                @foreach ($beras as $b)
-                    <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1" role="dialog"
-                        aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Apakah Anda yakin ingin menghapus data ini?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
-                                        class="btn btn-danger">Hapus</a>
+
+                    @foreach ($beras as $b)
+                        <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1" role="dialog"
+                            aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Konfirmasi Penghapusan
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah Anda yakin ingin menghapus data ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <a href="{{ route('admin.stockberas.destroy', $b->id_beras) }}"
+                                            class="btn btn-danger">Hapus</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
 
+                <!-- total seluruh stok -->
                 <div class="card">
                     <div class="card-header">
                         <h4>Total keseluruhan Stock berdasarkan Merk</h4>
@@ -143,11 +146,37 @@
                                             </tr>
                                         @endif
                                     @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-                                    <!-- <tr>
-                                                                                                                                                                                                                                                                                            <td colspan="4">Jumlah Total:</td>
-                                                                                                                                                                                                                                                                                            <td class="text-center" colspan="2">10000</td>
-                                                                                                                                                                                                                                                                                        </tr> -->
+                <!-- Data beras Rusak -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Data Beras Rusak</h4>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">No</th>
+                                        <th>Merk Beras</th>
+                                        <th>Ukuran Berat</th>
+                                        <th>Jumlah PCS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($total as $t)
+                                        @if ($t->status == "Rusak")
+                                            <tr>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td>{{ $t->merk_beras }}</td>
+                                                <td>{{ $t->ukuran_beras }} Kg</td>
+                                                <td class="text-center">{{ $t->jumlah_stock }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -382,13 +411,8 @@
                         beras: beras
                     },
                     success: function(response) {
-                        Swal.fire('Success', 'beras berhasil disimpan', 'success')
-                            .then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href =
-                                        '{{ route('admin.stockberas') }}';
-                                }
-                            });
+                        Swal.fire('Success', 'beras berhasil disimpan', 'success');
+                        window.location.href ='{{ route('admin.stockberas') }}';
                     },
                     error: function(xhr, status, error) {
                         // Penanganan kesalahan (jika diperlukan)

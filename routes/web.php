@@ -16,7 +16,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DeliveryOrderController;
-
+use App\Http\Controllers\PengembalianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +36,6 @@ use App\Http\Controllers\DeliveryOrderController;
 // Route::get('/l', function () {
 //         return view('auth.x');
 //     });
-// Route::get('/stockberas', [AdminController::class, 'stock'])->name('stock');
 
 // Login
 Route::get('/', [AuthController::class, "login"])->name('login');
@@ -94,12 +93,13 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/DeliveryOrder/show/{id}', [DeliveryOrderController::class, 'show'])->name('admin.DeliveryOrder.show');
     Route::get('/admin/DeliveryOrder/showDO/{id}', [DeliveryOrderController::class, 'showDO'])->name('admin.DeliveryOrder.showDO');
     Route::get('/admin/DeliveryOrder/destroy/{id}', [DeliveryOrderController::class, 'destroy'])->name('admin.DeliveryOrder.destroy');
-    Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak'); //iki nggo cetak DO/surat jalan sopir
+    Route::get('/admin/DeliveryOrder/cetak/{id}', [DeliveryOrderController::class, 'cetak'])->name('admin.DeliveryOrder.cetak');
 
     // penjualan (yang digunakan yaitu tabel distribusi namun nanti yang ditampilkan ada beberapa filter )
     Route::get('/admin/penjualan', [PenjualanController::class, 'index'])->name('penjualan');
     Route::get('/admin/penjualan/show/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
     Route::get('/admin/penjualan/destroy/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+    Route::get('/admin/penjualan/cetak/{id}', [PenjualanController::class, 'cetak'])->name('penjualan.cetak');
 
     //sales
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
@@ -131,5 +131,12 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/tagihan/destroy/{id}', [pembayaranController::class, 'destroy'])->name('admin.tagihan.destroy');
     Route::get('/admin/tagihan/show/{id}', [pembayaranController::class, 'show'])->name('admin.tagihan.show');
     Route::get('/admin/tagihan/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+
+    //Pengembalian
+    Route::get('/admin/pengembalian', [PengembalianController::class, 'index'])->name('admin.pengembalian');
+    Route::post('/admin/pengembalian/store', [PengembalianController::class, 'store'])->name('pengembalian.store');
+    Route::get('/admin/pengembalian/show/{id}', [PengembalianController::class, 'show'])->name('admin.pengembalian.show');
+    Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianTerakhir'])->name('getPembelianTerakhir');
+
 
 });

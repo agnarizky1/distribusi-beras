@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Toko;
 use App\Models\Sales;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\totalStock;
 use Illuminate\Http\Request;
+use App\Models\DeliveryOrder;
+use App\Models\DetailDelivery;
 use Illuminate\Routing\Controller;
 
 class PenjualanController extends Controller
@@ -18,7 +21,7 @@ class PenjualanController extends Controller
         $tokos = Toko::all();
         $distri = Distribusi::join('tokos', 'distribusis.id_toko', '=', 'tokos.id_toko')
             ->select('distribusis.*', 'tokos.*')
-            ->where('status', 'Diterima')
+            ->whereIn('status', ['Diterima','Ditolak'])
             ->get();
 
         $pembayaranTotals = [];
@@ -27,27 +30,6 @@ class PenjualanController extends Controller
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
         return view('admin.penjualan.index', compact('tokos','distri','pembayaranTotals'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -73,28 +55,6 @@ class PenjualanController extends Controller
         return view('admin.penjualan.show', compact('distribusi', 'toko', 'detailDistribusi', 'pembayaran', 'bayar'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -120,4 +80,48 @@ class PenjualanController extends Controller
 
         return redirect()->route('penjualan')->with('success', 'Transaksi telah dihapus.');
     }
+
+    public function cetak($id) {
+        $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
+        $distri = Distribusi::where('id_distribusi', $id)->first();
+        $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
+        $toko = Toko::where('id_toko', $id_toko)->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+        $delivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $nopol = DeliveryOrder::where('id_delivery', $delivery->id_delivery)->first();
+
+        $view = view('admin.penjualan.pembayaran_pdf', compact('distribusi','toko','total_harga','nopol'));
+
+        $pdf = PDF::loadHtml($view);
+
+        // (Optional) Set the paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // (Optional) Add header and footer
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+        ]);
+
+        // (Optional) Set additional configuration options
+        $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+        return $pdf->download('Nota-' . $distri->kode_distribusi . '.pdf');
+    }
+
+    // testing
+    public function cetakTes($id) {
+        $distribusi = Distribusi::with('detailDistribusi')->where('id_distribusi', $id)->get();
+        $kode_distribusi = Distribusi::where('id_distribusi', $id)->pluck('kode_distribusi');
+        $id_toko = Distribusi::where('id_distribusi', $id)->pluck('id_toko');
+        $toko = Toko::where('id_toko', $id_toko)->first();
+        $total_harga = Distribusi::where('id_distribusi', $id)->select('total_harga')->first();
+
+        $delivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $nopol = DeliveryOrder::where('id_delivery', $delivery->id_delivery)->first();
+        
+        return view('admin.penjualan.pembayaran_pdf',compact('distribusi','toko','total_harga','kode_distribusi','nopol'));
+    }
+
 }

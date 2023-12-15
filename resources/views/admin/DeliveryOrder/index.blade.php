@@ -50,7 +50,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     <a href="{{ route('admin.DeliveryOrder.show', $d->id_delivery) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-success btn-sm">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"

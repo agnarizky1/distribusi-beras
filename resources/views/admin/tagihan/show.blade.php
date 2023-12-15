@@ -19,19 +19,30 @@
                             <div class="col-md-6">
                                 <h4>Nota Pembayaran: {{ $distribusi->kode_distribusi }}</h4>
                             </div>
-                            <div class="col-md-6 text-end">
-                                <a href="{{ route('admin.tagihan') }}" class="btn btn-primary">
-                                    Kembali
-                                </a>
-                            </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Nama Toko: {{ $toko->nama_toko }}</p>
                                 <p>Jumlah Keseluruhan Distribusi: {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Total Harga: Rp.
-                                    {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
+                                <p>Total Harga Pembelian: Rp. {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
+
+                                @if ($distribusi->uang_return != 0)
+                                    <p class="text-danger">Uang Return Saat Pengiriman: Rp.
+                                        {{ number_format($distribusi->uang_return, 0, '.', '.') }}</p>
+                                @endif
+
+                                @if ($distribusi->potongan_harga != 0)
+                                    <p class="text-danger">Potongan Harga Dari Return: Rp.
+                                        {{ number_format($distribusi->potongan_harga, 0, '.', '.') }}</p>
+                                @endif
+
+                                @if ($distribusi->potongan_harga != 0 || $distribusi->uang_return != 0)
+                                    <p>Total Yang Harus Dibayarkan: Rp.
+                                        {{ number_format($distribusi->total_harga - $distribusi->uang_return - $distribusi->potongan_harga, 0, '.', '.') }}
+                                    </p>
+                                @endif
+
                             </div>
                             <div class="col-md-6">
                                 <p>Tanggal Kirim Beras : {{ $distribusi->tanggal_distribusi }}</p>
@@ -51,13 +62,14 @@
                                     <tbody>
                                         @php
                                             $totalPembayaran = 0;
+                                            $yangDibayarkan = $distribusi->total_harga - $distribusi->uang_return - $distribusi->potongan_harga;
                                         @endphp
                                         @foreach ($bayar as $pembayaran)
                                             <tr>
                                                 @if ($pembayaran->tanggal_pembayaran != null)
                                                     <td>{{ $pembayaran->tanggal_pembayaran }}</td>
                                                     <td>{{ $pembayaran->metode_pembayaran }}</td>
-                                                    <td> Rp.
+                                                    <td>Rp.
                                                         {{ number_format($pembayaran->jumlah_pembayaran, 0, '.', '.') }}
                                                     </td>
                                                     @php
@@ -68,12 +80,13 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="2"><strong>Total yang sudah terbayarkan</strong></td>
-                                            <td> Rp. {{ number_format($totalPembayaran, 0, '.', '.') }}</td>
+                                            <td>Rp.
+                                                {{ number_format($totalPembayaran, 0, '.', '.') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 @php
-                                    $sisaPembayaran = $distribusi->total_harga - $totalPembayaran;
+                                    $sisaPembayaran = $yangDibayarkan - $totalPembayaran;
                                 @endphp
                             </div>
                         </div>
@@ -87,9 +100,12 @@
                                 @endif
                             </div>
                             <div class="col-6 text-end">
+                                <a href="{{ route('admin.tagihan') }}" type="button" class="btn btn-warning btn-sm"><i
+                                        class='nav-icon fas fa-arrow-left'></i> &nbsp;
+                                    Kembali</a>
                                 <a id="bayarButton" href="#" class="btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#pembayaranModal">Bayar</a>
-                                <a href="#" class="btn btn-warning btn-sm">Print</a>
+                                <a href="#" class="btn btn-primary btn-sm">Print</a>
                             </div>
                         </div>
                     </div>
@@ -233,12 +249,8 @@
                 },
                 success: function(response) {
                     // Pembayaran berhasil disimpan
-                    Swal.fire('Success', 'Pembayaran Berhasil', 'success')
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload();
-                            }
-                        });
+                    Swal.fire('Success', 'Pembayaran Berhasil', 'success');
+                    window.location.reload();
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.error('Error:', errorThrown);
