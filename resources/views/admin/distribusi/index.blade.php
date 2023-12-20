@@ -91,7 +91,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     @if ($d->status == 'Dikirim')
-                                                        <a href="#" class="btn btn-success btn-sm mb-1"
+                                                        <a href="#" class="btn btn-warning btn-sm mb-1"
                                                             data-toggle="modal"
                                                             data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
                                                             <i class="fa fa-pen"></i>
