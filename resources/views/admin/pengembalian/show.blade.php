@@ -22,14 +22,14 @@
 
                 <h4>Detail Distribusi</h4>
                 <div class="mb-3">
-                    <strong>Kode Distribusi:</strong> {{ $distribusi->kode_distribusi }}
+                    <strong>Kode Distribusi:</strong> {{ $pengembalian->kode_pengembalian }}
                 </div>
                 <!-- Add more details about the distribution as needed -->
 
                 <hr>
 
-                <h4>Detail Pembelian</h4>
-                @if (count($detailDistribusi) > 0)
+                <h4>Detail Pengembalian</h4>
+                @if (count($detailPengembalian) > 0)
                     <table class="table">
                         <thead>
                             <tr class="text-center">
@@ -43,7 +43,7 @@
                             @php
                                 $total = 0;
                             @endphp
-                            @foreach ($detailDistribusi as $detail)
+                            @foreach ($detailPengembalian as $detail)
                                 <tr class="text-center">
                                     <td>{{ $detail->nama_beras }}</td>
                                     <td>{{ $detail->return_toko }}</td>
@@ -60,11 +60,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="text-end">
-                                <a href="{{ route('admin.pengembalian') }}" class="btn btn-warning">
-                                    Kembali
-                                </a>
-                            </div>
                 @else
                     <p>No details available.</p>
                 @endif

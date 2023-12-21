@@ -17,6 +17,8 @@
             border: 1px solid #dce7f1;
             padding: 0.275rem 0.75rem;
             border-radius: 0.25rem;
+            max-width: 100% !important;
+            box-sizing: border-box;
         }
 
         .select2-container--default .select2-selection--single {
@@ -33,19 +35,19 @@
                 <div class="card">
                     <div class="card-header row g-3">
                         <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"
-                                        class="btn btn-primary">
-                                        <i class="fa-solid fa-folder-plus"></i> Tambah Order</a>
+                            <div class="d-flex justify-content-between">
+                                <div class="col mb-3">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
+                                        <i class="fa-solid fa-folder-plus"></i> Tambah Order
+                                    </a>
                                 </div>
-                                <div class="col-md-6 text-end">
-                                    <a data-bs-toggle="modal" data-bs-target="#pengirimanModal" type="button"
-                                        class="btn btn-primary">
-                                        <i class="fa-solid fa-paper-plane"></i> Kirim Orderan</a>
-                                    <a href="{{ route('admin.DeliveryOrder.index') }}" type="button"
-                                        class="btn btn-success">
-                                        <i class="fa-solid fa-file-lines"></i> Riwayat Orderan</a>
+                                <div class="col text-end">
+                                    <a data-bs-toggle="modal" data-bs-target="#pengirimanModal" type="button" class="btn btn-primary mb-3">
+                                        <i class="fa-solid fa-paper-plane"></i> Kirim Orderan
+                                    </a>
+                                    <a href="{{ route('admin.DeliveryOrder.index') }}" type="button" class="btn btn-success mb-3">
+                                        <i class="fa-solid fa-file-lines"></i> Riwayat Orderan
+                                    </a>
                                 </div>
                             </div>
 
@@ -357,141 +359,150 @@
                                                             name="tanggal_distribusi" required>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-4">
-                                                    <div class="col-md-6">
-                                                        <label for="pemilik">Pemilik Toko</label>
-                                                        <input type="text" class="form-control" id="pemilik"
-                                                            name="pemilik" disabled>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="alamat">Alamat</label>
-                                                        <input type="text" class="form-control" id="alamat"
-                                                            name="alamat" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <div class="col-md-4">
-                                                        <label for="nomor-telp">No.Telp Toko</label>
-                                                        <input type="text" class="form-control" id="nomor-telp"
-                                                            name="nomor-telp" disabled>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="sales">Sales</label>
-                                                        <input type="text" class="form-control" id="sales"
-                                                            name="sales" disabled>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="pembayaran">Pembayaran</label>
-                                                        <select class="form-select" id="pembayaran" name="pembayaran"
-                                                            aria-label="Default select example" required>
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Tempo">Tempo</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="beras">Beras</label>
-                                                        <select name="beras" id="beras" class="form-control">
-                                                            <option value="0">Pilih Beras</option>
-                                                            @foreach ($beras as $item)
-                                                                <option value="{{ $item->id }}"
-                                                                    data-price="{{ $item->harga }}" data-satuan="">
-                                                                    {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="hargakg">Harga per KG</label>
-                                                        <input type="text" id="hargakg" class="form-control"
-                                                            disabled>
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="hargapcs">Harga Satuan</label>
-                                                        <input type="text" id="hargapcs" class="form-control"
-                                                            disabled>
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="jumlah">Jumlah (qty)</label>
-                                                        <input type="number" id="jumlah" class="form-control">
-                                                    </div>
-                                                    <input type="hidden" id="selected-product-id">
+                                                <div id="cekToko" class="row">
                                                     <div class="col-md-12 text-end">
-                                                        <button class="btn btn-success btn-sm text-white rounded"
-                                                            id="simpanBtn"><i class="fa fa-save"></i> Tambah
-                                                            Barang</button>
+                                                        <button class="btn btn-primary text-white rounded"
+                                                            onclick="cariData()">Cari Toko</button>
                                                     </div>
                                                 </div>
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Nama Beras</th>
-                                                                <th>Harga Per KG</th>
-                                                                <th>Harga Satuan</th>
-                                                                <th>Jumlah</th>
-                                                                <th>Subtotal</th>
-                                                                <th>Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="transaction-records">
-                                                            <!-- Data Distribusi akan ditampilkan di sini -->
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <div class="row">
-                                                                        <div class="col-md-4 mt-2">
-                                                                            <label for="pilihanDiskon">Pilihan
-                                                                                Diskon</label>
+                                                <div id="dataToko" style="display: none;">
+                                                    <div class="row mb-4">
+                                                        <div class="col-md-6">
+                                                            <label for="pemilik">Pemilik Toko</label>
+                                                            <input type="text" class="form-control" id="pemilik"
+                                                                name="pemilik" disabled>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="alamat">Alamat</label>
+                                                            <input type="text" class="form-control" id="alamat"
+                                                                name="alamat" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-md-4">
+                                                            <label for="nomor-telp">No.Telp Toko</label>
+                                                            <input type="text" class="form-control" id="nomor-telp"
+                                                                name="nomor-telp" disabled>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="sales">Sales</label>
+                                                            <input type="text" class="form-control" id="sales"
+                                                                name="sales" disabled>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="pembayaran">Pembayaran</label>
+                                                            <select class="form-select" id="pembayaran" name="pembayaran"
+                                                                aria-label="Default select example" required>
+                                                                <option value="Cash">Cash</option>
+                                                                <option value="Tempo">Tempo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="beras">Beras</label>
+                                                            <select name="beras" id="beras" class="form-control">
+                                                                <option value="0">Pilih Beras</option>
+                                                                @foreach ($beras as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        data-price="{{ $item->harga }}" data-satuan="">
+                                                                        {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="hargakg">Harga per KG</label>
+                                                            <input type="text" id="hargakg" class="form-control"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="hargapcs">Harga Satuan</label>
+                                                            <input type="text" id="hargapcs" class="form-control"
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="jumlah">Jumlah (qty)</label>
+                                                            <input type="number" id="jumlah" class="form-control">
+                                                        </div>
+                                                        <input type="hidden" id="selected-product-id">
+                                                        <div class="col-md-12 text-end">
+                                                            <button class="btn btn-success btn-sm text-white rounded"
+                                                                id="simpanBtn"><i class="fa fa-save"></i> Tambah
+                                                                Barang</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nama Beras</th>
+                                                                    <th>Harga Per KG</th>
+                                                                    <th>Harga Satuan</th>
+                                                                    <th>Jumlah</th>
+                                                                    <th>Subtotal</th>
+                                                                    <th>Aksi</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="transaction-records">
+                                                                <!-- Data Distribusi akan ditampilkan di sini -->
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div class="row">
+                                                                            <div class="col-md-4 mt-2 mb-2">
+                                                                                <label for="pilihanDiskon">Pilihan
+                                                                                    Diskon</label>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-2">
+                                                                                <select class="form-select" id="pilihanDiskon"
+                                                                                    name="pilihanDiskon"
+                                                                                    aria-label="Default select example"
+                                                                                    required>
+                                                                                    <option value="Pilih">Pilih Diskon
+                                                                                    </option>
+                                                                                    <option value="Persen">Persen</option>
+                                                                                    <option value="Harga Per-Kg">Harga Per-Kg
+                                                                                    </option>
+                                                                                    <option value="Nominal">Nominal</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-2">
+                                                                                <input type="text" class="form-control"
+                                                                                style="min-width: 50px;" id="diskon" name="diskon" required>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-md-4">
-                                                                            <select class="form-select" id="pilihanDiskon"
-                                                                                name="pilihanDiskon"
-                                                                                aria-label="Default select example"
-                                                                                required>
-                                                                                <option value="Pilih">Pilih Diskon
-                                                                                </option>
-                                                                                <option value="Persen">Persen</option>
-                                                                                <option value="Harga Per-Kg">Harga Per-Kg
-                                                                                </option>
-                                                                                <option value="Nominal">Nominal</option>
-                                                                            </select>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 text-end">
+                                                                                <strong>Total Diskon:</strong> <span
+                                                                                    id="total-diskon">0</span>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-md-4">
-                                                                            <input type="text" class="form-control"
-                                                                                id="diskon" name="diskon" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 text-end">
-                                                                            <strong>Total Diskon:</strong> <span
-                                                                                id="total-diskon">0</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td colspan="2" class="text-end">
-                                                                    <strong>Total Jumlah Harga :</strong>
-                                                                </td>
-                                                                <td colspan="2">
-                                                                    <span id="total-price">0</span>
-                                                                </td>
-                                                            </tr>
+                                                                    </td>
+                                                                    <td colspan="2" class="text-end">
+                                                                        <strong>Total Jumlah Harga :</strong>
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        <span id="total-price">0</span>
+                                                                    </td>
+                                                                </tr>
 
-                                                        </tfoot>
-                                                    </table>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <button type="button" class="btn btn-warning rounded" data-bs-dismiss="modal">
+                                                            <i class='nav-icon fas fa-arrow-left'></i>
+                                                            &nbsp; Kembali
+                                                        </button>
+                                                        <button id="simpanDistribusiBtn" class="btn btn-primary rounded">
+                                                            <i class="fa fa-save"></i> Simpan Order
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="text-end">
-                                                    <button type="button" class="btn btn-warning rounded"
-                                                        data-bs-dismiss="modal"><i class='nav-icon fas fa-arrow-left'></i>
-                                                        &nbsp;
-                                                        Kembali</button>
-                                                    <button id="simpanDistribusiBtn" class="btn btn-primary rounded"><i
-                                                            class="fa fa-save"></i>
-                                                        Simpan Order</button>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -504,6 +515,55 @@
                                         dropdownParent: $('#exampleModal')
                                     });
                                 });
+
+                                function cariData() {
+                                    var idToko = $('#nama_toko').val();
+
+                                    // Lakukan panggilan AJAX ke server
+                                    $.ajax({
+                                        url: '/cekTanggungan/' + idToko,
+                                        type: 'GET',
+                                        success: function(response) {
+                                            if (response.tanggungan) {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Toko Tidak Memiliki Tanggungan',
+                                                    timer: 1000,
+                                                    showConfirmButton: false 
+                                                });
+                                                $('#cekToko').hide();
+                                                $('#dataToko').show();
+
+                                            }else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Toko Memiliki Tanggungan',
+                                                    showCancelButton: true,
+                                                    cancelButtonText: 'Batal',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Lanjut',
+                                                    confirmButtonColor: '#3085d6',
+                                                    customClass: {
+                                                        cancelButton: 'btn btn-danger mr-2',
+                                                        confirmButton: 'btn btn-primary ml-2',
+                                                    }
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        $('#passwordModal').modal('show');
+                                                    }
+                                                });
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Toko Tidak Ditemukan',
+                                                timer: 1000,
+                                                showConfirmButton: false 
+                                            });
+                                        }
+                                    });
+                                }
 
                                 const transactionRecords = document.getElementById('transaction-records');
                                 let totalHarga = 0;
@@ -540,6 +600,10 @@
                                     inputAlamat.val(alamat);
                                     intputNomorTelp.val(NomorTelp);
                                     intputSales.val(sales);
+
+                                    
+                                    $('#cekToko').show();
+                                    $('#dataToko').hide();
                                 });
 
                                 $(document).ready(function() {
@@ -574,6 +638,7 @@
 
                                     $('#pilihanDiskon').change(function() {
                                         $('#diskon').val('');
+                                        updateTotalHarga();
                                     });
 
                                 });
@@ -599,10 +664,14 @@
                                         <td class="hargakg">${berasHargaKg}</td>
                                         <td class="hargapcs">${berasHargaPcs}</td>
                                         <td>
-                                            <div class="input-group">
-                                                <button class="btn btn-primary btn-sm" onclick="tambahBeras(this)">+</button>
-                                                <input class="kuantitas" value="${berasJumlah}" readonly>
-                                                <button class="btn btn-primary btn-sm" onclick="kurangBeras(this)">-</button>
+                                            <div class="d-flex align-items-center">
+                                                <button class="btn btn-primary btn-sm me-2" onclick="kurangBeras(this)">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input class="kuantitas form-control text-center" style="min-width: 50px;" value="${berasJumlah}" readonly="">
+                                                <button class="btn btn-primary btn-sm ms-2" onclick="tambahBeras(this)">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
                                             </div>
                                         </td>
                                         <td class="subtotal">${subtotal}</td>
@@ -680,7 +749,14 @@
                                         totalBerat += kuantitas * beratBeras;
                                     });
 
-                                    const diskonInput = parseFloat($('#diskon').val());
+                                    var diskon = $('#diskon').val();
+
+                                    // Pemeriksaan jika nilai diskon tidak valid
+                                    if (isNaN(parseFloat(diskon))) {
+                                        diskon = 0;
+                                    }
+
+                                    const diskonInput = parseFloat(diskon);
                                     const selectedDiskonOption = $('#pilihanDiskon').val();
 
                                     switch (selectedDiskonOption) {
@@ -764,6 +840,73 @@
             </div>
         </div>
     </div>
+    
+    <!-- modal input password verif -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="passwordModalLabel">Input Password Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="passwordForm">
+                        <div class="mb-3">
+                            <label for="adminPassword" class="form-label">Password Admin:</label>
+                            <input type="password" class="form-control" id="adminPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" onclick="handlePasswordInput()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            
+            function handlePasswordInput(){
+                var pass = $('#adminPassword').val();
+
+                $.ajax({
+                    url: '{{ route('validasiToko') }}',
+                    type: 'GET',
+                    data: {
+                        pass: pass
+                    },
+                    success: function(response) {
+                        if (response.password === 'benar') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Validsi Berhasil',
+                                timer: 1000,
+                                showConfirmButton: false 
+                            });
+                            $('#passwordModal').modal('hide');
+                            $('#cekToko').hide();
+                            $('#dataToko').show();
+                        }else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validasi Gagal',
+                                timer: 1000,
+                                showConfirmButton: false
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            timer: 1000,
+                            showConfirmButton: false 
+                        });
+                    }
+                });
+            }
+        </script>
+    </div>
+
     <!-- Modal pengiriman-->
     <div class="modal fade" id="pengirimanModal" tabindex="-1" aria-labelledby="pengirimanModalLabel"
         aria-hidden="true">
@@ -854,7 +997,7 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(response) {
-                                Swal.fire('Success', 'Pengembalian berhasil disimpan', 'success').then((res) => {
+                                Swal.fire('Success', 'Orderan Sedang Dikirm', 'success').then((res) => {
                                     location.reload()
                                 });
                             },

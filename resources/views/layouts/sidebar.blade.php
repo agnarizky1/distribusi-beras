@@ -1,11 +1,9 @@
 <div id="sidebar">
     <div class="sidebar-wrapper active">
-        {{-- <div class="sidebar-header position-relative">
+        <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="logo">
+                <div class="logo mt-3">
                     <h3>Admin</h3>
-                     <a href="{{ route('superadmin.dashboard') }}"><img
-                            src="#" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -40,10 +38,9 @@
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <h3>Admin</h3>
                 <li class="sidebar-item {{ set_active('superadmin.dashboard') }}">
                     <a href="{{ route('superadmin.dashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
@@ -113,7 +110,7 @@
                     class="sidebar-item {{ set_active(['admin.pengembalian', 'admin.pengembalian.add', 'admin.pengembalian.show']) }} ">
                     <a href="{{ route('admin.pengembalian') }}" class='sidebar-link'>
                         <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Pengembalian</span>
+                        <span>Return</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Setting</li>

@@ -137,7 +137,7 @@
                                 </a>
                                 <a href="{{ route('penjualan.cetak', $distribusi->id_distribusi) }}"
                                     class="btn btn-primary">Print</a>
-                            </div>1
+                            </div>
                         </div>
                     </div>
                 </div>

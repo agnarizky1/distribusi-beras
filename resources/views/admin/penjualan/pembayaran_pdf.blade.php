@@ -53,7 +53,7 @@
                 <td>Nopol Armada : {{ $nopol->plat_no }}</td>
             </tr>
             <tr>
-                <td>No. Telp : {{ $toko->nomor_tlp }}</td>
+                <td>Alamat : {{ $toko->alamat }}</td>
                 <td style="padding-left:20px"></td>
                 <td>Sales : {{ $toko->sales }}</td>
             </tr>

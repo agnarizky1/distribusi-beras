@@ -13,15 +13,20 @@ class Pengembalian extends Model
     protected $primaryKey = 'id_pengembalian';
 
     protected $fillable = [
+        'id_toko',
         'kode_pengembalian',
-        'id_distribusi',
         'tanggal_pengembalian',
         'jumlah_return',
         'uang_return',
     ];
 
-    public function distribusi()
+    public function detailPengembalian()
     {
-        return $this->belongsTo(Distribusi::class, 'id_distribusi');
+        return $this->hasMany(DetailPengembalian::class, 'id_pengembalian');
+    }
+
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'id_toko', 'id_toko');
     }
 }
