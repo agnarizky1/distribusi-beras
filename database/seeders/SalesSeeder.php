@@ -19,7 +19,7 @@ class SalesSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
 
-        foreach (range(1, 10) as $index) {
+        foreach (range(1, 5) as $index) {
             Sales::create([
                 'nama_sales' => $faker->name,
                 'no_telpon' => $faker->phoneNumber,

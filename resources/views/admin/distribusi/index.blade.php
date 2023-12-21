@@ -96,7 +96,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     @if ($d->status == 'Dikirim')
-                                                        <a href="#" class="btn btn-warning btn-sm mb-1"
+                                                        <a href="#" class="btn btn-primary btn-sm mb-1"
                                                             data-toggle="modal"
                                                             data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
                                                             <i class="fa fa-pen"></i>
@@ -446,6 +446,7 @@
                                                                     <th>Harga Satuan</th>
                                                                     <th>Jumlah</th>
                                                                     <th>Subtotal</th>
+                                                                    <th>Tonase</th>
                                                                     <th>Aksi</th>
                                                                 </tr>
                                                             </thead>
@@ -691,6 +692,7 @@
                                             </div>
                                         </td>
                                         <td class="subtotal">${subtotal}</td>
+                                        <td class="tonase">${tonase} Kg</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" onclick="hapusBeras(this)">Hapus</button>
 

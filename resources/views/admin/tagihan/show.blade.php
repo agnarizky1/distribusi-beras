@@ -105,7 +105,6 @@
                                     Kembali</a>
                                 <a id="bayarButton" href="#" class="btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#pembayaranModal">Bayar</a>
-                                <a href="#" class="btn btn-primary btn-sm">Print</a>
                             </div>
                         </div>
                     </div>
@@ -133,7 +132,8 @@
                                             <label for="jumlahPembayaran">Jumlah Pembayaran:</label>
                                             <input type="number" class="form-control" id="jumlahPembayaran"
                                                 name="jumlahPembayaran" required>
-                                            <small>Sisa yang harus dibayar: {{ $sisaPembayaran }}</small>
+                                            <small>Sisa yang harus dibayar: Rp.
+                                                {{ number_format($sisaPembayaran, 0, '.', '.') }}</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="metodePembayaran">Metode Pembayaran:</label>

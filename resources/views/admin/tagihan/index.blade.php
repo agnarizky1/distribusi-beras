@@ -63,14 +63,19 @@
                                             <td>{{ $d->nama_toko }}</td>
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}</td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                            <td class="text-center">{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}</td>
+                                            <td class="text-center">Rp.
+                                                {{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
+                                            </td>
                                             @if ($d->status_bayar == 'Belum-Lunas')
-                                                <td class="text-danger text-center"><strong>{{ $d->status_bayar }}</strong><br>
-                                                <span class="text-danger">Sisa: Rp.{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
+                                                <td class="text-danger text-center">
+                                                    <strong>{{ $d->status_bayar }}</strong><br>
+                                                    <span class="text-danger">Sisa:
+                                                        Rp.{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
                                                 </td>
                                             @endif
                                             @if ($d->status_bayar == 'Lunas')
-                                                <td class="text-success text-center"><strong>{{ $d->status_bayar }}</strong>
+                                                <td class="text-success text-center">
+                                                    <strong>{{ $d->status_bayar }}</strong>
                                                 </td>
                                             @endif
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
@@ -79,7 +84,8 @@
                                                         class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm mb-1"" data-toggle="modal"
+                                                    <a href="#" class="btn btn-danger btn-sm mb-1""
+                                                        data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
                                                         <i class="fa fa-trash-can"></i></a>
                                                 </td>

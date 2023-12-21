@@ -109,8 +109,8 @@
                 <li
                     class="sidebar-item {{ set_active(['admin.pengembalian', 'admin.pengembalian.add', 'admin.pengembalian.show']) }} ">
                     <a href="{{ route('admin.pengembalian') }}" class='sidebar-link'>
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span>Return</span>
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Retur</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Setting</li>
