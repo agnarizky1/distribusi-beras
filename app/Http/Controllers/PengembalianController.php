@@ -10,6 +10,7 @@ use App\Models\Pengembalian;
 use App\Models\Beras;
 use App\Models\Toko;
 use App\Models\totalStock;
+use App\Models\DetailPengembalian;
 
 class PengembalianController extends Controller
 {
@@ -28,32 +29,36 @@ class PengembalianController extends Controller
     return view('admin.pengembalian.index', compact('distri','pengembalian'));
     }
 
-    public function getPembelianTerakhir(Request $request)
-    {
-        // Ambil id distribusi dari request
-        $idDistri = $request->input('idDistri');
+    // public function getPembelianTerakhir(Request $request)
+    // {
+    //     // Ambil id distribusi dari request
+    //     $idDistri = $request->input('idDistri');
 
-        // Ambil detail pembelian terakhir
-        $detailDistribusi = DetailDistribusi::where('id_distribusi', $idDistri)->get();
+    //     // Ambil detail pembelian terakhir
+    //     $detailDistribusi = DetailDistribusi::where('id_distribusi', $idDistri)->get();
 
-        return response()->json($detailDistribusi);
-    }
+    //     return response()->json($detailDistribusi);
+    // }
 
     public function getPembelianDuaTerakhir(Request $request)
     {
         // Ambil id distribusi dari request
-        $idDistri = $request->input('idDistri');
+        $idToko = $request->input('idToko');
 
-        $distribusi = Distribusi::find($idDistri);
-        $selectDistri = Distribusi::where('id_toko', $distribusi->id_toko)
+        $selectDistri = Distribusi::where('id_toko', $idToko)
         ->orderBy('created_at', 'desc')
         ->take(2)
         ->get();        
-        $detailDistribusi = collect(); 
+        $detailDistribusi = [];
 
-        foreach($selectDistri as $sd){
+        $nomor = 1;
+        foreach ($selectDistri as $sd) {
             $detail = DetailDistribusi::where('id_distribusi', $sd->id_distribusi)->get();
-            $detailDistribusi = $detailDistribusi->merge($detail);
+            $detailDistribusi[] = [
+                'nama_orderan' => $nomor,
+                'details' => $detail->toArray(),
+            ];
+            $nomor += 1;
         }
 
         return response()->json($detailDistribusi);
@@ -61,7 +66,7 @@ class PengembalianController extends Controller
 
     public function store(Request $request)
     {
-        $idDistri = $request->input('idDistri');
+        $idToko = $request->input('idToko');
         $tglPengembalian = $request->input('tglPengembalian');
         $jumlahReturn = $request->input('jumlahReturn');
         $uangReturn = $request->input('uangReturn');
@@ -75,12 +80,11 @@ class PengembalianController extends Controller
         // Gabungkan elemen-elemen tersebut untuk membuat kode transaksi
         $kode_pengembalian = 'RT' . date('mdH', $timestamp) . $randomValue;
 
-        $detailDistribusis = DetailDistribusi::where('id_distribusi', $idDistri)->get();
 
         // Simpan data pengembalian
         $pengembalian = new Pengembalian();
         $pengembalian->kode_pengembalian = $kode_pengembalian;
-        $pengembalian->id_distribusi = $idDistri;
+        $pengembalian->id_toko = $idToko;
         $pengembalian->tanggal_pengembalian = $tglPengembalian;
         $pengembalian->jumlah_return = $jumlahReturn;
         $pengembalian->uang_return = $uangReturn;
@@ -92,9 +96,17 @@ class PengembalianController extends Controller
             $detail = DetailDistribusi::find($data['detailId']);
             if ($detail) {
                 $detail->update([
-                    'return_toko' => $data['rusak']+$data['baik'],// iki diubah
+                    'return_toko' => $data['rusak']+$data['baik'],
                 ]);
             }
+
+            $detailPengembalian = new DetailPengembalian();
+            $detailPengembalian->id_pengembalian = $pengembalian->id_pengembalian;
+            $detailPengembalian->nama_beras = $detail['nama_beras'];
+            $detailPengembalian->harga = $detail['harga'];
+            $detailPengembalian->sub_total = $detail['harga']*($data['rusak']+$data['baik']);
+            $detailPengembalian->return_toko = $data['rusak']+$data['baik'];
+            $detailPengembalian->save();
 
             $produkString = $detail->nama_beras;
             $namaProduk = trim(preg_replace('/\d+(\.\d+)? Kg$/', '', $produkString));
@@ -154,9 +166,7 @@ class PengembalianController extends Controller
             }
         }
 
-        $distribusi = Distribusi::find($idDistri);
-
-        $toko = Toko::where('id_toko', $distribusi->id_toko)->first();
+        $toko = Toko::where('id_toko', $idToko)->first();
 
         if ($toko) {
             $toko->update([
@@ -185,15 +195,14 @@ class PengembalianController extends Controller
 
     public function show($id)
     {
-        $pengembalian = Pengembalian::find($id); 
+        $pengembalian = Pengembalian::with('detailPengembalian')->where('id_pengembalian', $id)->first();
         if (!$pengembalian) {
             return redirect()->route('admin.pengembalian')->with('error', 'Pengembalian tidak ditemukan.');
         }
 
-        $distribusi = $pengembalian->distribusi;
-        $detailDistribusi = $distribusi->detailDistribusi;
+        $detailPengembalian = $pengembalian->detailPengembalian;
 
-        return view('admin.pengembalian.show', compact('distribusi', 'pengembalian', 'detailDistribusi'));
+        return view('admin.pengembalian.show', compact('pengembalian', 'detailPengembalian'));
     }
 
 }

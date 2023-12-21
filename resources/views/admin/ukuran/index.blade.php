@@ -39,11 +39,11 @@
                                             <td>{{ $b->berat }} Kg</td>
                                             @if (Auth::user()->role == 'admin')
                                                 <td>
-                                                    <a href="{{ route('admin.sales.edit', $b->id) }}"
+                                                    <a href="{{ route('admin.ukuran.edit', $b->id) }}"
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa-solid fa-pen-to-square"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.sales.destroy', $b->id) }}"
+                                                    <a href="{{ route('admin.ukuran.destroy', $b->id) }}"
                                                         class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                 </td>

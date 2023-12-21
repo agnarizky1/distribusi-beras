@@ -17,6 +17,8 @@
             border: 1px solid #dce7f1;
             padding: 0.275rem 0.75rem;
             border-radius: 0.25rem;
+            max-width: 100% !important;
+            box-sizing: border-box;
         }
 
         .select2-container--default .select2-selection--single {
@@ -33,7 +35,7 @@
         }
     </style>
     <div class="page-heading">
-        <h3>Data Pengembalian</h3>
+        <h3>Data Return</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -46,7 +48,7 @@
                                 <div class="col-md-6">
                                     <a data-bs-toggle="modal" data-bs-target="#returnModal" type="button"
                                         class="btn btn-primary">
-                                        <i class="fa-solid fa-folder-plus"></i> Tambah Pengembalian
+                                        <i class="fa-solid fa-folder-plus"></i> Tambah Return
                                     </a>
                                 </div>
                             </div>
@@ -74,10 +76,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($pengembalian as $p)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                        <tr class="text-center">
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $p->kode_pengembalian }}</td>
-                                            <td>{{ $p->distribusi->toko->nama_toko }}</td>
+                                            <td>{{ $p->toko->nama_toko }}</td>
                                             <td>{{ \Carbon\Carbon::parse($p->tanggal_pengembalian)->format('d F Y') }}</td>
                                             <td>{{ $p->jumlah_return }}</td>
                                             <td>Rp. {{ number_format($p->uang_return, 0, '.', '.') }}</td>
@@ -97,7 +99,7 @@
                         </div>
                     </div>
                     @foreach ($pengembalian as $p)
-                        <div class="modal fade" id="deleteConfirmationModal{{ $p->id_distribusi }}" tabindex="-1"
+                        <div class="modal fade" id="deleteConfirmationModal{{ $p->id_pengembalian }}" tabindex="-1"
                             role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -113,7 +115,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <a href="{{ route('distribution.destroy', $p->id_distribusi) }}"
+                                        <a href="{{ route('distribution.destroy', $p->id_pengembalian) }}"
                                             class="btn btn-danger">Hapus</a>
                                     </div>
                                 </div>
@@ -140,7 +142,7 @@
                                                     data-live-search="true">
                                                     <option value="">Pilih Nama Toko</option>
                                                     @foreach ($distri as $distri)
-                                                        <option value="{{ $distri->id_distribusi }}"
+                                                        <option value="{{ $distri->id_toko }}"
                                                             data-pemilik="{{ $distri->toko->pemilik }}"
                                                             data-alamat="{{ $distri->toko->alamat }}"
                                                             data-nomor-telp="{{ $distri->toko->nomor_tlp }}">
@@ -186,33 +188,31 @@
                                         <div id="daftarPembelianTerakhir" style="margin-top: 20px; display: none;">
                                             <hr>
                                             <h5 class="text-center">Daftar Orderan Terakhir</h5>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>Nama Beras</th>
-                                                        <th>Harga</th>
-                                                        <th>Jumlah Order Terakhir</th>
-                                                        <th>Barang Rusak</th>
-                                                        <th>Barang Baik</th>
-                                                        <th>Sub Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="listPembelianTerakhir">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th>Nama Beras</th>
+                                                                <th>Harga</th>
+                                                                <th>Jumlah Order Terakhir</th>
+                                                                <th>Barang Rusak</th>
+                                                                <th>Barang Baik</th>
+                                                                <th>Sub Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="listPembelianTerakhir">
 
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="5" class="text-end"><strong>Total Jumlah
-                                                                Harga :</strong></td>
-                                                        <td><span id="total-harga">0</span></td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            <div>
-
-                                            </div>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5" class="text-end"><strong>Total Jumlah
+                                                                        Harga :</strong></td>
+                                                                <td><span id="total-harga">0</span></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
                                         </div>
-
 
                                         <div class="col mt-1 text-end">
                                             <button type="button" id="cariBtn" class="btn btn-primary"
@@ -232,7 +232,7 @@
 
                         function cariData() {
                             var selectedOption = $('#selectToko').find(':selected');
-                            var idDistri = selectedOption.val();
+                            var idToko = selectedOption.val();
 
                             // Tampilkan daftar pembelian terakhir
                             $('#daftarPembelianTerakhir').show();
@@ -245,37 +245,58 @@
                                 type: 'GET',
                                 url: '{{ route('getPembelianTerakhir') }}', // Gantilah dengan rute yang sesuai
                                 data: {
-                                    idDistri: idDistri
+                                    idToko: idToko
                                 },
                                 success: function(response) {
                                     var listPembelianTerakhir = $('#listPembelianTerakhir');
                                     listPembelianTerakhir.empty(); // Hapus isi sebelumnya
 
-                                    response.forEach(function(detailDistribusi) {
-                                        var tableRow =
-                                            `<tr class="text-center" data-id-detail=${detailDistribusi.id_detail_distribusi}>
-                                                <td>${detailDistribusi.nama_beras}</td>
-                                                <td class="hargapcs">${detailDistribusi.harga}</td>
-                                                <td class="jumlahPcs">${detailDistribusi.jumlah_beras - detailDistribusi.jumlah_return - detailDistribusi.return_toko}</td>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <button type="button" class="btn btn-primary btn-sm" onclick="tambahBerasRusak(this)">+</button>
-                                                        <input class="Rusak kuantitas" value="0" readonly>
-                                                        <button type="button" class="btn btn-primary btn-sm" onclick="kurangBerasRusak(this)">-</button>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <button type="button" class="btn btn-primary btn-sm" onclick="tambahBerasBaik(this)">+</button>
-                                                        <input class="Baik kuantitas" value="0" readonly>
-                                                        <button type="button" class="btn btn-primary btn-sm" onclick="kurangBerasBaik(this)">-</button>
-                                                    </div>
-                                                </td>
-                                                <td class="subtotal">0</td>
-                                            </tr>`;
+                                    let currentOrder = null;
 
-                                        // Tambahkan baris ke tabel
-                                        listPembelianTerakhir.append(tableRow);
+                                    response.forEach(function (detailDistribusi) {
+                                        // Cek apakah orderan berubah
+                                        if (currentOrder !== detailDistribusi.nama_orderan) {
+                                            // Tambahkan baris untuk memisahkan orderan
+                                            let orderSeparator =
+                                                `<tr class="text-center order-separator">
+                                                    <td colspan="3">Orderan ${detailDistribusi.nama_orderan}</td>
+                                                </tr>`;
+
+                                            // Tambahkan baris pemisah ke tabel
+                                            listPembelianTerakhir.append(orderSeparator);
+
+                                            // Perbarui nilai order saat ini
+                                            currentOrder = detailDistribusi.nama_orderan;
+                                        }
+
+                                        // Loop melalui detail untuk menangani array
+                                        detailDistribusi.details.forEach(function (detail) {
+                                            // Tambahkan baris detail distribusi
+                                            let tableRow =
+                                                `<tr class="text-center" data-id-detail=${detail.id_detail_distribusi}>
+                                                    <td>${detail.nama_beras}</td>
+                                                    <td class="hargapcs">${detail.harga}</td>
+                                                    <td class="jumlahPcs">${detail.jumlah_beras - detail.jumlah_return - detail.return_toko}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="kurangBerasRusak(this)"><i class="fas fa-minus"></i></button>
+                                                            <input class="Rusak kuantitas" style="min-width: 50px;" value="0" readonly>
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="tambahBerasRusak(this)"><i class="fas fa-plus"></i></i></button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="kurangBerasBaik(this)"><i class="fas fa-minus"></i></button>
+                                                            <input class="Baik kuantitas" style="min-width: 50px;" value="0" readonly>
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="tambahBerasBaik(this)"><i class="fas fa-plus"></i></button>
+                                                        </div>
+                                                    </td>
+                                                    <td class="subtotal">0</td>
+                                                </tr>`;
+
+                                            // Tambahkan baris ke tabel
+                                            listPembelianTerakhir.append(tableRow);
+                                        });
                                     });
                                 },
                                 error: function(xhr, textStatus, errorThrown) {
@@ -375,10 +396,10 @@
                             let totalHarga = 0;
 
                             $('#listPembelianTerakhir tr').each(function() {
-                                const hargapcs = parseFloat($(this).find('.hargapcs').text());
-                                const rusak = parseInt($(this).find('.Rusak').val());
-                                const baik = parseInt($(this).find('.Baik').val());
-                                totalHarga += hargapcs * (rusak + baik);
+                                const subtotal = parseFloat($(this).find('.subtotal').text());
+                                if(!isNaN(subtotal)){
+                                    totalHarga += subtotal;
+                                }
                             });
 
                             $('#total-harga').text(totalHarga); // Ganti total-price menjadi total-harga
@@ -415,7 +436,7 @@
                         function kembalikan() {
                             var pengembalian = [];
                             var selectedOption = $('#selectToko').find(':selected');
-                            var idDistri = selectedOption.val();
+                            var idToko = selectedOption.val();
                             var tglPengembalian = document.getElementById('tglPengembalian').value;
                             var jumlahReturn = 0;
                             var uangReturn = document.getElementById('total-harga').textContent;
@@ -424,30 +445,32 @@
 
 
                             document.querySelectorAll('#listPembelianTerakhir tr').forEach(function(row) {
-                                var detailId = row.getAttribute('data-id-detail');
-                                var namaBeras = row.querySelector('td:nth-child(1)').textContent;
-                                var hargaBeras = parseFloat(row.querySelector('td:nth-child(2)').textContent);
-                                var rusak = parseInt(row.querySelector('td:nth-child(4) input').value);
-                                var baik = parseInt(row.querySelector('td:nth-child(5) input').value);
-                                var beratBeras = parseFloat(namaBeras.match(/\d+/));
-                                var subTotalBeras = parseFloat(row.querySelector('td:nth-child(6)').textContent);
-                                var jumlahBerat = (rusak + baik) * beratBeras;
-                                jumlahReturn += jumlahBerat;
+                                if (row.getAttribute('data-id-detail')) {
+                                    var detailId = row.getAttribute('data-id-detail');
+                                    var namaBeras = row.querySelector('td:nth-child(1)').textContent;
+                                    var hargaBeras = parseFloat(row.querySelector('td:nth-child(2)').textContent);
+                                    var rusak = parseInt(row.querySelector('td:nth-child(4) input').value);
+                                    var baik = parseInt(row.querySelector('td:nth-child(5) input').value);
+                                    var beratBeras = parseFloat(namaBeras.match(/\d+/));
+                                    var subTotalBeras = parseFloat(row.querySelector('td:nth-child(6)').textContent);
+                                    var jumlahBerat = (rusak + baik) * beratBeras;
+                                    jumlahReturn += jumlahBerat;
 
-                                pengembalian.push({
-                                    detailId: detailId,
-                                    nama: namaBeras,
-                                    harga: hargaBeras,
-                                    rusak: rusak,
-                                    baik: baik,
-                                });
+                                    pengembalian.push({
+                                        detailId: detailId,
+                                        nama: namaBeras,
+                                        harga: hargaBeras,
+                                        rusak: rusak,
+                                        baik: baik,
+                                    });
+                                }
                             });
                             // Kirim data ke server menggunakan AJAX
                             $.ajax({
                                 type: 'POST',
                                 url: '{{ route('pengembalian.store') }}',
                                 data: {
-                                    idDistri: idDistri,
+                                    idToko: idToko,
                                     tglPengembalian: tglPengembalian,
                                     jumlahReturn: jumlahReturn,
                                     uangReturn: uangReturn,

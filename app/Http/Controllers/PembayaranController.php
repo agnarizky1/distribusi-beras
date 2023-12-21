@@ -53,12 +53,18 @@ class PembayaranController extends Controller
         $distri = Distribusi::find($id_distribusi);
         $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
 
+        $toko = $distri->id_toko;
+
         $totalBayar = intval($pembayaranTotal);
         $totalHargaAwal = intval($distri->total_harga);
         $totalHarga = $totalHargaAwal -  $distri->uang_return - $distri->potongan_harga;
         if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
             $distri->update([
                 'status_bayar' => 'Lunas',
+            ]);
+
+            $toko->update([
+                'tanggungan' => 'Tidak Punya'
             ]);
         }
     }

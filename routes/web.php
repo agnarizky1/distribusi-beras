@@ -86,6 +86,8 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/distribution/destroy/{id}', [DistributionController::class, 'destroy'])->name('distribution.destroy');
     Route::post('/admin/distribution/update', [DistributionController::class, 'update'])->name('distribution.update');
     Route::get('/admin/distribution/cetak/{id}', [DistributionController::class, 'cetak'])->name('distribution.cetak');
+    Route::get('/cekTanggungan/{idToko}', [DistributionController::class, 'cekTanggungan']);
+    Route::get('/validasi', [DistributionController::class, 'validasi'])->name('validasiToko');
 
     // DeliveryOrder
     Route::get('/admin/DeliveryOrder', [DeliveryOrderController::class, 'index'])->name('admin.DeliveryOrder.index');
@@ -137,7 +139,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/pengembalian', [PengembalianController::class, 'index'])->name('admin.pengembalian');
     Route::post('/admin/pengembalian/store', [PengembalianController::class, 'store'])->name('pengembalian.store');
     Route::get('/admin/pengembalian/show/{id}', [PengembalianController::class, 'show'])->name('admin.pengembalian.show');
-    Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianTerakhir'])->name('getPembelianTerakhir');
+    Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianDuaTerakhir'])->name('getPembelianTerakhir');
 
 
 });

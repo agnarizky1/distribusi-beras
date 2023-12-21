@@ -50,7 +50,7 @@
                                         <th>Nama Toko</th>
                                         <th>tgl Orderan</th>
                                         <th>Total Berat(Kg)</th>
-                                        <th>Total Harga</th>
+                                        <th>Total Tagihan</th>
                                         <th>Status Pembayaran</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -61,20 +61,12 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $d->kode_distribusi }}</td>
                                             <td>{{ $d->nama_toko }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}
-                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}</td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                            <td>{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
-                                                {{-- <br>
-                                                @if ($pembayaranTotals[$d->id_distribusi] >= $d->total_harga)
-                                                    <span class="text-success">Lunas</span>
-                                                @else
-                                                    <span class="text-danger">Sisa Bayar: Rp.
-                                                        {{ number_format($d->total_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
-                                                @endif --}}
-                                            </td>
+                                            <td class="text-center">{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}</td>
                                             @if ($d->status_bayar == 'Belum-Lunas')
-                                                <td class="text-danger text-center"><strong>{{ $d->status_bayar }}</strong>
+                                                <td class="text-danger text-center"><strong>{{ $d->status_bayar }}</strong><br>
+                                                <span class="text-danger">Sisa: Rp.{{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga - $pembayaranTotals[$d->id_distribusi], 0, '.', '.') }}</span>
                                                 </td>
                                             @endif
                                             @if ($d->status_bayar == 'Lunas')
@@ -87,7 +79,7 @@
                                                         class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <a href="#" class="btn btn-danger btn-sm mb-1"" data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
                                                         <i class="fa fa-trash-can"></i></a>
                                                 </td>

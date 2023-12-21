@@ -16,13 +16,13 @@ class CreatePengembaliansTable extends Migration
         Schema::create('pengembalians', function (Blueprint $table) {
             $table->id('id_pengembalian');
             $table->char('kode_pengembalian');
-            $table->unsignedBigInteger('id_distribusi');
+            $table->char('id_toko');
             $table->date('tanggal_pengembalian');
             $table->integer('jumlah_return');
             $table->integer('uang_return');
             $table->timestamps();
 
-            $table->foreign('id_distribusi')->references('id_distribusi')->on('distribusis')->onDelete('cascade');
+            $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');
 
         });
     }

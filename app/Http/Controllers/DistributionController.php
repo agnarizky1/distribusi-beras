@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Toko;
 use App\Models\Beras;
 use App\Models\Sales;
@@ -38,6 +39,31 @@ class DistributionController extends Controller
             $pembayaranTotals[$d->id_distribusi] = $pembayaranTotal;
         }
         return view('admin.distribusi.index', compact('tokos', 'sales', 'beras','distri','pembayaranTotals'));
+    }
+
+    public function cekTanggungan($idToko)
+    {
+        $toko = Toko::find($idToko);
+        $tanggungan = $toko->tanggungan;
+
+        if ($tanggungan != 'Punya') {
+            return response()->json(['tanggungan' => $tanggungan]);
+        }
+    }
+
+    public function validasi(Request $request){
+        $getUser = User::all();
+
+        foreach($getUser as $user){
+            $role = $user->role;
+            if($role == 'superadmin'){
+                if (password_verify($request->input('pass'), $user->password)) {
+                    return response()->json(['password' => 'benar']);
+                }
+            }else{
+                return response()->json(['password' => 'salah'], 401);
+            }
+        }
     }
 
     public function store(Request $request)
@@ -107,6 +133,7 @@ class DistributionController extends Controller
 
         $toko->update([
             'sisa_uang_return' => 0,
+            'tanggungan' => 'Punya' ,
         ]);
     }
 
@@ -260,7 +287,7 @@ class DistributionController extends Controller
 
         $distribusi->delete();
 
-        return redirect()->route('distribution')->with('success', 'Transaksi telah dihapus.');
+        return redirect()->route('distribution')->with('success', 'Orderan telah dihapus.');
     }
 
     public function cetak($id) {
