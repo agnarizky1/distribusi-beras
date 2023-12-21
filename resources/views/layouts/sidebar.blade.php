@@ -1,16 +1,14 @@
 <div id="sidebar">
     <div class="sidebar-wrapper active">
-        {{-- <div class="sidebar-header position-relative">
+        <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="logo">
+                <div class="logo mt-2">
                     <h3>Admin</h3>
-                     <a href="{{ route('superadmin.dashboard') }}"><img
-                            src="#" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
-                        height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                        role="img" class="iconify iconify--system-uicons" width="20" height="20"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                         <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path
@@ -36,14 +34,13 @@
                         </path>
                     </svg>
                 </div>
-                 <div class="sidebar-toggler  x">
+                <div class="sidebar-toggler  x">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <h3>Admin</h3>
                 <li class="sidebar-item {{ set_active('superadmin.dashboard') }}">
                     <a href="{{ route('superadmin.dashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>

@@ -12,7 +12,6 @@ class Toko extends Model
     protected $keyType = 'string';
     protected $primaryKey = 'id_toko';
 
-    protected $fillable = [
-        'sisa_uang_return',
-    ];
+    protected $fillable = ['id_toko', 'sales', 'foto_toko', 'nama_toko', 'pemilik', 'foto_ktp', 'alamat', 'nomor_tlp', 'koordinat'];
+
 }

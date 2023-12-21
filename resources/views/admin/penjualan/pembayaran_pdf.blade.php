@@ -5,39 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Order</title>
+    <title>Nota</title>
 </head>
 
 <body>
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    td {
-        padding: 8px;
-    }
-
-    .responsive-table td {
-        white-space: nowrap;
-    }
-
-    @media screen and (max-width: 768px) {
-        .responsive-table td {
-            display: block;
+    <style>
+        table {
             width: 100%;
-            box-sizing: border-box;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-    }
-</style>
+
+        td {
+            padding: 8px;
+        }
+
+        .responsive-table td {
+            white-space: nowrap;
+        }
+
+        @media screen and (max-width: 768px) {
+            .responsive-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
     <div style="padding: 20px;">
         <center>
             <h3>UD. SUMBER REJEKI SEJATI</h3>
             <p>Jalan Letjen Suprapto 72E, Kebonsari, Sumbersari, Jember. No.Telp (082133208080)</p>
             @foreach ($distribusi as $distribusi)
-            <h3>Nota Pembelian</h3>
+                <h3>Nota Pembelian</h3>
             @endforeach
         </center>
 
@@ -73,38 +73,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $totalHarga = 0; $totalTonase = 0; ?>
+                    <?php $totalHarga = 0;
+                    $totalTonase = 0; ?>
                     @foreach ($distribusi->detailDistribusi as $detail)
                         <?php
-                            $produkString = $detail->nama_beras;
-                            $namaProduk = trim(preg_replace('/\d+(\.\d+)? Kg$/', '', $produkString));
-                
-                            $beratString = preg_match('/(\d+(\.\d+)?) Kg$/', $produkString, $matches) ? $matches[1] : null;
-                            $berat = $beratString ? floatval($beratString) : null;
-                
-                            $hargaPcs = $detail->harga;
-                            $hargaKG = $hargaPcs/$berat;
-                            $tonase = $berat*$detail->jumlah_beras;
+                        $produkString = $detail->nama_beras;
+                        $namaProduk = trim(preg_replace('/\d+(\.\d+)? Kg$/', '', $produkString));
+                        
+                        $beratString = preg_match('/(\d+(\.\d+)?) Kg$/', $produkString, $matches) ? $matches[1] : null;
+                        $berat = $beratString ? floatval($beratString) : null;
+                        
+                        $hargaPcs = $detail->harga;
+                        $hargaKG = $hargaPcs / $berat;
+                        $tonase = $berat * $detail->jumlah_beras;
                         ?>
                         <tr>
                             <td style="text-align: center; border: 1px solid #000;">{{ $loop->iteration }}</td>
                             <td style="text-align: center; border: 1px solid #000;">{{ $detail->jumlah_beras }}</td>
                             <td style="text-align: center; border: 1px solid #000;">{{ $detail->nama_beras }}</td>
                             <td style="text-align: center; border: 1px solid #000;">{{ $tonase }}</td>
-                            <td style="text-align: center; border: 1px solid #000;">Rp. {{ number_format($hargaKG, 0, '.', '.') }}</td>
-                            <td style="text-align: center; border: 1px solid #000;">Rp. {{ number_format($detail->harga, 0, '.', '.') }}</td>
-                            <td style="text-align: center; border: 1px solid #000;">Rp. {{ number_format($detail->sub_total, 0, '.', '.') }}</td>
+                            <td style="text-align: center; border: 1px solid #000;">Rp.
+                                {{ number_format($hargaKG, 0, '.', '.') }}</td>
+                            <td style="text-align: center; border: 1px solid #000;">Rp.
+                                {{ number_format($detail->harga, 0, '.', '.') }}</td>
+                            <td style="text-align: center; border: 1px solid #000;">Rp.
+                                {{ number_format($detail->sub_total, 0, '.', '.') }}</td>
                         </tr>
-                        <?php 
-                            $totalHarga += $detail->sub_total;
-                            $totalTonase += $tonase;
+                        <?php
+                        $totalHarga += $detail->sub_total;
+                        $totalTonase += $tonase;
                         ?>
                     @endforeach
                     <tr>
                         <td style="text-align: center;" colspan="3">
                             <strong>Total</strong>
                         </td>
-                        <td style="text-align: center;">{{$tonase}}</td>
+                        <td style="text-align: center;">{{ $distribusi->jumlah_distribusi }}</td>
                         <td style="text-align: left;" colspan="2"></td>
                         <td style="text-align: right;">Rp. {{ number_format($totalHarga, 0, '.', '.') }}</td>
                     </tr>
