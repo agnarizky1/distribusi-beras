@@ -46,7 +46,10 @@ class AuthController extends Controller
 
     public function doLogin(Request $request)
     {
-        $credentials = $request->validate([
+        if(Auth::check()){
+            return redirect('/admin');
+        }
+            $credentials = $request->validate([
             'email' => ['required', 'string', 'max:100', 'email'],
             'password' => ['required']
         ]);
