@@ -167,10 +167,10 @@ class DistributionController extends Controller
 
                 $beratString = preg_match('/(\d+(\.\d+)?) Kg$/', $produkString, $matches) ? $matches[1] : null;
                 $berat = $beratString ? floatval($beratString) : null;
-                
+
                 $orderDetail = DetailDelivery::where('id_distribusi', $distribusi->id_distribusi)->get();
                 $idDelivery = $orderDetail->first()->id_delivery;
-                
+
                 $delivery = DeliveryOrder::find($idDelivery);
                 $hargaPcs = $detail->harga;
                 $hargaKG = $hargaPcs/$berat;
@@ -255,7 +255,7 @@ class DistributionController extends Controller
 
     public function show($id)
     {
-        $distribusi = Distribusi::find($id); 
+        $distribusi = Distribusi::find($id);
         if (!$distribusi) {
             return redirect()->route('distribution')->with('error', 'Distribusi tidak ditemukan.');
         }

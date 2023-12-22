@@ -78,8 +78,7 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="2"><strong>Total yang sudah terbayarkan</strong></td>
-                                            <td>Rp.
-                                                {{ number_format($totalPembayaran, 0, '.', '.') }}</td>
+                                            <td> Rp. {{ number_format($totalPembayaran, 0, '.', '.') }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

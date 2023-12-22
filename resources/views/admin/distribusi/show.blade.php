@@ -30,7 +30,8 @@
                             <div class="col-md-6">
                                 <p>Tanggal Order Beras : {{ $distribusi->tanggal_distribusi }}</p>
                                 <p>Jumlah Seluruh Orderan : {{ $distribusi->jumlah_distribusi }} KG</p>
-                                <p>Yang Harus Dibayar : {{ $distribusi->total_harga }}</p>
+                                <p>Yang Harus Dibayar : Rp.
+                                    {{ number_format($distribusi->total_harga, 0, '.', '.') }}</p>
                             </div>
                         </div>
                         <div class="row mt-3">

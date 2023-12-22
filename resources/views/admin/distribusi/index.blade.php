@@ -93,7 +93,7 @@
                                             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
                                                 <td class="text-center">
                                                     @if ($d->status == 'Dikirim')
-                                                        <a href="#" class="btn btn-warning btn-sm mb-1"
+                                                        <a href="#" class="btn btn-success btn-sm mb-1"
                                                             data-toggle="modal"
                                                             data-target="#ConfirmationDeliveryModal{{ $d->id_distribusi }}">
                                                             <i class="fa fa-pen"></i>
@@ -433,76 +433,74 @@
                                                                 Barang</button>
                                                         </div>
                                                     </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nama Beras</th>
-                                                                    <th>Harga Per KG</th>
-                                                                    <th>Harga Satuan</th>
-                                                                    <th>Jumlah</th>
-                                                                    <th>Subtotal</th>
-                                                                    <th>Aksi</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="transaction-records">
-                                                                <!-- Data Distribusi akan ditampilkan di sini -->
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div class="row">
-                                                                            <div class="col-md-4 mt-2 mb-2">
-                                                                                <label for="pilihanDiskon">Pilihan
-                                                                                    Diskon</label>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-2">
-                                                                                <select class="form-select" id="pilihanDiskon"
-                                                                                    name="pilihanDiskon"
-                                                                                    aria-label="Default select example"
-                                                                                    required>
-                                                                                    <option value="Pilih">Pilih Diskon
-                                                                                    </option>
-                                                                                    <option value="Persen">Persen</option>
-                                                                                    <option value="Harga Per-Kg">Harga Per-Kg
-                                                                                    </option>
-                                                                                    <option value="Nominal">Nominal</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-2">
-                                                                                <input type="text" class="form-control"
-                                                                                style="min-width: 50px;" id="diskon" name="diskon" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-12 text-end">
-                                                                                <strong>Total Diskon:</strong> <span
-                                                                                    id="total-diskon">0</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td colspan="2" class="text-end">
-                                                                        <strong>Total Jumlah Harga :</strong>
-                                                                    </td>
-                                                                    <td colspan="2">
-                                                                        <span id="total-price">0</span>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <button type="button" class="btn btn-warning rounded" data-bs-dismiss="modal">
-                                                            <i class='nav-icon fas fa-arrow-left'></i>
-                                                            &nbsp; Kembali
-                                                        </button>
-                                                        <button id="simpanDistribusiBtn" class="btn btn-primary rounded">
-                                                            <i class="fa fa-save"></i> Simpan Order
-                                                        </button>
-                                                    </div>
                                                 </div>
-
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama Beras</th>
+                                                                <th>Harga Per KG</th>
+                                                                <th>Harga Satuan</th>
+                                                                <th>Jumlah</th>
+                                                                <th>Subtotal</th>
+                                                                <th>Tonase</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="transaction-records">
+                                                            <!-- Data Distribusi akan ditampilkan di sini -->
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4 mt-2 mb-2">
+                                                                            <label for="pilihanDiskon">PilihanDiskon</label>
+                                                                        </div>
+                                                                        <div class="col-md-4 mb-2">
+                                                                            <select class="form-select" id="pilihanDiskon"
+                                                                                name="pilihanDiskon"
+                                                                                aria-label="Default select example"
+                                                                                required>
+                                                                                <option value="Pilih">Pilih Diskon
+                                                                                </option>
+                                                                                <option value="Persen">Persen</option>
+                                                                                <option value="Harga Per-Kg">Harga Per-Kg
+                                                                                </option>
+                                                                                <option value="Nominal">Nominal</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-4 mb-2">
+                                                                            <input type="text" class="form-control"
+                                                                            style="min-width: 50px;" id="diskon" name="diskon" required>
+                                                                        </div>                                                                        
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 text-end">
+                                                                            <strong>Total Diskon:</strong> <span
+                                                                                id="total-diskon">0</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td colspan="2" class="text-end">
+                                                                    <strong>Total Jumlah Harga :</strong>
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <span id="total-price">0</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                                <div class="text-end">
+                                                    <button type="button" class="btn btn-warning rounded" data-bs-dismiss="modal">
+                                                        <i class='nav-icon fas fa-arrow-left'></i>
+                                                        &nbsp; Kembali
+                                                    </button>
+                                                    <button id="simpanDistribusiBtn" class="btn btn-primary rounded">
+                                                        <i class="fa fa-save"></i> Simpan Order
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -573,9 +571,6 @@
                                     var price = selectedOption.data('price');
                                     var beratOption = selectedOption.text().match(/\d+(\.\d+)?/);
                                     var berat = beratOption ? parseFloat(beratOption[0]) : 0;
-
-                                    console.log(price, berat);
-
 
                                     $('#hargakg').val(price);
                                     $('#hargapcs').val(price * berat);
@@ -657,6 +652,12 @@
                                         return;
                                     }
 
+                                    // Pastikan bahwa atribut berat diambil dengan benar
+                                    const beratBeras = parseFloat(berasNama.match(/\d+/));
+                                    const tonase = berasJumlah * beratBeras;
+                                    console.log(beratBeras, berasJumlah);
+
+
                                     const subtotal = berasHargaPcs * berasJumlah;
                                     const row = `
                                     <tr data-idberas=${berasId}>
@@ -675,6 +676,7 @@
                                             </div>
                                         </td>
                                         <td class="subtotal">${subtotal}</td>
+                                        <td class="tonase">${tonase} Kg</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" onclick="hapusBeras(this)">Hapus</button>
 
@@ -705,14 +707,20 @@
                                     const row = button.closest('tr');
                                     const kuantitasInput = row.querySelector('.kuantitas'); // Mengambil input kuantitas
                                     const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
+                                    const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
                                     const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
+                                    const berasNama = row.querySelector('.namaBeras').textContent;
+                                    const berat = parseFloat(berasNama.match(/\d+/));
 
                                     let kuantitas = parseFloat(kuantitasInput.value);
                                     kuantitas++;
                                     kuantitasInput.value = kuantitas; // Mengubah nilai input
 
+
                                     const subtotal = kuantitas * hargapcs;
+                                    const tonase = kuantitas * berat;
                                     subtotalElement.textContent = subtotal; // Memperbarui subtotal
+                                    tonaseElement.textContent = tonase + ' KG';
 
                                     updateTotalHarga()
                                 }
@@ -721,15 +729,20 @@
                                     const row = button.closest('tr');
                                     const kuantitasInput = row.querySelector('.kuantitas'); // Mengambil input kuantitas
                                     const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
+                                    const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
+                                    const berasNama = row.querySelector('.namaBeras').textContent;
+                                    const berat = parseFloat(berasNama.match(/\d+/));
 
                                     let kuantitas = parseInt(kuantitasInput.value);
-                                    if (kuantitas > 1) {
+                                    if (kuantitas > 0) {
                                         kuantitas--;
                                         const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
                                         const subtotal = kuantitas * hargapcs;
+                                        const tonase = kuantitas * berat;
 
                                         kuantitasInput.value = kuantitas; // Mengubah nilai input
                                         subtotalElement.textContent = subtotal;
+                                        tonaseElement.textContent = tonase + ' KG';
 
                                         updateTotalHarga()
                                     }
