@@ -63,7 +63,7 @@
                                             <td>{{ $d->nama_toko }}</td>
                                             <td>{{ \Carbon\Carbon::parse($d->tanggal_distribusi)->format('d F Y') }}</td>
                                             <td class="text-center">{{ $d->jumlah_distribusi }} Kg</td>
-                                            <td class="text-center">Rp.
+                                            <td class="text-center">
                                                 {{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
                                             </td>
                                             @if ($d->status_bayar == 'Belum-Lunas')

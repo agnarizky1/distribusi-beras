@@ -18,7 +18,7 @@ class BerasSeeder extends Seeder
         $ukuranjEnak = [25, 5 , 3];
         $ukuranJPlastik = [25, 5, 2.5];
         $ukuranJLaminasi = [10, 5];
-        $ukuranNis = [25, 5, 10];
+        $ukuranNis = [25, 10, 5];
 
         $dataBeras = [];
         foreach ($merk as $m) {
