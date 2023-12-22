@@ -302,4 +302,3 @@ class DistributionController extends Controller
         return $pdf->download('distribusi' . $kode_distribusi . '.pdf');
     }
 }
-

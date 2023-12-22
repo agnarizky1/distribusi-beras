@@ -42,27 +42,30 @@
                                     @foreach ($beras as $b)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            @if($b->keterangan == "Beras Return")
-                                            <td class="text-danger">{{$b->keterangan}} {{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            @if ($b->keterangan == 'Beras Return')
+                                                <td class="text-danger">{{ $b->keterangan }}
+                                                    {{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
                                             @endif
-                                            @if($b->keterangan == "Dari Pabrik")
-                                            <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
+                                            @if ($b->keterangan == 'Dari Pabrik')
+                                                <td>{{ $b->merk_beras }}&nbsp;{{ $b->berat }} Kg</td>
                                             @endif
                                             <td>{{ $b->tanggal_masuk_beras }}</td>
                                             <td>{{ $b->nama_sopir }}</td>
                                             <td>{{ $b->plat_no }}</td>
                                             <td class="text-center">{{ $b->stock }}</td>
                                             @if (Auth::user()->role == 'admin')
-                                                <td>
+                                                <td class="d-flex justify-content-center align-items-center">
                                                     <a href="{{ route('admin.stockberas.edit', $b->id_beras) }}"
-                                                        class="btn btn-warning btn-sm"><i
-                                                            class="fa-solid fa-pen-to-square"></i>
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $b->id_beras }}">
-                                                        <i class="fa fa-trash-can"></i></a>
+                                                        <i class="fa fa-trash-can"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.stockberas.show', $b->id_beras) }}"
-                                                        class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i>
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fa-solid fa-eye"></i>
                                                     </a>
                                                 </td>
                                             @endif
@@ -74,8 +77,8 @@
                     </div>
 
                     @foreach ($beras as $b)
-                        <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1" role="dialog"
-                            aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteConfirmationModal{{ $b->id_beras }}" tabindex="-1"
+                            role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -168,7 +171,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($total as $t)
-                                        @if ($t->status == "Rusak")
+                                        @if ($t->status == 'Rusak')
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td>{{ $t->merk_beras }}</td>
@@ -200,7 +203,8 @@
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="plat_no">Plat No.</label>
-                                        <input type="text" class="form-control" id="plat_no" name="plat_no" required>
+                                        <input type="text" class="form-control" id="plat_no" name="plat_no"
+                                            required>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="tanggal_masuk_beras">Tanggal Masuk</label>
@@ -412,7 +416,7 @@
                     },
                     success: function(response) {
                         Swal.fire('Success', 'beras berhasil disimpan', 'success');
-                        window.location.href ='{{ route('admin.stockberas') }}';
+                        window.location.href = '{{ route('admin.stockberas') }}';
                     },
                     error: function(xhr, status, error) {
                         // Penanganan kesalahan (jika diperlukan)
