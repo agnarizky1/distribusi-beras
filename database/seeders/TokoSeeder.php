@@ -14,12 +14,12 @@ class TokoSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $prefix = 'T-';
             $lastId = Toko::max('id_toko');
             $allSales = Sales::all();
             $randomSales = $allSales->random();
-        
+
             $nmSales = $randomSales->nama_sales;
 
             if (!$lastId) {
