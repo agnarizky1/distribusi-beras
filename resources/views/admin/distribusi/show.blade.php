@@ -15,12 +15,6 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <div class="col-md-6">
-                            <a href="{{ route('distribution') }}" class="btn btn-primary">
-                                Kembali
-                            </a>
-                        </div>
-                        <br>
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Nama Toko : {{ $toko->nama_toko }}</p>
@@ -86,8 +80,11 @@
 
                             </div>
                             <div class="text-end">
-                                <a href="{{ route('distribution.cetak', $distribusi->id_distribusi) }}"
+                                {{-- <a href="{{ route('distribution.cetak', $distribusi->id_distribusi) }}"
                                     class="btn btn-warning btn-sm">Print</i>
+                                </a> --}}
+                                <a href="{{ route('distribution') }}" class="btn btn-warning">
+                                    Kembali
                                 </a>
                             </div>
                         </div>
