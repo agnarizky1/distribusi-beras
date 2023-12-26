@@ -192,14 +192,14 @@ class DistributionController extends Controller
                     $tStock = totalStock::where('merk_beras', $namaProduk)
                         ->where('ukuran_beras', $berat)
                         ->first();
-                
+
                     if ($tStock) {
                         $tStock->jumlah_stock += intval($data['jumlahBaik']);
                         $tStock->harga = $hargaKG;
                         $tStock->save();
                     }
                 }
-                
+
                 if($data['jumlahRusak'] > 0){
                     $berasRusak = 'Rusak';
 
@@ -302,4 +302,3 @@ class DistributionController extends Controller
         return $pdf->download('distribusi' . $kode_distribusi . '.pdf');
     }
 }
-

@@ -65,9 +65,10 @@ class DeliveryOrderController extends Controller
     {
         $delivery = DeliveryOrder::with('detailDelivery.distribusi')->find($id);
         $detailDeliveries = DetailDelivery::where('id_delivery', $id)->get();
+        $detailDistribusi = Distribusi::where('id_distribusi', $id)->get();
         $merk = totalStock::all();
 
-        return view('admin.DeliveryOrder.show', compact('delivery' ,'detailDeliveries', 'merk'));
+        return view('admin.DeliveryOrder.show', compact('detailDistribusi','delivery' ,'detailDeliveries', 'merk'));
     }
 
     public function showDO($id)
@@ -139,4 +140,52 @@ class DeliveryOrderController extends Controller
 
         return $pdf->download('Delivery-' .$delivery->kode_delivery_orders. '.pdf');
     }
+
+    public function cetaktt($id)
+    {
+        $distribusi = Distribusi::find($id);
+        $detailDistribusi = $distribusi->detailDistribusi;
+
+        $detailDelivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $idDelivery = $detailDelivery->id_delivery;
+
+        $delivery = DeliveryOrder::find($idDelivery);
+
+        $merk = totalStock::where('status', 'Baik')->get();
+
+        $view =  view('admin.DeliveryOrder.printTT', compact('distribusi', 'merk', 'detailDistribusi','delivery'));
+
+        $pdf = PDF::loadHtml($view);
+
+        // (Optional) Set the paper size and orientation
+        $pdf->setPaper('A4', 'landscape');
+
+        // (Optional) Add header and footer
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+        ]);
+
+        // (Optional) Set additional configuration options
+        $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+        return $pdf->download('Delivery-' . $delivery->kode_delivery_orders . '.pdf');
+    }
+
+    public function tescetaktt($id)
+    {
+        $distribusi = Distribusi::find($id);
+        $detailDistribusi = $distribusi->detailDistribusi;
+
+        $detailDelivery = DetailDelivery::where('id_distribusi', $id)->first();
+        $idDelivery = $detailDelivery->id_delivery;
+
+        $delivery = DeliveryOrder::find($idDelivery);
+
+        $merk = totalStock::where('status', 'Baik')->get();
+
+        return view('admin.DeliveryOrder.printTT', compact('distribusi', 'merk', 'detailDistribusi','delivery'));
+    }
+
 }

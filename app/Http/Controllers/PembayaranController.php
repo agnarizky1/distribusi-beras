@@ -52,7 +52,7 @@ class PembayaranController extends Controller
 
         $distri = Distribusi::find($id_distribusi);
         $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
-        
+
         $toko = $distri->id_toko;
 
         $totalBayar = intval($pembayaranTotal);

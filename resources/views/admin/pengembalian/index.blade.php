@@ -35,7 +35,7 @@
         }
     </style>
     <div class="page-heading">
-        <h3>Data Return</h3>
+        <h3>Data Retur</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <a data-bs-toggle="modal" data-bs-target="#returnModal" type="button"
                                         class="btn btn-primary">
-                                        <i class="fa-solid fa-folder-plus"></i> Tambah Return
+                                        <i class="fa-solid fa-folder-plus"></i> Tambah Retur
                                     </a>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="returnModalLabel">Tambah Pengembalian</h5>
+                                    <h5 class="modal-title" id="returnModalLabel">Tambah retur</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -188,37 +188,37 @@
                                         <div id="daftarPembelianTerakhir" style="margin-top: 20px; display: none;">
                                             <hr>
                                             <h5 class="text-center">Daftar Orderan Terakhir</h5>
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr class="text-center">
-                                                                <th>Nama Beras</th>
-                                                                <th>Harga</th>
-                                                                <th>Jumlah Order Terakhir</th>
-                                                                <th>Barang Rusak</th>
-                                                                <th>Barang Baik</th>
-                                                                <th>Sub Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="listPembelianTerakhir">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>Nama Beras</th>
+                                                            <th>Harga</th>
+                                                            <th>Jumlah Order Terakhir</th>
+                                                            <th>Barang Rusak</th>
+                                                            <th>Barang Baik</th>
+                                                            <th>Sub Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="listPembelianTerakhir">
 
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td colspan="5" class="text-end"><strong>Total Jumlah
-                                                                        Harga :</strong></td>
-                                                                <td><span id="total-harga">0</span></td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="5" class="text-end"><strong>Total Jumlah
+                                                                    Harga :</strong></td>
+                                                            <td><span id="total-harga">0</span></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                         </div>
 
                                         <div class="col mt-1 text-end">
                                             <button type="button" id="cariBtn" class="btn btn-primary"
                                                 onclick="cariData()">Cari Order Terakhir</button>
                                             <button type="submit" id="simpanBtn" class="btn btn-primary"
-                                                style="display: none;" onclick="kembalikan()">Kembalikan</button>
+                                                style="display: none;" onclick="kembalikan()">Retur</button>
                                         </div>
                                     </form>
                                 </div>
@@ -253,7 +253,7 @@
 
                                     let currentOrder = null;
 
-                                    response.forEach(function (detailDistribusi) {
+                                    response.forEach(function(detailDistribusi) {
                                         // Cek apakah orderan berubah
                                         if (currentOrder !== detailDistribusi.nama_orderan) {
                                             // Tambahkan baris untuk memisahkan orderan
@@ -270,7 +270,7 @@
                                         }
 
                                         // Loop melalui detail untuk menangani array
-                                        detailDistribusi.details.forEach(function (detail) {
+                                        detailDistribusi.details.forEach(function(detail) {
                                             // Tambahkan baris detail distribusi
                                             let tableRow =
                                                 `<tr class="text-center" data-id-detail=${detail.id_detail_distribusi}>
@@ -397,7 +397,7 @@
 
                             $('#listPembelianTerakhir tr').each(function() {
                                 const subtotal = parseFloat($(this).find('.subtotal').text());
-                                if(!isNaN(subtotal)){
+                                if (!isNaN(subtotal)) {
                                     totalHarga += subtotal;
                                 }
                             });

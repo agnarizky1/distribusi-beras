@@ -37,15 +37,18 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div class="col mb-3">
-                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"
+                                        class="btn btn-primary">
                                         <i class="fa-solid fa-folder-plus"></i> Tambah Order
                                     </a>
                                 </div>
                                 <div class="col text-end">
-                                    <a data-bs-toggle="modal" data-bs-target="#pengirimanModal" type="button" class="btn btn-primary mb-3">
+                                    <a data-bs-toggle="modal" data-bs-target="#pengirimanModal" type="button"
+                                        class="btn btn-primary mb-3">
                                         <i class="fa-solid fa-paper-plane"></i> Kirim Orderan
                                     </a>
-                                    <a href="{{ route('admin.DeliveryOrder.index') }}" type="button" class="btn btn-success mb-3">
+                                    <a href="{{ route('admin.DeliveryOrder.index') }}" type="button"
+                                        class="btn btn-success mb-3">
                                         <i class="fa-solid fa-file-lines"></i> Riwayat Orderan
                                     </a>
                                 </div>
@@ -693,7 +696,6 @@
                 kuantitas++;
                 kuantitasInput.value = kuantitas; // Mengubah nilai input
 
-
                 const subtotal = kuantitas * hargapcs;
                 const tonase = kuantitas * berat;
                 subtotalElement.textContent = subtotal; // Memperbarui subtotal
@@ -827,7 +829,6 @@
     </div>
 </div>
 
-    
     <!-- modal input password verif -->
     <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -851,8 +852,7 @@
             </div>
         </div>
         <script>
-            
-            function handlePasswordInput(){
+            function handlePasswordInput() {
                 var pass = $('#adminPassword').val();
 
                 $.ajax({
@@ -867,12 +867,12 @@
                                 icon: 'success',
                                 title: 'Validsi Berhasil',
                                 timer: 1000,
-                                showConfirmButton: false 
+                                showConfirmButton: false
                             });
                             $('#passwordModal').modal('hide');
                             $('#cekToko').hide();
                             $('#dataToko').show();
-                        }else {
+                        } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Validasi Gagal',
@@ -886,7 +886,7 @@
                             icon: 'error',
                             title: 'Gagal',
                             timer: 1000,
-                            showConfirmButton: false 
+                            showConfirmButton: false
                         });
                     }
                 });

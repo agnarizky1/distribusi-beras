@@ -89,42 +89,45 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <p class="text-danger">Beras Yang di-Return</p>
-                                <small>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <p>Nama</p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <p>Jumlah</p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <p>Subtotal</p>
-                                        </div>
-                                    </div>
-                                    @php
-                                        $HargaTotal = 0;
-                                    @endphp
-                                    @foreach ($detailDistribusi as $detail)
+                                @if ($distribusi->uang_return != 0)
+                                    <p class="text-danger">Beras Yang Direturn</p>
+                                    <small>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <p>{{ $detail->nama_beras }}</p>
+                                                <p>Nama</p>
                                             </div>
                                             <div class="col-md-2">
-                                                <p>: {{ $detail->jumlah_return }}</p>
+                                                <p>Jumlah</p>
                                             </div>
                                             <div class="col-md-2">
-                                                <p>: {{ number_format($detail->jumlah_return * $detail->harga, 0, '.', '.') }}
-                                                </p>
+                                                <p>Subtotal</p>
                                             </div>
-                                            @php
-                                                $HargaTotal += $detail->jumlah_return * $detail->harga;
-                                            @endphp
                                         </div>
-                                    @endforeach
-                                    <p>harga total yang direturn: Rp.
-                                        {{ number_format($distribusi->uang_return, 0, '.', '.') }}</p>
-                                </small>
+                                        @foreach ($detailDistribusi as $detail)
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p>{{ $detail->nama_beras }}</p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p>: {{ $detail->jumlah_return }}</p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p>: Rp.
+                                                        {{ number_format($detail->jumlah_return * $detail->harga, 0, '.', '.') }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="row">
+                                            <div class="col-md-5 text-end">
+                                                <p>Total Harga Yang Direturn</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                : Rp. {{ number_format($distribusi->uang_return, 0, '.', '.') }}
+                                            </div>
+                                        </div>
+                                    </small>
+                                @endif
                             </div>
                             <div class=" text-end">
                                 <a href="{{ route('penjualan') }}" class="btn btn-warning">

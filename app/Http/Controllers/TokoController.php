@@ -31,15 +31,15 @@ class TokoController extends Controller
     {
         return view('admin.toko.add');
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
         'sales' => 'required',
-        'foto_toko' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_toko' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         'nama_toko' => 'required',
         'pemilik' => 'required',
-        'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         'alamat' => 'required',
         'nomor_tlp' => 'required',
         ]);
@@ -51,11 +51,11 @@ class TokoController extends Controller
         if ($request->hasFile('foto_toko') && $request->hasFile('foto_ktp')) {
             $nama_toko = $request->file('foto_toko');
             $namaGambartoko = time() . 'toko.' . $nama_toko->getClientOriginalExtension();
-            $nama_toko->move(public_path('uploads/toko'), $namaGambartoko); 
+            $nama_toko->move(public_path('uploads/toko'), $namaGambartoko);
 
             $foto_ktp = $request->file('foto_ktp');
             $namaGambarktp = time() . 'ktp.' . $foto_ktp->getClientOriginalExtension();
-            $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp); 
+            $foto_ktp->move(public_path('uploads/ktp'), $namaGambarktp);
         } else {
             $namaGambartoko = null; // Jika tidak ada gambar yang diunggah
             $namaGambarktp = null; // Jika tidak ada gambar yang diunggah
@@ -192,7 +192,7 @@ class TokoController extends Controller
         if ($id_toko->foto_toko) {
             $gambartoko = public_path('uploads/toko/' . $id_toko->foto_toko);
             $gambarktp = public_path('uploads/ktp/' . $id_toko->foto_ktp);
-    
+
             if (File::exists($gambartoko, $gambarktp)) {
                 File::delete($gambartoko, $gambarktp);
             }

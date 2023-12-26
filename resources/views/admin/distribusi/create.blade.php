@@ -169,7 +169,7 @@
                 </button>
             </div>
         </div>
-                                    <script>
+                            <script>
                                 $(document).on('shown.bs.modal', function() {
                                     $('#nama_toko').select2({
                                         dropdownParent: $('#exampleModal')
@@ -510,4 +510,11 @@
                                 });
                             </script>
     </div>
-</div>
+    <script>
+        $(document).ready(function() {
+            $("#tabel-distribusi").DataTable({
+                responsive: true
+            });
+        });
+    </script>
+@endsection
