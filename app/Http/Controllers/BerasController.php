@@ -26,48 +26,47 @@ class BerasController extends Controller
     }
 
     public function store(Request $request)
-{
-    $berasArray = $request->input ('beras');
-    $namaSopir = $request->input ('namaSopir');
-    $platNo = $request->input ('platNo');
-    $tanggal_masuk = $request->input ('tanggal_masuk');
+    {
+        $berasArray = $request->input ('beras');
+        $namaSopir = $request->input ('namaSopir');
+        $platNo = $request->input ('platNo');
+        $tanggal_masuk = $request->input ('tanggal_masuk');
 
-    foreach ($berasArray as $d) {
-        $nextId = $this->generateNextId();
-        $beras = new Beras();
-        $beras->id_beras = $nextId;
-        $beras->merk_beras = $d['merk'];
-        $beras->berat = $d['berat'];
-        $beras->harga = $d['harga'];
-        $beras->stock = $d['jumlah'];
-        $beras->nama_sopir = $namaSopir;
-        $beras->plat_no = $platNo;
-        $beras->tanggal_masuk_beras = $tanggal_masuk;
+        foreach ($berasArray as $d) {
+            $nextId = $this->generateNextId();
+            $beras = new Beras();
+            $beras->id_beras = $nextId;
+            $beras->merk_beras = $d['merk'];
+            $beras->berat = $d['berat'];
+            $beras->harga = $d['harga'];
+            $beras->stock = $d['jumlah'];
+            $beras->nama_sopir = $namaSopir;
+            $beras->plat_no = $platNo;
+            $beras->tanggal_masuk_beras = $tanggal_masuk;
 
-        $beras->save();
+            $beras->save();
 
-        $tStock = totalStock::where('merk_beras', $d['merk'])
-        ->where('ukuran_beras', $d['berat'])
-        ->first();
+            $tStock = totalStock::where('merk_beras', $d['merk'])
+            ->where('ukuran_beras', $d['berat'])
+            ->first();
 
-        if ($tStock) {
-            $tStock->jumlah_stock += $d['jumlah'];
-            $tStock->harga = $d['harga'];
-            $tStock->save();
-        } else {
-            // Jika total_stock belum ada, buat yang baru
-            totalStock::create([
-                'merk_beras' =>  $d['merk'],
-                'ukuran_beras' =>  $d['berat'],
-                'jumlah_stock' =>  $d['jumlah'],
-                'harga' =>  $d['harga'],
-            ]);
+            if ($tStock) {
+                $tStock->jumlah_stock += $d['jumlah'];
+                $tStock->harga = $d['harga'];
+                $tStock->save();
+            } else {
+                // Jika total_stock belum ada, buat yang baru
+                totalStock::create([
+                    'merk_beras' =>  $d['merk'],
+                    'ukuran_beras' =>  $d['berat'],
+                    'jumlah_stock' =>  $d['jumlah'],
+                    'harga' =>  $d['harga'],
+                ]);
+            }
+
+            $updateharga = TotalStock::where('merk_beras',  $d['merk'])->update(['harga' => $d['harga']]);
         }
-
-        $updateharga = TotalStock::where('merk_beras',  $d['merk'])->update(['harga' => $d['harga']]);
     }
-}
-
 
     private function generateNextId()
     {
@@ -160,20 +159,21 @@ class BerasController extends Controller
 
     public function updatejumlah(Request $request, $id)
     {
+        // ini fungsi untuk update harga pada stok beras
         $request->validate([
             'harga' => 'required',
         ]);
 
-        $query = totalStock::find('id', $id);
+        $query = totalStock::find($id);
         $getData = $query->first();
-        dd($getData);
+        // dd($getData);
 
         if($getData){
             $getData->update([
                 'harga' => $request->harga,
             ]);
         }
-        return redirect()->route('admin.stockberas')->with('success', 'Data Beras Berhasil Disimpan!');
+        return redirect()->route('admin.stockberas')->with('success', 'Harga Beras Berhasil Diubah!');
     }
 
     /**
@@ -196,9 +196,8 @@ class BerasController extends Controller
             } else {
                 $tStock->save();
             }
-
-            $id_beras->delete();
         }
+        $id_beras->delete();
 
         Alert::error('Data Beras Berhasil Dihapus!');
         return back();

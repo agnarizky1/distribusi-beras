@@ -133,26 +133,23 @@ class PengembalianController extends Controller
 
                 $tStock = totalStock::where('merk_beras', $namaProduk)
                     ->where('ukuran_beras', $berat)
+                    ->where('status', 'Baik')//status rusak ->kari iki wes
                     ->first();
             
                 if ($tStock) {
                     $tStock->jumlah_stock += intval($data['baik']);
-                    $tStock->harga = $hargaKG;
                     $tStock->save();
                 }
             }
 
             if($data['rusak'] > 0){
-                $berasRusak = 'Rusak';
-
                 $stockRusak = totalStock::where('merk_beras', $namaProduk)
                     ->where('ukuran_beras', $berat)
-                    ->where('status', $berasRusak)//status rusak ->kari iki wes
+                    ->where('status', 'Rusak')//status rusak ->kari iki wes
                     ->first();
 
                 if ($stockRusak) {
                     $stockRusak->jumlah_stock += intval($data['rusak']);
-                    $stockRusak->harga = $hargaKG;
                     $stockRusak->save();
                 } else {
                     $berasRusakToStock = new totalStock();

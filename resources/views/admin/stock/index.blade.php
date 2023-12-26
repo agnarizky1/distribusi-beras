@@ -123,14 +123,16 @@
                                     @endphp
 
                                     @foreach ($total as $t)
-                                        @php
-                                            $key = $t->merk_beras . $t->ukuran_beras;
-                                            if (array_key_exists($key, $stockMap)) {
-                                                $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
-                                            } else {
-                                                $stockMap[$key] = $t;
-                                            }
-                                        @endphp
+                                        @if ($t->status == 'Baik')
+                                            @php
+                                                $key = $t->merk_beras . $t->ukuran_beras;
+                                                if (array_key_exists($key, $stockMap)) {
+                                                    $stockMap[$key]->jumlah_stock += $t->jumlah_stock;
+                                                } else {
+                                                    $stockMap[$key] = $t;
+                                                }
+                                            @endphp
+                                        @endif
                                     @endforeach
 
                                     @foreach ($stockMap as $stock)

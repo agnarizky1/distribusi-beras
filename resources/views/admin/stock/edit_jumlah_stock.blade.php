@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">
                     </div>
-                    <form action="{{ Route('admin.jumlahstock.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('admin.jumlahstock.update', $total->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
