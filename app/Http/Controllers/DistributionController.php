@@ -76,6 +76,17 @@ class DistributionController extends Controller
         $distribusi = $request->input('Distribusi');
         $metodeBayar = $request->input('metodeBayar');
 
+        foreach ($distribusi as $item) {
+            $dataBeras = totalStock::where('id', $item['idBeras'])->first();
+            if ($dataBeras) {
+                if ($dataBeras->jumlah_stock >= $item['jumlah']) {
+                    continue;
+                } else {
+                    return response()->json(['error' => 'Beras merk ' . $dataBeras->merk_beras . $dataBeras->ukuran_beras . ' Habis'], 400);
+                }
+            }
+        }
+
         $timestamp = time(); // Waktu saat ini dalam detik
         $randomValue = mt_rand(1000, 9999); // Nilai acak antara 1000 dan 9999
 
@@ -123,7 +134,7 @@ class DistributionController extends Controller
                     $dataBeras->jumlah_stock -= $item['jumlah'];
                     $dataBeras->save();
                 } else {
-                    return response()->json(['error' => 'Beras merk ' . $dataBeras->merk_beras . ' Habis'], 400);
+                    return response()->json(['error' => 'Beras merk ' . $dataBeras->merk_beras . $dataBeras->ukuran_beras . ' Habis'], 400);
                 }
             } else {
                 return response()->json(['error' => 'Beras tidak ditemukan'], 404);

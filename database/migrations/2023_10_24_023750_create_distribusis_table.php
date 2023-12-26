@@ -18,7 +18,7 @@ class CreateDistribusisTable extends Migration
             $table->char('id_toko',30);
             $table->char('kode_distribusi');
             $table->date('tanggal_distribusi');
-            $table->integer('jumlah_distribusi');
+            $table->string('jumlah_distribusi');
             $table->integer('jumlah_return')->default(0);
             $table->integer('total_harga');
             $table->enum('status', ['Pending', 'Dikirim', 'Diterima', 'Ditolak'])->default('Pending');

@@ -236,7 +236,7 @@
                                                     var namaDataBeras = $(input).data('nama');
                                                     var idDetail = $(input).data('id-detail');
                                                     if (namaDataBeras) {
-                                                        var beratBerasPcs = parseFloat(namaDataBeras.match(/\d+/)[0]);
+                                                        var beratBerasPcs = parseFloat(namaDataBeras.match(/\d+(\.\d+)?/));
                                                         var subBeras = beratBerasPcs * input.value;
                                                         jumlahReturn += subBeras;
                                                     }
@@ -393,7 +393,7 @@
                                 <option value="0">Pilih Beras</option>
                                 @foreach ($beras as $item)
                                     <option value="{{ $item->id }}"
-                                        data-price="{{ $item->harga }}" data-satuan="">
+                                        data-price="{{ $item->harga }}" data-stok="{{ $item->jumlah_stock }}">
                                         {{ $item->merk_beras }} {{ $item->ukuran_beras }} Kg
                                     </option>
                                 @endforeach
@@ -412,6 +412,9 @@
                         <div class="col-md-3 mb-3">
                             <label for="jumlah">Jumlah (qty)</label>
                             <input type="number" id="jumlah" class="form-control">
+                            <small id="sisa" style="display: none;">Sisa Stok: 
+                                <span id="sisa_stok"></span>
+                            </small>
                         </div>
                         <input type="hidden" id="selected-product-id">
                         <div class="col-md-12 text-end">
@@ -549,11 +552,15 @@
             $('#beras').change(function() {
                 var selectedOption = $(this).find('option:selected');
                 var price = selectedOption.data('price');
+                var jumlah = selectedOption.data('stok');
                 var beratOption = selectedOption.text().match(/\d+(\.\d+)?/);
                 var berat = beratOption ? parseFloat(beratOption[0]) : 0;
 
+                $('#sisa').show();
+
                 $('#hargakg').val(price);
                 $('#hargapcs').val(price * berat);
+                $('#sisa_stok').text(jumlah);
 
                 selectedOption.data('satuan', price * berat);
             });
@@ -633,7 +640,7 @@
                 }
 
                 // Pastikan bahwa atribut berat diambil dengan benar
-                const beratBeras = parseFloat(berasNama.match(/\d+/));
+                const beratBeras = parseFloat(berasNama.match(/\d+(\.\d+)?/));
                 const tonase = berasJumlah * beratBeras;
                 console.log(beratBeras, berasJumlah);
 
@@ -690,7 +697,7 @@
                 const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
                 const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
                 const berasNama = row.querySelector('.namaBeras').textContent;
-                const berat = parseFloat(berasNama.match(/\d+/));
+                const berat = parseFloat(berasNama.match(/\d+(\.\d+)?/));
 
                 let kuantitas = parseFloat(kuantitasInput.value);
                 kuantitas++;
@@ -710,7 +717,7 @@
                 const subtotalElement = row.querySelector('.subtotal'); // Mengambil elemen subtotal
                 const tonaseElement = row.querySelector('.tonase'); // Mengambil elemen subtotal
                 const berasNama = row.querySelector('.namaBeras').textContent;
-                const berat = parseFloat(berasNama.match(/\d+/));
+                const berat = parseFloat(berasNama.match(/\d+(\.\d+)?/));
 
                 let kuantitas = parseInt(kuantitasInput.value);
                 if (kuantitas > 0) {
@@ -734,7 +741,7 @@
 
                 document.querySelectorAll('#transaction-records tr').forEach(function(row) {
                     const namaBeras = row.querySelector('.namaBeras').textContent;
-                    const beratBeras = parseFloat(namaBeras.match(/\d+/));
+                    const beratBeras = parseFloat(namaBeras.match(/\d+(\.\d+)?/));
                     const hargapcs = parseFloat(row.querySelector('.hargapcs').textContent);
                     const kuantitas = parseInt(row.querySelector('.kuantitas').value);
                     totalHarga += hargapcs * kuantitas;
@@ -786,7 +793,7 @@
                     var subtotal = parseInt(row.querySelector('td:nth-child(5)')
                         .textContent, 10);
                     var jumlah = subtotal / hargaBeras;
-                    var beratBeras = parseFloat(namaBeras.match(/\d+/));
+                    var beratBeras = parseFloat(namaBeras.match(/\d+(\.\d+)?/));
                     var subTotalBeras = jumlah * beratBeras;
                     jumlahDistribusi += subTotalBeras;
 
@@ -821,7 +828,14 @@
                     },
                     error: function(xhr, textStatus, errorThrown) {
                         console.error('Error:', errorThrown);
-                        Swal.fire('Error', 'Distribusi Gagal', 'error');
+                        
+                        // Cek jika respons dari server adalah error dan memiliki properti 'error'
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            Swal.fire('Error', xhr.responseJSON.error, 'error');
+                        } else {
+                            // Tampilkan pesan kesalahan default jika tidak ada properti 'error'
+                            Swal.fire('Error', 'Distribusi Gagal', 'error');
+                        }
                     }
                 });
             });
