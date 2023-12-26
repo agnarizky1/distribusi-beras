@@ -66,7 +66,8 @@
                                                         class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    <a href="{{ route('penjualan.destroy', $d->id_distribusi) }}"
+                                                        class="btn btn-danger btn-sm" data-toggle="modal"
                                                         data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
                                                         <i class="fa fa-trash-can"></i></a>
                                                 </td>

@@ -200,7 +200,7 @@ class BerasController extends Controller
             $id_beras->delete();
         }
 
-        Alert::error('Data Beras Berhasil Dihapus!');
+        Alert::error('Data Beras Gagal Dihapus!');
         return back();
     }
 }

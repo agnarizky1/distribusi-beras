@@ -84,10 +84,6 @@
                                                         class="btn btn-success btn-sm mb-1">
                                                         <i class="fa fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm mb-1""
-                                                        data-toggle="modal"
-                                                        data-target="#deleteConfirmationModal{{ $d->id_distribusi }}">
-                                                        <i class="fa fa-trash-can"></i></a>
                                                 </td>
                                             @endif
                                         </tr>
@@ -96,7 +92,7 @@
                             </table>
                         </div>
                     </div>
-                    @foreach ($distri as $d)
+                    {{-- @foreach ($distri as $d)
                         <div class="modal fade" id="deleteConfirmationModal{{ $d->id_distribusi }}" tabindex="-1"
                             role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -119,7 +115,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                 </div>
             </div>
         </section>
