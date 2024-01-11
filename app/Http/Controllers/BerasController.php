@@ -200,7 +200,7 @@ class BerasController extends Controller
             $id_beras->delete();
         }
 
+        return redirect()->route('admin.stockberas')->with('success', 'Orderan telah dihapus.');
         Alert::error('Data Beras Gagal Dihapus!');
-        return back();
     }
 }
