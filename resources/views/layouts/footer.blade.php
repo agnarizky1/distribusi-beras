@@ -5,7 +5,7 @@
         </div>
         <div class="float-end">
             <p>Crafted with <span class="text-danger"><i class="fa fa-laptop-code"></i></span>
-                by <a href="https://saugi.me">Kreatindo</a></p>
+                by <a href="https://kreatindo.com/">Kreatindo</a></p>
         </div>
     </div>
 </footer>

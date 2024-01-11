@@ -49,7 +49,8 @@ class AuthController extends Controller
         if(Auth::check()){
             return redirect('/admin');
         }
-            $credentials = $request->validate([
+
+        $credentials = $request->validate([
             'email' => ['required', 'string', 'max:100', 'email'],
             'password' => ['required']
         ]);

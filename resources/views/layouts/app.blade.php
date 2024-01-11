@@ -81,7 +81,7 @@
 
     <!-- Need: Apexcharts -->
     <script src="{{ asset('/src/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('/src/assets/static/js/pages/dashboard.js') }}"></script>
+    
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

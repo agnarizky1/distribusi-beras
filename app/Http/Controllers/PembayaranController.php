@@ -90,6 +90,8 @@ class PembayaranController extends Controller
         $distribusi = Distribusi::find($id);
         $dataDetails = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->get();
         $pembayaranDetails = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
+        $detailDO = DetailDelivery::where('id_distribusi', $distribusi->id_distribusi)->get();
+        $toko = Toko::where('id_toko', $distribusi->id_toko)->first();
 
         foreach ($dataDetails as $detail) {
             $detail->delete();
@@ -99,7 +101,19 @@ class PembayaranController extends Controller
             $bayar->delete();
         }
 
+        foreach ($detailDO as $detailDO) {
+            $detailDO->delete();
+        }
+
         $distribusi->delete();
+
+        $totalDistribusi = Distribusi::where('id_toko', $distribusi->id_toko)->count();
+
+        if($totalDistribusi == 0){
+            $toko->update([
+                'tanggungan' => 'Tidak Punya'
+            ]);
+        }
 
         return redirect()->route('admin.tagihan')->with('success', 'Transaksi telah dihapus.');
     }

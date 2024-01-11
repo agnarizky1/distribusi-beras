@@ -49,8 +49,6 @@
                 </li>
 
                 <li class="sidebar-title">Master</li>
-
-
                 <li
                     class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit', 'admin.toko.show']) }}">
                     <a href="{{ route('admin.toko') }}" class='sidebar-link'>
@@ -76,7 +74,6 @@
                         <span>Data Ukuran Beras</span>
                     </a>
                 </li>
-
 
                 <li class="sidebar-title">Transaksi</li>
                 <li
@@ -111,6 +108,13 @@
                     <a href="{{ route('admin.pengembalian') }}" class='sidebar-link'>
                         <i class="fa-solid fa-rotate-left"></i>
                         <span>Retur</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item {{ set_active(['admin.laporan', 'admin.laporan.show']) }} ">
+                    <a href="{{ route('admin.laporan') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file"></i>
+                        <span>Laporan</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Setting</li>

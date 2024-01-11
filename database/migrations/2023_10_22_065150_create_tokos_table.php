@@ -24,7 +24,7 @@ class CreateTokosTable extends Migration
             $table->string('nomor_tlp');
             $table->string('koordinat');
             $table->integer('sisa_uang_return')->default(0);
-            $table->string('tanggungan')->default('Tidak Punya');
+            $table->enum('tanggungan',['Punya', 'Tidak Punya'])->default('Tidak Punya');
             $table->timestamps();
         });
     }

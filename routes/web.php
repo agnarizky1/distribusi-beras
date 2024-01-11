@@ -17,6 +17,7 @@ use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +102,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     // penjualan (yang digunakan yaitu tabel distribusi namun nanti yang ditampilkan ada beberapa filter )
     Route::get('/admin/penjualan', [PenjualanController::class, 'index'])->name('penjualan');
     Route::get('/admin/penjualan/show/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
-    Route::get('/admin/penjualan/destroy/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+    // Route::get('/admin/penjualan/destroy/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
     Route::get('/admin/penjualan/cetak/{id}', [PenjualanController::class, 'cetak'])->name('penjualan.cetak');
 
     //sales
@@ -141,5 +142,8 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/pengembalian/show/{id}', [PengembalianController::class, 'show'])->name('admin.pengembalian.show');
     Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianDuaTerakhir'])->name('getPembelianTerakhir');
 
+    // laporan
+    Route::get('/admin/laporan',[LaporanController::class, 'index'])->name('admin.laporan');
+    Route::get('/admin/laporan/show/{Tanggal_Penjualan}',[LaporanController::class, 'show'])->name('admin.laporan.show');
 
 });

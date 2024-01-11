@@ -283,6 +283,7 @@ class DistributionController extends Controller
         $dataDetails = DetailDistribusi::where('id_distribusi', $distribusi->id_distribusi)->get();
         $pembayaranDetails = Pembayaran::where('id_distribusi', $distribusi->id_distribusi)->get();
         $detailDO = DetailDelivery::where('id_distribusi', $distribusi->id_distribusi)->get();
+        $toko = Toko::where('id_toko', $distribusi->id_toko)->first();
 
         foreach ($dataDetails as $detail) {
             $detail->delete();
@@ -297,6 +298,14 @@ class DistributionController extends Controller
         }
 
         $distribusi->delete();
+
+        $totalDistribusi = Distribusi::where('id_toko', $distribusi->id_toko)->count();
+
+        if($totalDistribusi == 0){
+            $toko->update([
+                'tanggungan' => 'Tidak Punya'
+            ]);
+        }
 
         return redirect()->route('distribution')->with('success', 'Orderan telah dihapus.');
     }
