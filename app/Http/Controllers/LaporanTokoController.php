@@ -11,6 +11,7 @@ class LaporanTokoController extends Controller
     public function index()
     {
         $penjualan = Distribusi::select(
+            'distribusis.id_toko',
             'tokos.nama_toko',
                 DB::raw('YEAR(tanggal_distribusi) as tahun'),
                 DB::raw('LPAD(MONTH(tanggal_distribusi), 2, "0") as bulan'),
@@ -29,4 +30,15 @@ class LaporanTokoController extends Controller
         
         return view('admin.laporanToko.index', compact('penjualan','tokos'));
     }
+
+    public function show($id, $bulan){
+        list($tahun, $bulan) = explode('-', $bulan);
+
+        $order = Distribusi::where('id_toko', $id)
+            ->whereMonth('tanggal_distribusi', $bulan)
+            ->whereYear('tanggal_distribusi', $tahun)
+            ->get();
+            
+            return view('admin.laporanToko.show', compact('order'));
+        }
 }

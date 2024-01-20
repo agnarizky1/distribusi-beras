@@ -69,7 +69,7 @@
                                         <td>{{ $p->total_pembelian }}</td>
                                         <td>{{ $p->laba_kotor }}</td>
                                         <td>
-                                            <a href="{{ route('admin.laporanToko.show', $p->nama_toko) }}"
+                                            <a href="{{ route('admin.laporanToko.show', ['id' => $p->id_toko, 'bulan' => $p->tahun . '-' . $p->bulan]) }}"
                                                 class="btn btn-success btn-sm mb-1">
                                                 <i class="fa fa-regular fa-eye"></i>
                                             </a>

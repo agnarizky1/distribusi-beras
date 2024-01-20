@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
 
     // laporanToko
     Route::get('/admin/laporanToko',[LaporanTokoController::class, 'index'])->name('admin.laporanToko');
-    Route::get('/admin/laporanToko/show/{toko}',[LaporanTokoController::class, 'show'])->name('admin.laporanToko.show');
+    Route::get('/admin/laporanToko/show/{id}/{bulan}',[LaporanTokoController::class, 'show'])->name('admin.laporanToko.show');
 
     // laporanSales
     Route::get('/admin/laporanSales',[LaporanSalesController::class, 'index'])->name('admin.laporanSales');
