@@ -49,8 +49,7 @@
                 </li>
 
                 <li class="sidebar-title">Master</li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit', 'admin.toko.show']) }}">
+                <li class="sidebar-item {{ set_active(['admin.toko', 'admin.toko.add', 'admin.toko.edit', 'admin.toko.show']) }}">
                     <a href="{{ route('admin.toko') }}" class='sidebar-link'>
                         <i class="fa-sharp fa-solid fa-store"></i>
                         <span>Data Toko</span>
@@ -76,15 +75,13 @@
                 </li>
 
                 <li class="sidebar-title">Transaksi</li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
+                <li class="sidebar-item {{ set_active(['admin.stockberas', 'admin.stockberas.add', 'admin.stockberas.edit']) }} ">
                     <a href="{{ route('admin.stockberas') }}" class='sidebar-link'>
                         <i class="fa-solid fa-box-open"></i>
                         <span>Stok Beras</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show', 'admin.DeliveryOrder.index', 'admin.DeliveryOrder.show']) }}">
+                <li class="sidebar-item {{ set_active(['distribution', 'distribution.add', 'distribution.edit', 'distribution.show', 'admin.DeliveryOrder.index', 'admin.DeliveryOrder.show']) }}">
                     <a href="{{ route('distribution') }}" class='sidebar-link'>
                         <i class="fa fa-truck-moving"></i>
                         <span>Order</span>
@@ -96,27 +93,38 @@
                         <span>Penjualan</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.tagihan', 'admin.tagihan.add', 'admin.tagihan.edit', 'admin.tagihan.show']) }} ">
+                <li class="sidebar-item {{ set_active(['admin.tagihan', 'admin.tagihan.add', 'admin.tagihan.edit', 'admin.tagihan.show']) }} ">
                     <a href="{{ route('admin.tagihan') }}" class='sidebar-link'>
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <span>Tagihan</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.pengembalian', 'admin.pengembalian.add', 'admin.pengembalian.show']) }} ">
+                <li class="sidebar-item {{ set_active(['admin.pengembalian', 'admin.pengembalian.add', 'admin.pengembalian.show']) }} ">
                     <a href="{{ route('admin.pengembalian') }}" class='sidebar-link'>
                         <i class="fa-solid fa-rotate-left"></i>
                         <span>Retur</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item {{ set_active(['admin.laporan', 'admin.laporan.show']) }} ">
-                    <a href="{{ route('admin.laporan') }}" class='sidebar-link'>
+                <li class="sidebar-title">Laporan</li>
+                <li class="sidebar-item {{ set_active(['admin.laporanOrder', 'admin.laporanOrder.show']) }} ">
+                    <a href="{{ route('admin.laporanOrder') }}" class='sidebar-link'>
                         <i class="fa-solid fa-file"></i>
-                        <span>Laporan</span>
+                        <span>Laporan Order</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ set_active(['admin.laporanToko', 'admin.laporanToko.show']) }} ">
+                    <a href="{{ route('admin.laporanToko') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file"></i>
+                        <span>Laporan Toko</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ set_active(['admin.laporanSales', 'admin.laporanSales.show']) }} ">
+                <a href="{{ route('admin.laporanSales') }}" class='sidebar-link'>
+                        <i class="fa-solid fa-file"></i>
+                        <span>Laporan Sales</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-title">Setting</li>
                 <li class="sidebar-item {{ set_active(['admin.user', 'admin.user.add', 'admin.user.edit']) }}">
                     <a href="{{ route('admin.user') }}" class='sidebar-link'>

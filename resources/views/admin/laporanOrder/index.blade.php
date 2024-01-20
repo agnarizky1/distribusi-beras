@@ -16,6 +16,9 @@
                             <label for="filterBulan">Filter Bulan</label>
                             <input type="month" class="form-control" id="filterBulan">
                         </div>
+                        <div class="col-md-4 mt-4">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Reset</button>
+                        </div>
                         <div class="card-body">
                             @if (session('status'))
                                 <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -38,13 +41,13 @@
                                 </thead>
                                 <tbody>
                                     @foreach($penjualan as $p)
-                                    <tr>
+                                    <tr class="list-penjualan text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $p->Tanggal_Penjualan }}</td>
+                                        <td id="tanggal">{{ $p->Tanggal_Penjualan }}</td>
                                         <td>{{ $p->Total_Penjualan }}</td>
                                         <td>{{ $p->Laba_Kotor }}</td>
                                         <td>
-                                            <a href="{{ route('admin.laporan.show', $p->Tanggal_Penjualan) }}"
+                                            <a href="{{ route('admin.laporanOrder.show', $p->Tanggal_Penjualan) }}"
                                                 class="btn btn-success btn-sm mb-1">
                                                 <i class="fa fa-regular fa-eye"></i>
                                             </a>
@@ -61,28 +64,50 @@
     </div>
     <script>
         $(document).ready(function () {
-            // Inisialisasi DataTable
-            var table = $('#tabel-distribusi').DataTable({
-                // Konfigurasi DataTable
-                // ...
-            });
-
             // Tambahkan event listener untuk filter tanggal
             $('#filterTanggal').on('change', function () {
-                var tanggal = $(this).val();
-                table.column(1).search(tanggal).draw();
+                $('#filterBulan').val('');
+                var selectTanggal = $(this).val();
+
+                // Loop melalui semua kartu data
+                $('.list-penjualan').each(function () {
+                    const tanggal = $(this).find('#tanggal').text();
+                    const card = $(this);
+
+                    // Periksa apakah data sesuai dengan jenis yang dipilih
+                    if (selectTanggal === tanggal || selectTanggal === '') {
+                        card.show(); // Tampilkan kartu data
+                    } else {
+                        card.hide(); // Sembunyikan kartu data yang tidak sesuai
+                    }
+                });
             });
 
             // Tambahkan event listener untuk filter bulan
             $('#filterBulan').on('change', function () {
-                var bulan = $(this).val();
-                table.column(1).search(bulan).draw();
+                $('#filterTanggal').val('');
+                var selectBulan = $(this).val();
+
+                // Loop melalui semua kartu data
+                $('.list-penjualan').each(function () {
+                    const tanggal = $(this).find('#tanggal').text();
+                    const card = $(this);
+                    const tahunBulan = tanggal.substring(0, 7);
+
+                    // Periksa apakah data sesuai dengan jenis yang dipilih
+                    if (selectBulan === tahunBulan || selectBulan === '') {
+                        card.show(); // Tampilkan kartu data
+                    } else {
+                        card.hide(); // Sembunyikan kartu data yang tidak sesuai
+                    }
+                });
             });
 
-            // Tambahkan event listener untuk filter tahun
-            $('#filterTahun').on('change', function () {
-                var tahun = $(this).val();
-                table.column(1).search(tahun).draw();
+            $('.btn-primary').on('click', function(){
+                // Reset nilai filterTanggal dan filterBulan
+                $('#filterTanggal').val('');
+                $('#filterBulan').val('');
+                $('.list-penjualan').show();
             });
         });
 
