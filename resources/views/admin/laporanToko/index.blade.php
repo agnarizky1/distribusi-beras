@@ -88,37 +88,22 @@
         $(document).ready(function () {
             $('#filterToko').select2();
 
-            $('#filterToko').on('change', function () {
-                var selectToko = $(this).find('option:selected');
+            $('#filterToko, #filterBulan').on('change', function () {
+                var selectToko = $('#filterToko').find('option:selected');
                 var namaToko = selectToko.text();
+                var bulan = $('#filterBulan').val();
 
                 // Loop melalui semua kartu data
                 $('.list-penjualan').each(function () {
                     const nama = $(this).find('#nama').text();
                     const card = $(this);
+                    const dataBulan = $(this).find('td:nth-child(3)').data('bulan');
 
                     // Periksa apakah data sesuai dengan jenis yang dipilih
-                    if (namaToko === nama || namaToko === 'Cari Toko') {
-                        card.show(); // Tampilkan kartu data
+                    if ((namaToko === nama || namaToko === 'Cari Toko') && (bulan === '' || dataBulan === bulan)) {
+                        card.show();
                     } else {
-                        card.hide(); // Sembunyikan kartu data yang tidak sesuai
-                    }
-                });
-            });
-
-            $('#filterBulan').on('change', function () {
-                var selectBulan = $(this).val();
-
-                // Loop melalui semua kartu data
-                $('.list-penjualan').each(function () {
-                    var bulan = $(this).find('td[data-bulan]').data('bulan');
-                    const card = $(this);
-
-                    // Periksa apakah data sesuai dengan jenis yang dipilih
-                    if (selectBulan === bulan || selectBulan === '') {
-                        card.show(); // Tampilkan kartu data
-                    } else {
-                        card.hide(); // Sembunyikan kartu data yang tidak sesuai
+                        card.hide();
                     }
                 });
             });
@@ -130,6 +115,5 @@
                 $('.list-penjualan').show();
             });
         });
-
     </script>
 @endsection
