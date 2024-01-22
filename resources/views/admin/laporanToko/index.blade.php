@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('content')
-<style>
-    .select2-container {
-        border: 1px solid #dce7f1;
-        padding: 0.275rem 0.75rem;
-        border-radius: 0.25rem;
-        max-width: 100% !important;
-        box-sizing: border-box;
-    }
+    <style>
+        .select2-container {
+            border: 1px solid #dce7f1;
+            padding: 0.275rem 0.75rem;
+            border-radius: 0.25rem;
+            max-width: 100% !important;
+            box-sizing: border-box;
+        }
 
-    .select2-container--default .select2-selection--single {
-        border: 1px solid #fff;
-    }
-</style>
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #fff;
+        }
+    </style>
 
     <div class="page-heading">
         <h3>Laporan Pembelian Toko</h3>
@@ -61,21 +61,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($penjualan as $p)
-                                    <tr class="list-penjualan text-center">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td id="nama">{{ $p->nama_toko }}</td>
-                                        <td data-bulan="{{$p->tahun}}-{{$p->bulan}}">{{ date('F', mktime(0, 0, 0, $p->bulan, 1)) }} {{ $p->tahun }}</td>
-                                        <td>{{ $p->total_pembelian }}</td>
-                                        <td>{{ $p->laba_kotor }}</td>
-                                        <td>
-                                            <a href="{{ route('admin.laporanToko.show', ['id' => $p->id_toko, 'bulan' => $p->tahun . '-' . $p->bulan]) }}"
-                                                class="btn btn-success btn-sm mb-1">
-                                                <i class="fa fa-regular fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($penjualan as $p)
+                                        <tr class="list-penjualan text-center">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td id="nama">{{ $p->nama_toko }}</td>
+                                            <td data-bulan="{{ $p->tahun }}-{{ $p->bulan }}">
+                                                {{ date('F j, Y', mktime(0, 0, 0, $p->bulan, 1, $p->tahun)) }}
+                                            </td>
+                                            <td>{{ $p->total_pembelian }} Kg</td>
+                                            <td> Rp. {{ number_format($p->laba_kotor, 0, '.', '.') }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.laporanToko.show', ['id' => $p->id_toko, 'bulan' => $p->tahun . '-' . $p->bulan]) }}"
+                                                    class="btn btn-success btn-sm mb-1">
+                                                    <i class="fa fa-regular fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endforeach
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-end"><b>Total</b></td>
+                                    <td class="text-center">100 Kg</td>
+                                    <td class="text-center">Rp. 100.000</td>
+                                    <td></td>
                                 </tbody>
                             </table>
                         </div>
@@ -85,22 +95,23 @@
         </section>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#filterToko').select2();
 
-            $('#filterToko, #filterBulan').on('change', function () {
+            $('#filterToko, #filterBulan').on('change', function() {
                 var selectToko = $('#filterToko').find('option:selected');
                 var namaToko = selectToko.text();
                 var bulan = $('#filterBulan').val();
 
                 // Loop melalui semua kartu data
-                $('.list-penjualan').each(function () {
+                $('.list-penjualan').each(function() {
                     const nama = $(this).find('#nama').text();
                     const card = $(this);
                     const dataBulan = $(this).find('td:nth-child(3)').data('bulan');
 
                     // Periksa apakah data sesuai dengan jenis yang dipilih
-                    if ((namaToko === nama || namaToko === 'Cari Toko') && (bulan === '' || dataBulan === bulan)) {
+                    if ((namaToko === nama || namaToko === 'Cari Toko') && (bulan === '' ||
+                            dataBulan === bulan)) {
                         card.show();
                     } else {
                         card.hide();
@@ -108,7 +119,7 @@
                 });
             });
 
-            $('.btn-primary').on('click', function(){
+            $('.btn-primary').on('click', function() {
                 // Reset nilai filterToko dan filterBulan
                 $('#filterToko').val('').trigger('change');;
                 $('#filterBulan').val('');

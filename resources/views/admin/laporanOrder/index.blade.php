@@ -33,6 +33,7 @@
                                 <thead class="table-light">
                                     <tr class="text-center">
                                         <th width="5%">No</th>
+                                        <th>ID Order</th>
                                         <th>Tanggal Penjualan</th>
                                         <th>Jumlah Tonase</th>
                                         <th>Laba Kotor</th>
@@ -40,20 +41,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($penjualan as $p)
-                                    <tr class="list-penjualan text-center">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td id="tanggal">{{ $p->Tanggal_Penjualan }}</td>
-                                        <td>{{ $p->Total_Penjualan }}</td>
-                                        <td>{{ $p->Laba_Kotor }}</td>
-                                        <td>
-                                            <a href="{{ route('admin.laporanOrder.show', $p->Tanggal_Penjualan) }}"
-                                                class="btn btn-success btn-sm mb-1">
-                                                <i class="fa fa-regular fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($penjualan as $p)
+                                        <tr class="list-penjualan text-center">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $p->kode_distribusi }}</td>
+                                            <td id="tanggal">{{ $p->Tanggal_Penjualan }}</td>
+                                            <td>{{ $p->Total_Penjualan }}</td>
+                                            <td>Rp. {{ number_format($p->Laba_Kotor, 0, '.', '.') }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.laporanOrder.show', $p->Tanggal_Penjualan) }}"
+                                                    class="btn btn-success btn-sm mb-1">
+                                                    <i class="fa fa-regular fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endforeach
+                                </tbody>
+                                <tbody>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-end"><b>Total</b></td>
+                                    <td class="text-center">100 Kg</td>
+                                    <td class="text-center">Rp. 100.000</td>
+                                    <td></td>
                                 </tbody>
                             </table>
                         </div>
@@ -63,14 +73,14 @@
         </section>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Tambahkan event listener untuk filter tanggal
-            $('#filterTanggal').on('change', function () {
+            $('#filterTanggal').on('change', function() {
                 $('#filterBulan').val('');
                 var selectTanggal = $(this).val();
 
                 // Loop melalui semua kartu data
-                $('.list-penjualan').each(function () {
+                $('.list-penjualan').each(function() {
                     const tanggal = $(this).find('#tanggal').text();
                     const card = $(this);
 
@@ -84,12 +94,12 @@
             });
 
             // Tambahkan event listener untuk filter bulan
-            $('#filterBulan').on('change', function () {
+            $('#filterBulan').on('change', function() {
                 $('#filterTanggal').val('');
                 var selectBulan = $(this).val();
 
                 // Loop melalui semua kartu data
-                $('.list-penjualan').each(function () {
+                $('.list-penjualan').each(function() {
                     const tanggal = $(this).find('#tanggal').text();
                     const card = $(this);
                     const tahunBulan = tanggal.substring(0, 7);
@@ -103,13 +113,12 @@
                 });
             });
 
-            $('.btn-primary').on('click', function(){
+            $('.btn-primary').on('click', function() {
                 // Reset nilai filterTanggal dan filterBulan
                 $('#filterTanggal').val('');
                 $('#filterBulan').val('');
                 $('.list-penjualan').show();
             });
         });
-
     </script>
 @endsection
