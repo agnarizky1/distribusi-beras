@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Distribusi;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
@@ -24,6 +25,10 @@ class LaporanController extends Controller
 
     public function show($Tanggal_Penjualan)
     {
-        
+
+    }
+    public function downloadExcel()
+    {
+        return Excel::download(new YourExportClass, 'example.xlsx');
     }
 }
