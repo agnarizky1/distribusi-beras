@@ -17,7 +17,9 @@ use App\Http\Controllers\pembayaranController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\PengembalianController;
-use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanOrderController;
+use App\Http\Controllers\LaporanTokoController;
+use App\Http\Controllers\LaporanSalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,10 +132,10 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/merk/destroy/{id}', [MerkController::class, 'destroy'])->name('admin.merk.destroy');
 
     //Pembayaran (tagihan)
-    Route::get('/admin/tagihan', [pembayaranController::class, 'index'])->name('admin.tagihan');
-    Route::post('/admin/tagihan/store', [pembayaranController::class, 'store'])->name('tagihan.store');
-    Route::get('/admin/tagihan/destroy/{id}', [pembayaranController::class, 'destroy'])->name('admin.tagihan.destroy');
-    Route::get('/admin/tagihan/show/{id}', [pembayaranController::class, 'show'])->name('admin.tagihan.show');
+    Route::get('/admin/tagihan', [PembayaranController::class, 'index'])->name('admin.tagihan');
+    Route::post('/admin/tagihan/store', [PembayaranController::class, 'store'])->name('tagihan.store');
+    Route::get('/admin/tagihan/destroy/{id}', [PembayaranController::class, 'destroy'])->name('admin.tagihan.destroy');
+    Route::get('/admin/tagihan/show/{id}', [PembayaranController::class, 'show'])->name('admin.tagihan.show');
     Route::get('/admin/tagihan/cetaknota/{id}', [PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
 
     //Pengembalian
@@ -142,8 +144,16 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
     Route::get('/admin/pengembalian/show/{id}', [PengembalianController::class, 'show'])->name('admin.pengembalian.show');
     Route::get('/getPembelianTerakhir', [PengembalianController::class, 'getPembelianDuaTerakhir'])->name('getPembelianTerakhir');
 
-    // laporan
-    Route::get('/admin/laporan',[LaporanController::class, 'index'])->name('admin.laporan');
-    Route::get('/admin/laporan/show/{Tanggal_Penjualan}',[LaporanController::class, 'show'])->name('admin.laporan.show');
+    // laporanOrder
+    Route::get('/admin/laporanOrder',[LaporanOrderController::class, 'index'])->name('admin.laporanOrder');
+    Route::get('/admin/laporanOrder/show/{Tanggal_Penjualan}',[LaporanOrderController::class, 'show'])->name('admin.laporanOrder.show');
+
+    // laporanToko
+    Route::get('/admin/laporanToko',[LaporanTokoController::class, 'index'])->name('admin.laporanToko');
+    Route::get('/admin/laporanToko/show/{id}/{bulan}',[LaporanTokoController::class, 'show'])->name('admin.laporanToko.show');
+
+    // laporanSales
+    Route::get('/admin/laporanSales',[LaporanSalesController::class, 'index'])->name('admin.laporanSales');
+    Route::get('/admin/laporanSales/show/{sales}',[LaporanSalesController::class, 'show'])->name('admin.laporanSales.show');
 
 });

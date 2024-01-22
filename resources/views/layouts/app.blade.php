@@ -61,16 +61,15 @@
     <div id="app">
         @include('layouts.sidebar')
         <div id="main">
-            <header class="mb-3">
+            <header class="mb-1">
                 <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
+                    <i class="bi bi-justify fs-2"></i>
                 </a>
             </header>
 
             @yield('content')
             @include('sweetalert::alert')
             @include('layouts.footer')
-
         </div>
     </div>
     <script src="{{ asset('/src/assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
