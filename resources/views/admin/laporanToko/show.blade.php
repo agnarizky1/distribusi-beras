@@ -8,10 +8,8 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-md-8">
-                                    <h4>Penjualan Toko {{$order[0]->toko->nama_toko}} Pada Bulan {{\Carbon\Carbon::parse($order[0]->tanggal_distribusi)->format('F Y') }}</h4>
-                                </div>
-                                <div class="col-md-4 text-end">
-                                    <a href="{{ route('admin.laporanToko') }}" class="btn btn-warning"></i> Kembali</a>
+                                    <h4>Penjualan Toko {{ $order[0]->toko->nama_toko }} Pada Bulan
+                                        {{ \Carbon\Carbon::parse($order[0]->tanggal_distribusi)->format('F Y') }}</h4>
                                 </div>
                             </div>
 
@@ -42,12 +40,19 @@
                                             <td>{{ $d->kode_distribusi }}</td>
                                             <td>{{ $d->toko->nama_toko }}</td>
                                             <td>{{ $d->toko->sales }}</td>
-                                            <td>{{$d->jumlah_distribusi - $d->jumlah_return}}</td>
-                                            <td>{{$d->total_harga - $d->uang_return - $d->potongan_harga}}</td>
+                                            <td>{{ $d->jumlah_distribusi - $d->jumlah_return }} Kg</td>
+                                            <td>Rp.
+                                                {{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="row mb-2">
+                                <div class="text-end">
+                                    <a href="{{ route('admin.laporanToko') }}" class="btn btn-warning"></i> Kembali</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

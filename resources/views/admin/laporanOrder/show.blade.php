@@ -7,7 +7,8 @@
                     <div class="card-header row">
                         <div class="card-body">
                             <div class="row mb-2">
-                                <h3>Penjualan Pada Tanggal {{\Carbon\Carbon::parse($order[0]->tanggal_distribusi)->format('d F Y') }}</h3>
+                                <h3>ORDER -
+                                    {{ $order[0]->kode_distribusi }}</h3>
                             </div>
 
                             @if (session('status'))
@@ -24,6 +25,7 @@
                                     <tr class="text-center">
                                         <th width="5%">No</th>
                                         <th>Kode Order</th>
+                                        <th>Tanggal Order</th>
                                         <th>Nama Toko</th>
                                         <th>Sales</th>
                                         <th>Tonase</th>
@@ -35,10 +37,14 @@
                                         <tr class="text-center">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $d->kode_distribusi }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($order[0]->tanggal_distribusi)->format('d F Y') }}
+                                            </td>
                                             <td>{{ $d->toko->nama_toko }}</td>
                                             <td>{{ $d->toko->sales }}</td>
-                                            <td>{{$d->jumlah_distribusi - $d->jumlah_return}}</td>
-                                            <td>{{$d->total_harga - $d->uang_return - $d->potongan_harga}}</td>
+                                            <td>{{ $d->jumlah_distribusi - $d->jumlah_return }} Kg</td>
+                                            <td> Rp.
+                                                {{ number_format($d->total_harga - $d->uang_return - $d->potongan_harga, 0, '.', '.') }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
