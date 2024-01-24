@@ -15,7 +15,7 @@
     </style>
 
     <div class="page-heading">
-        <h3>Laporan Pembelian Toko</h3>
+        <h3>Laporan Penjualan Sales</h3>
     </div>
     <div class="page-content">
         <section class="row">
@@ -23,11 +23,11 @@
                 <div class="card">
                     <div class="card-header row">
                         <div class="col-md-4">
-                            <label for="filterToko">Filter Toko</label>
+                            <label for="filterToko">Filter Sales</label>
                             <select class="form-control" id="filterToko">
-                                <option value="">Cari Toko</option>
+                                <option value="">Cari Sales</option>
                                 @foreach ($tokos as $toko)
-                                    <option value="{{ $toko->id_toko }}">{{ $toko->nama_toko }}</option>
+                                    <option value="{{ $toko->id_toko }}">{{ $toko->sales }}</option>
                                 @endforeach
 
                             </select>
@@ -64,14 +64,14 @@
                                     @foreach ($penjualan as $p)
                                         <tr class="list-penjualan text-center">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td id="nama">{{ $p->nama_toko }}</td>
+                                            <td id="nama">{{ $p->sales }}</td>
                                             <td data-bulan="{{ $p->tahun }}-{{ $p->bulan }}">
                                                 {{ date('F Y', mktime(0, 0, 0, $p->bulan, 1, $p->tahun)) }}
                                             </td>
                                             <td data-tonase="{{ $p->total_pembelian }}">{{ $p->total_pembelian }} Kg</td>
                                             <td data-laba="{{$p->laba_kotor}}"> Rp. {{ number_format($p->laba_kotor, 0, '.', '.') }}</td>
                                             <td>
-                                                <a href="{{ route('admin.laporanToko.show', ['id' => $p->id_toko, 'bulan' => $p->tahun . '-' . $p->bulan]) }}"
+                                                <a href="{{ route('admin.laporanSales.show', ['sales' => $p->sales, 'bulan' => $p->tahun . '-' . $p->bulan]) }}"
                                                     class="btn btn-success btn-sm mb-1">
                                                     <i class="fa fa-regular fa-eye"></i>
                                                 </a>
@@ -128,12 +128,14 @@
                     const dataBulan = $(this).find('td:nth-child(3)').data('bulan');
 
                     // Periksa apakah data sesuai dengan jenis yang dipilih
-                    if ((namaToko === nama || namaToko === 'Cari Toko') && (bulan === '' || dataBulan === bulan)) {
+                    if ((namaToko === nama || namaToko === 'Cari Sales') && (bulan === '' ||
+                            dataBulan === bulan)) {
                         card.show();
                     } else {
                         card.hide();
                     }
                 });
+                    
                 updateTotalTonase();
                 updateTotalLaba();
             });
@@ -143,7 +145,7 @@
                 $('#filterToko').val('').trigger('change');;
                 $('#filterBulan').val('');
                 $('.list-penjualan').show();
-                
+                    
                 updateTotalTonase();
                 updateTotalLaba();
             });

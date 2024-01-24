@@ -40,5 +40,5 @@ class LaporanTokoController extends Controller
             ->get();
             
             return view('admin.laporanToko.show', compact('order'));
-        }
+    }
 }

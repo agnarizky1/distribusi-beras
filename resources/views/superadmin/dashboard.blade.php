@@ -104,10 +104,54 @@
                         <h4>Penjualan</h4>
                     </div>
                     <div class="card-body">
-                        <!-- <div id="chart-profile-visit"></div> -->
+                        <canvas id="berasChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var dataPenjualan = {!! json_encode($penjualan) !!};
+
+            // Inisialisasi data untuk chart
+            var labels = dataPenjualan.map(function(item) {
+                return item.nama_beras;
+            });
+
+            var dataset = {
+                label: 'Jumlah Terjual',
+                data: dataPenjualan.map(function(item) {
+                    return item.jumlah_beras;
+                }),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Warna latar belakang bar
+                borderColor: 'rgba(75, 192, 192, 1)', // Warna garis batas bar
+                borderWidth: 1 // Lebar garis batas bar
+            };
+
+            var maxDataValue = Math.max(...dataset.data);
+
+            var config = {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [dataset]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 11,
+                            max: maxDataValue
+                        }
+                    }
+                }
+            };
+
+            // Menggambar chart
+            var ctx = document.getElementById('berasChart').getContext('2d');
+            new Chart(ctx, config);
+        });
+    </script>
+
 @endsection

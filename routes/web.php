@@ -154,6 +154,6 @@ Route::group(['middleware' => ['auth', 'Role:superadmin,admin']], function () {
 
     // laporanSales
     Route::get('/admin/laporanSales',[LaporanSalesController::class, 'index'])->name('admin.laporanSales');
-    Route::get('/admin/laporanSales/show/{sales}',[LaporanSalesController::class, 'show'])->name('admin.laporanSales.show');
+    Route::get('/admin/laporanSales/show/{sales}/{bulan}',[LaporanSalesController::class, 'show'])->name('admin.laporanSales.show');
 
 });
