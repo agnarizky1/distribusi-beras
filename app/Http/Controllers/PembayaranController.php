@@ -8,6 +8,7 @@ use App\Models\Toko;
 use App\Models\Distribusi;
 use App\Models\Pembayaran;
 use App\Models\DetailDistribusi;
+use App\Models\DetailDelivery;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -44,21 +45,34 @@ class PembayaranController extends Controller
         $tengatWaktu = $tanggalDistribusi->addDays(10)->format('Y-m-d');
 
         $pembayaran->tanggal_tengat_pembayaran = $tengatWaktu;
-        $pembayaran->save();
-
-        if($bayar->jumlah_pembayaran == null ){
-            $bayar->delete();
-        }
 
         $distri = Distribusi::find($id_distribusi);
         $pembayaranTotal = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
-
-        $toko = $distri->id_toko;
-
         $totalBayar = intval($pembayaranTotal);
+
         $totalHargaAwal = intval($distri->total_harga);
         $totalHarga = $totalHargaAwal -  $distri->uang_return - $distri->potongan_harga;
-        if ($totalBayar == $totalHarga || $totalBayar > $totalHarga) {
+
+        $sisaPembayaran = $totalHarga - $totalBayar;
+
+        $jumlahPembayaran = $request->input('jumlahPembayaran');
+
+        if( $jumlahPembayaran > $sisaPembayaran){
+            $response = [
+                'status' => 'error',
+                'message' => 'Pembayaran Gagal',
+                'sisaPembayaran' => $sisaPembayaran,
+            ];
+            return response()->json($response, 500);
+        }else{
+            $pembayaran->save();
+        }
+
+        $toko = Toko::find($distri->id_toko);
+        $totalPembayaran = Pembayaran::where('id_distribusi', $distri->id_distribusi)->sum('jumlah_pembayaran');
+        $totPembayaran = intval($totalPembayaran);
+
+        if ($totPembayaran >= $totalHarga) {
             $distri->update([
                 'status_bayar' => 'Lunas',
             ]);
@@ -66,6 +80,10 @@ class PembayaranController extends Controller
             $toko->update([
                 'tanggungan' => 'Tidak Punya'
             ]);
+        }
+
+        if($bayar->jumlah_pembayaran == null ){
+            $bayar->delete();
         }
     }
 
