@@ -167,7 +167,7 @@ class PengembalianController extends Controller
 
         if ($toko) {
             $toko->update([
-                'sisa_uang_return' => $toko->sisa_uang_return+$uangReturn,
+                'sisa_uang_return' => $toko->sisa_uang_return + intval($uangReturn),
             ]);
         }
     }
